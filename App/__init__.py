@@ -6,4 +6,6 @@ TELEGRAM_SESSION = os.environ.get("TELEGRAM_SESSION")
 
 bot: TelegramClient = TelegramClient(
     StringSession(TELEGRAM_SESSION),
+    api_id=870972,
+    api_hash="ce2efaca02dfcd110941be6025e9ac0d",
 )
