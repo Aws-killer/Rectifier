@@ -97,7 +97,7 @@ def celery_task(video_task: EditorRequest):
         render_video.si(temp_dir, output_dir),
         cleanup_temp_directory.si(temp_dir, output_dir),
     ).apply_async(
-        # link_error=handle_error
+        link_error=handle_error
     )  # Link the tasks and handle errors
 
 
