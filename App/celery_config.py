@@ -4,7 +4,8 @@ import ssl
 task_serializer = "pickle"
 result_serializer = "pickle"
 event_serializer = "json"
-accept_content = ["json"]
+accept_content = ["application/json", "application/x-python-serialize"]
+result_accept_content = ["application/json", "application/x-python-serialize"]
 timezone = "Europe/Oslo"
 enable_utc = True
 
