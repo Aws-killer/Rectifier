@@ -36,22 +36,14 @@ RUN apt-get install -y \
 RUN wget https://github.com/Alex313031/thorium/releases/download/M117.0.5938.157/thorium-browser_117.0.5938.157_amd64.deb && \
   dpkg -i thorium-browser_117.0.5938.157_amd64.deb
 
-# Install Node.js and npm
-# Install NVM using sudo apt
-RUN apt-get update && \
-  apt-get install -y curl && \
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-
-# Activate NVM in the current shell
-SHELL ["/bin/bash", "--login", "-c"]
-RUN source "$HOME/.nvm/nvm.sh" && \
-  source "$HOME/.bashrc" && \
-  nvm --version && \
-  nvm install 18.17.0 && \
-  nvm alias default 18.17.0 && \
-  npm install -g npm@9.6.7
-USER admin
-
+RUN apt-get update && apt-get install -y \
+  software-properties-common \
+  npm
+RUN npm install npm@latest -g && \
+  npm install n -g && \
+  n latest
+RUN echo npm -v
+RUN node -v
 # Copy the application code
 COPY --chown=admin . /srv
 
