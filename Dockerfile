@@ -55,3 +55,5 @@ RUN rm thorium-browser_117.0.5938.157_amd64.deb
 
 # Command to run the application
 CMD uvicorn App.app:app --host 0.0.0.0 --port 7860 --workers 4 & celery -A App.Worker.celery worker -c 4 --loglevel=DEBUG
+
+EXPOSE 7860
