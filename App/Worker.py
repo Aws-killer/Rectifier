@@ -65,8 +65,7 @@ def cleanup_temp_directory(
 
 
 @celery.task
-def celery_task(video_request):
-    video_request = EditorRequest.parse_obj(video_request)
+def celery_task(links, script=""):
     remotion_app_dir = os.path.join("/srv", "Remotion-app")
     project_id = str(uuid.uuid4())
     temp_dir = f"/tmp/{project_id}"
@@ -75,9 +74,7 @@ def celery_task(video_request):
     chain(
         copy_remotion_app.s(remotion_app_dir, temp_dir),
         install_dependencies.s(temp_dir),
-        download_assets.s(video_request.links, temp_dir)
-        if video_request.links
-        else None,
+        download_assets.s(links, temp_dir) if links else None,
         render_video.s(temp_dir, output_dir),
         cleanup_temp_directory.s(temp_dir, output_dir),
     ).apply_async(
