@@ -56,10 +56,10 @@ def download_assets(links: List[str], temp_dir: str):
         else:
             # If Content-Disposition is not available, use the last part of the URL as the filename
             filename = os.path.basename(urlparse(link).path)
-
+        public_dir = f"{temp_dir}/public"
         # Use the extracted filename to save the file
 
-        download_with_wget(link, temp_dir, filename)
+        download_with_wget(link, public_dir, filename)
 
 
 @celery.task
