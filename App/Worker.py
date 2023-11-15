@@ -1,6 +1,7 @@
 from celery import Celery, chain
 import os, shutil, subprocess
-import uuid
+import uuid, cgi
+from urllib.parse import urlparse
 import time
 import requests
 from App import celery_config, bot
@@ -26,8 +27,8 @@ def worker_process_init_handler(**kwargs):
 # Script
 
 
-def download_with_wget(link, download_dir):
-    subprocess.run(["wget", "-P", download_dir, link])
+def download_with_wget(link, download_dir, filename):
+    subprocess.run(["wget", "-P", download_dir, "-O", filename, link])
 
 
 @celery.task
@@ -57,8 +58,8 @@ def download_assets(links: List[str], temp_dir: str):
             filename = os.path.basename(urlparse(link).path)
 
         # Use the extracted filename to save the file
-        destination_path = os.path.join(temp_dir, filename)
-        download_with_wget(link, destination_path)
+
+        download_with_wget(link, temp_dir, filename)
 
 
 @celery.task
