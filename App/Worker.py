@@ -71,9 +71,7 @@ def cleanup_temp_directory(
     temp_dir: str, output_dir: str, chat_id: int = -1002069945904
 ):
     try:
-        bot.send_file(
-            chat_id=-1002069945904, file=output_dir, caption="Your video caption"
-        )
+        bot.send_file(chat_id, file=output_dir, caption="Your video caption")
     finally:
         # Cleanup: Remove the temporary directory
         shutil.rmtree(temp_dir, ignore_errors=True)
