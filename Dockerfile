@@ -9,7 +9,7 @@ RUN chmod -R 755 /srv
 
 # Install dependencies
 RUN apt-get update && \
-  apt-get install -y libu2f-udev libvulkan1 mesa-vulkan-drivers wget ffmpeg curl 
+  apt-get install -y libu2f-udev libvulkan1 mesa-vulkan-drivers wget ffmpeg curl aria2
 
 RUN apt-get install -y \
   fonts-liberation \

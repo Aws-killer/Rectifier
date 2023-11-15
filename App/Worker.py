@@ -28,7 +28,7 @@ def worker_process_init_handler(**kwargs):
 
 
 def download_with_wget(link, download_dir, filename):
-    subprocess.run(["wget", "-P", download_dir, "-O", filename, link])
+    subprocess.run(["aria2c", link, "-d", download_dir, "-o", filename])
 
 
 @celery.task
@@ -57,6 +57,7 @@ def download_assets(links: List[str], temp_dir: str):
             # If Content-Disposition is not available, use the last part of the URL as the filename
             filename = os.path.basename(urlparse(link).path)
         public_dir = f"{temp_dir}/public"
+        print(public_dir)
         # Use the extracted filename to save the file
 
         download_with_wget(link, public_dir, filename)
