@@ -72,7 +72,7 @@ def cleanup_temp_directory(
 ):
     try:
         bot.send_file(
-            chat_id - 1002069945904, file=output_dir, caption="Your video caption"
+            chat_id=-1002069945904, file=output_dir, caption="Your video caption"
         )
     finally:
         # Cleanup: Remove the temporary directory
