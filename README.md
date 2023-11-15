@@ -1,6 +1,6 @@
 ---
-title: Basic Docker SDK Space
-emoji: 🐳
+title: Renderer
+emoji: 🚀
 colorFrom: purple
 colorTo: gray
 sdk: docker
