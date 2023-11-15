@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../short/.github"
+		},
+		{
+			"path": "../../short/.vscode"
+		},
+		{
+			"path": "../../short/node_modules"
+		},
+		{
+			"path": "../../short/out"
+		},
+		{
+			"path": "../../short/public"
+		},
+		{
+			"path": "../../short/src"
+		}
+	],
+	"settings": {}
+}
