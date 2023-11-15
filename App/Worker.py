@@ -23,8 +23,15 @@ def worker_process_init_handler(**kwargs):
     bot.start()
 
 
-# Downloads list of links
-# Script
+def create_symlink(source_dir, target_dir, symlink_name):
+    source_path = os.path.join(source_dir, symlink_name)
+    target_path = os.path.join(target_dir, symlink_name)
+
+    try:
+        os.symlink(source_path, target_path)
+        print(f"Symlink '{symlink_name}' created successfully.")
+    except FileExistsError:
+        print(f"Symlink '{symlink_name}' already exists.")
 
 
 def download_with_wget(link, download_dir, filename):
@@ -34,6 +41,10 @@ def download_with_wget(link, download_dir, filename):
 @celery.task
 def copy_remotion_app(src: str, dest: str):
     shutil.copytree(src, dest)
+
+    # # create symbolic link to prevent multiple installs
+    # source_dir = os.path.join(src, "node_module")
+    # create_symlink(source_dir, target_dir=dest, symlink_name="node_module")
 
 
 @celery.task
@@ -89,7 +100,7 @@ def celery_task(links, script=""):
 
     chain(
         copy_remotion_app.si(remotion_app_dir, temp_dir),
-        install_dependencies.si(temp_dir),
+        # install_dependencies.si(temp_dir),
         download_assets.si(links, temp_dir) if links else None,
         render_video.si(temp_dir, output_dir),
         cleanup_temp_directory.si(temp_dir, output_dir),

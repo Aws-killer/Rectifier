@@ -32,6 +32,9 @@ RUN apt-get install -y \
   libxrandr2 \
   xdg-utils
 
+# Copy the application code
+COPY --chown=admin . /srv
+
 # Download and install Thorium Browser
 RUN wget https://github.com/Alex313031/thorium/releases/download/M117.0.5938.157/thorium-browser_117.0.5938.157_amd64.deb && \
   dpkg -i thorium-browser_117.0.5938.157_amd64.deb
@@ -42,10 +45,18 @@ RUN apt-get update && apt-get install -y \
 RUN npm install npm@latest -g && \
   npm install n -g && \
   n latest
+
+
+
 RUN echo npm -v
 RUN node -v
-# Copy the application code
-COPY --chown=admin . /srv
+
+#install the stuff
+RUN cd /srv/Remotion-app && npm install
+
+
+
+
 
 # Install Python dependencies
 COPY requirements.txt .
