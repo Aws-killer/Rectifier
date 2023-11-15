@@ -2,6 +2,7 @@ from celery import Celery, chain
 import os, shutil, subprocess
 import uuid
 import time
+import requests
 from App import celery_config, bot
 from typing import List
 from App.Editor.Schema import EditorRequest
@@ -43,8 +44,21 @@ def install_dependencies(directory: str):
 @celery.task
 def download_assets(links: List[str], temp_dir: str):
     for i, link in enumerate(links):
-        download_dir = os.path.join(temp_dir, "public")
-        download_with_wget(link, download_dir)
+        # Make a request to the server to get the filename and format
+        response = requests.head(link)
+
+        # Extract filename and format from the Content-Disposition header, if available
+        content_disposition = response.headers.get("Content-Disposition")
+        if content_disposition and "filename" in content_disposition:
+            _, params = cgi.parse_header(content_disposition)
+            filename = params["filename"]
+        else:
+            # If Content-Disposition is not available, use the last part of the URL as the filename
+            filename = os.path.basename(urlparse(link).path)
+
+        # Use the extracted filename to save the file
+        destination_path = os.path.join(temp_dir, filename)
+        download_with_wget(link, destination_path)
 
 
 @celery.task
