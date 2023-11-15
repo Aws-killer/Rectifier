@@ -72,11 +72,11 @@ def celery_task(links, script=""):
     output_dir = f"/tmp/{project_id}/{project_id}.mp4"
 
     chain(
-        copy_remotion_app.s(remotion_app_dir, temp_dir),
-        install_dependencies.s(temp_dir),
-        download_assets.s(links, temp_dir) if links else None,
-        render_video.s(temp_dir, output_dir),
-        cleanup_temp_directory.s(temp_dir, output_dir),
+        copy_remotion_app.si(remotion_app_dir, temp_dir),
+        install_dependencies.si(temp_dir),
+        download_assets.si(links, temp_dir) if links else None,
+        render_video.si(temp_dir, output_dir),
+        cleanup_temp_directory.si(temp_dir, output_dir),
     ).apply_async(
         link_error=handle_error
     )  # Link the tasks and handle errors
