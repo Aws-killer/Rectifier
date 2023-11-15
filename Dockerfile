@@ -9,7 +9,7 @@ RUN chmod -R 755 /srv
 
 # Install dependencies
 RUN apt-get update && \
-  apt-get install -y libu2f-udev libvulkan1 mesa-vulkan-drivers wget ffmpeg
+  apt-get install -y libu2f-udev libvulkan1 mesa-vulkan-drivers wget ffmpeg curl 
 
 RUN apt-get install -y \
   fonts-liberation \
@@ -36,22 +36,20 @@ RUN apt-get install -y \
 RUN wget https://github.com/Alex313031/thorium/releases/download/M117.0.5938.157/thorium-browser_117.0.5938.157_amd64.deb && \
   dpkg -i thorium-browser_117.0.5938.157_amd64.deb
 
-
-# Install NVM to manage Node.js versions
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+# Install Node.js and npm
+# Install NVM using sudo apt
+RUN apt-get update && \
+  apt-get install -y curl && \
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 
 # Activate NVM in the current shell
-RUN export NVM_DIR="$HOME/.nvm" && \
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-# Install Node.js version v18.17.0 and npm v9.6.7 using NVM
-RUN nvm install 18.17.0
-RUN nvm install-latest-npm
-
-# Set the installed Node.js version as the default
-RUN nvm alias default 18.17.0
-
+SHELL ["/bin/bash", "--login", "-c"]
+RUN source "$HOME/.nvm/nvm.sh" && \
+  source "$HOME/.bashrc" && \
+  nvm --version && \
+  nvm install 18.17.0 && \
+  nvm alias default 18.17.0 && \
+  npm install -g npm@9.6.7
 USER admin
 
 # Copy the application code
