@@ -1,9 +1,7 @@
 from celery import Celery, chain
 import os, shutil, subprocess
-import uuid, cgi
+import uuid
 from urllib.parse import urlparse
-import time
-import requests
 from App import celery_config, bot
 from typing import List
 from App.Editor.Schema import EditorRequest, LinkInfo

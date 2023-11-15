@@ -8,7 +8,7 @@ videditor_router = APIRouter(tags=["vidEditor"])
 
 @videditor_router.post("/create-video")
 async def create_video(videoRequest: EditorRequest):
-    result = celery_task.delay(**videoRequest.dict())
+    result = celery_task.delay(videoRequest)
     return {"task_id": result.task_id}
 
 
