@@ -85,7 +85,7 @@ def celery_task(links, script=""):
     remotion_app_dir = os.path.join("/srv", "Remotion-app")
     project_id = str(uuid.uuid4())
     temp_dir = f"/tmp/{project_id}"
-    output_dir = f"/tmp/{project_id}/{project_id}.mp4"
+    output_dir = f"/tmp/{project_id}/out/video.mp4"
 
     chain(
         copy_remotion_app.si(remotion_app_dir, temp_dir),
