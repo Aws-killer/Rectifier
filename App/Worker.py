@@ -12,7 +12,7 @@ celery = Celery()
 celery.config_from_object(celery_config)
 celery.conf.update(
     # Other Celery configuration settings
-    # CELERYD_LOG_LEVEL="DEBUG",  # Set log level to DEBUG for the worker
+    CELERYD_LOG_LEVEL="DEBUG",  # Set log level to DEBUG for the worker
 )
 
 
@@ -70,13 +70,9 @@ def render_video(directory: str, output_directory: str):
 def cleanup_temp_directory(
     temp_dir: str, output_dir: str, chat_id: int = -1002069945904
 ):
-    async_to_sync(SendVideo)(temp_dir, output_dir, chat_id=-1002069945904)
-
-
-async def SendVideo(temp_dir: str, output_dir: str, chat_id: int = -1002069945904):
     try:
-        await bot.send_video(
-            -1002069945904, video=output_dir, caption="Your video caption"
+        bot.send_file(
+            chat_id - 1002069945904, file=output_dir, caption="Your video caption"
         )
     finally:
         # Cleanup: Remove the temporary directory
@@ -97,7 +93,7 @@ def celery_task(video_task: EditorRequest):
         render_video.si(temp_dir, output_dir),
         cleanup_temp_directory.si(temp_dir, output_dir),
     ).apply_async(
-        link_error=handle_error
+        # link_error=handle_error
     )  # Link the tasks and handle errors
 
 

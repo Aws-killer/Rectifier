@@ -19,6 +19,7 @@ requests
 ujson
 psutil
 celery
+telethon
 python-multipart
 git+https://github.com/redis/redis-py.git
 TgCrypto
