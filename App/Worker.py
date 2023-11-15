@@ -6,7 +6,7 @@ from App import celery_config, bot
 from typing import List
 from App.Editor.Schema import EditorRequest, LinkInfo
 from celery.signals import worker_process_init
-
+from asgiref.sync import async_to_sync
 
 celery = Celery()
 celery.config_from_object(celery_config)
@@ -70,8 +70,14 @@ def render_video(directory: str, output_directory: str):
 def cleanup_temp_directory(
     temp_dir: str, output_dir: str, chat_id: int = -1002069945904
 ):
+    async_to_sync(SendVideo(temp_dir, output_dir, chat_id=-1002069945904))
+
+
+async def SendVideo(temp_dir: str, output_dir: str, chat_id: int = -1002069945904):
     try:
-        bot.send_video(-1002069945904, video=output_dir, caption="Your video caption")
+        await bot.send_video(
+            -1002069945904, video=output_dir, caption="Your video caption"
+        )
     finally:
         # Cleanup: Remove the temporary directory
         shutil.rmtree(temp_dir, ignore_errors=True)
