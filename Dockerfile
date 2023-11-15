@@ -68,6 +68,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN rm thorium-browser_117.0.5938.157_amd64.deb
 
 # Command to run the application
-CMD python -m uvicorn App.app:app --host 0.0.0.0 --port 7860 &  python -m celery -A App.Worker.celery worker -c 4 --loglevel=DEBUG
+CMD python -m uvicorn App.app:app --host 0.0.0.0 --port 7860 &  python -m celery -A App.Worker.celery worker -c 4
 
 EXPOSE 7860

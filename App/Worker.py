@@ -12,7 +12,7 @@ celery = Celery()
 celery.config_from_object(celery_config)
 celery.conf.update(
     # Other Celery configuration settings
-    CELERYD_LOG_LEVEL="DEBUG",  # Set log level to DEBUG for the worker
+    # CELERYD_LOG_LEVEL="DEBUG",  # Set log level to DEBUG for the worker
 )
 
 
