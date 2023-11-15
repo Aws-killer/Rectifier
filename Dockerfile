@@ -52,7 +52,7 @@ RUN echo npm -v
 RUN node -v
 
 #install the stuff
-RUN cd /srv/Remotion-app && npm install
+# RUN cd /srv/Remotion-app && npm install
 
 
 

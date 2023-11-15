@@ -86,7 +86,7 @@ def celery_task(video_task: EditorRequest):
 
     chain(
         copy_remotion_app.si(remotion_app_dir, temp_dir),
-        # install_dependencies.si(temp_dir),
+        install_dependencies.si(temp_dir),
         download_assets.si(video_task.links, temp_dir) if video_task.links else None,
         render_video.si(temp_dir, output_dir),
         cleanup_temp_directory.si(temp_dir, output_dir),
