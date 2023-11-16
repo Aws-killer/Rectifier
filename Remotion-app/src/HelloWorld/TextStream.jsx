@@ -40,16 +40,15 @@ export const TextStream = () => {
 			<TransitionSeries>
 				{transcriptData.map((entry, index) => {
 					return (
-						<>
-							<TransitionSeries.Sequence
-								from={entry.start * fps}
-								durationInFrames={fps * (entry.end - entry.start)}
-							>
-								<Letter index={index} color="#0b84f3">
-									{entry.text}
-								</Letter>
-							</TransitionSeries.Sequence>
-						</>
+						<TransitionSeries.Sequence
+							key={index}
+							from={entry.start * fps}
+							durationInFrames={fps * (entry.end - entry.start)}
+						>
+							<Letter index={index} color="#0b84f3">
+								{entry.text}
+							</Letter>
+						</TransitionSeries.Sequence>
 					);
 				})}
 			</TransitionSeries>

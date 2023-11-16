@@ -2,10 +2,11 @@ import {Series} from 'remotion';
 import React from 'react';
 import {staticFile, useVideoConfig, Audio} from 'remotion';
 import audioSequences from './Assets/AudioSequences.json';
+import {TransitionSeries} from '@remotion/transitions';
 export default function AudioStream() {
 	const {fps} = useVideoConfig();
 	return (
-		<Series
+		<TransitionSeries
 			style={{
 				color: 'white',
 				position: 'absolute',
@@ -14,14 +15,19 @@ export default function AudioStream() {
 		>
 			{audioSequences.map((entry, index) => {
 				return (
-					<Series.Sequence
+					<TransitionSeries.Sequence
+						key={index}
 						from={fps * entry.start}
 						durationInFrames={fps * (entry.end - entry.start)}
 					>
-						<Audio {...entry.props} src={staticFile(entry.name)} />
-					</Series.Sequence>
+						<Audio
+							endAt={entry.props.endAt}
+							startFrom={entry.props.startFrom}
+							src={staticFile(entry.name)}
+						/>
+					</TransitionSeries.Sequence>
 				);
 			})}
-		</Series>
+		</TransitionSeries>
 	);
 }
