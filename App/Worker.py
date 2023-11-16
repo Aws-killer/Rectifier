@@ -26,8 +26,7 @@ def worker_process_init_handler(**kwargs):
 @celery.task
 def create_json_file(assets: List[Assets], asset_dir: str):
     for asset in assets:
-        filename = f"{asset.type}Sequences.json"
-        filename = filename.capitalize()
+        filename = f"{asset.type.capitalize()}Sequences.json"
         # Convert dictionary to JSON string
         json_string = json.dumps(asset.sequence)
 
