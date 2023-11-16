@@ -1,63 +1,70 @@
 # Builder stage
-FROM python:3.10.0-alpine as builder
+FROM python:3.10.0 as builder
 
-# Create a non-root user
-RUN adduser -D admin
+RUN useradd -ms /bin/bash admin
 
-# Set the working directory and adjust permissions
 WORKDIR /srv
-RUN chown -R admin:admin /srv && \
-  chmod -R 755 /srv
+RUN chown -R admin:admin /srv
+RUN chmod -R 755 /srv
 
-# Install system dependencies
-RUN apk --no-cache add \
-  libu2f-dev \
-  vulkan-tools \
-  mesa-vulkan-radeon \
-  wget \
-  ffmpeg \
-  curl \
-  aria2 \
-  ttf-liberation \
-  at-spi2-atk \
-  atk \
-  cups-libs \
-  libdrm \
-  libgbm \
-  gtk3 \
-  nspr \
-  nss \
-  libu2f-host \
-  vulkan-loader \
-  libxcomposite \
-  libxdamage \
-  libxfixes \
-  alsa-lib \
-  libxkbcommon \
-  libxrandr \
-  xdg-utils \
-  npm
+# Install dependencies
+RUN apt-get update && \
+  apt-get install -y libu2f-udev libvulkan1 mesa-vulkan-drivers wget ffmpeg curl aria2
+
+RUN apt-get install -y \
+  fonts-liberation \
+  libatk-bridge2.0-0 \
+  libatk1.0-0 \
+  libatspi2.0-0 \
+  libcups2 \
+  libdrm2 \
+  libgbm1 \
+  libgtk-3-0 \
+  libnspr4 \
+  libnss3 \
+  libu2f-udev \
+  libvulkan1 \
+  libxcomposite1 \
+  libxdamage1 \
+  libxfixes3 \
+  libasound2 \
+  libxkbcommon0 \
+  libxrandr2 \
+  xdg-utils
 
 # Copy the application code
 COPY --chown=admin . /srv
 
-# Install Node.js and npm
+# Download and install Thorium Browser
+
+RUN apt-get update && apt-get install -y \
+  software-properties-common \
+  npm
 RUN npm install npm@latest -g && \
   npm install n -g && \
   n latest
 
-# Print Node.js and npm versions
-RUN echo "Node.js version: $(node -v)" && \
-  echo "npm version: $(npm -v)"
 
-# Install Thorium Browser or other dependencies if needed
+
+RUN echo npm -v
+RUN node -v
+
+#install the stuff
+# RUN cd /srv/Remotion-app && npm install
+
+
+
+
 
 # Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Application Run Command
-CMD ["bash", "-c", "python -m uvicorn App.app:app --host 0.0.0.0 --port 7860 & python -m celery -A App.Worker.celery worker -c 4 --loglevel=info"]
 
-# Expose ports
+
+
+
+# Command to run the application
+CMD python -m uvicorn App.app:app --host 0.0.0.0 --port 7860 &  python -m celery -A App.Worker.celery worker -c 4 --loglevel=info
+
 EXPOSE 7860
