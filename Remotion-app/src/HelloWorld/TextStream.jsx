@@ -36,7 +36,7 @@ export const TextStream = () => {
 	const {fps} = useVideoConfig();
 
 	return (
-		<div style={{...temp, ...{}}}>
+		<div style={subtitle}>
 			<TransitionSeries>
 				{transcriptData.map((entry, index) => {
 					return (
