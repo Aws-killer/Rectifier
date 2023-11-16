@@ -1,6 +1,6 @@
 import {Series} from 'remotion';
 import React from 'react';
-import {Video, OffthreadVideo, staticFile, useVideoConfig} from 'remotion';
+import {Video, staticFile, useVideoConfig} from 'remotion';
 import videoSequences from './Assets/VideoSequences.json';
 import {TransitionSeries} from '@remotion/transitions';
 export default function VideoStream() {
@@ -20,7 +20,7 @@ export default function VideoStream() {
 						from={fps * entry.start}
 						durationInFrames={fps * (entry.end - entry.start)}
 					>
-						<OffthreadVideo {...entry.props} src={staticFile(entry.name)} />
+						<Video {...entry.props} src={staticFile(entry.name)} />
 					</TransitionSeries.Sequence>
 				);
 			})}
