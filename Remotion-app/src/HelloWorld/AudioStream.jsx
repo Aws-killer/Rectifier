@@ -1,6 +1,6 @@
 import {Series} from 'remotion';
 import React from 'react';
-import {staticFile, useVideoConfig} from 'remotion';
+import {staticFile, useVideoConfig, Audio} from 'remotion';
 import audioSequences from './Assets/AudioSequences.json';
 export default function AudioStream() {
 	const {fps} = useVideoConfig();

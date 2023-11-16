@@ -6,4 +6,3 @@
 import {Config} from '@remotion/cli/config';
 
 Config.setVideoImageFormat('jpeg');
-Config.setFrameRange([0, (54 * 30) / 5]);
