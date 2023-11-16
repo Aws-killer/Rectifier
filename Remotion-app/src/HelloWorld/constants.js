@@ -5,4 +5,4 @@ export const COLOR_2 = '#91EAE4';
 
 export const FONT_FAMILY = 'Bungee';
 export const FPS = 30;
-export const DURATION = 30 * FPS; // 30 seconds
+export const DURATION = 70 * FPS; // 30 seconds
