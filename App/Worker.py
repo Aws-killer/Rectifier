@@ -101,7 +101,7 @@ def celery_task(video_task: EditorRequest):
     project_id = str(uuid.uuid4())
     temp_dir = f"/tmp/{project_id}"
     output_dir = f"/tmp/{project_id}/out/video.mp4"
-    assets_dir = os.path.join(temp_dir, "src/Assets")
+    assets_dir = os.path.join(temp_dir, "src/HelloWorld/Assets")
 
     chain(
         copy_remotion_app.si(remotion_app_dir, temp_dir),

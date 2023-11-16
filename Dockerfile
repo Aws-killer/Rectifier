@@ -36,8 +36,6 @@ RUN apt-get install -y \
 COPY --chown=admin . /srv
 
 # Download and install Thorium Browser
-RUN wget https://github.com/Alex313031/thorium/releases/download/M117.0.5938.157/thorium-browser_117.0.5938.157_amd64.deb && \
-  dpkg -i thorium-browser_117.0.5938.157_amd64.deb
 
 RUN apt-get update && apt-get install -y \
   software-properties-common \
@@ -64,8 +62,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 
 
-# Remove Thorium Browser .deb package
-RUN rm thorium-browser_117.0.5938.157_amd64.deb
+
 
 # Command to run the application
 CMD python -m uvicorn App.app:app --host 0.0.0.0 --port 7860 &  python -m celery -A App.Worker.celery worker -c 4 --loglevel=info
