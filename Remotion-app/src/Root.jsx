@@ -1,5 +1,6 @@
 import {Composition} from 'remotion';
 import {HelloWorld} from './HelloWorld';
+import {DURATION} from './HelloWorld/constants';
 
 export const RemotionRoot = () => {
 	return (
@@ -7,14 +8,10 @@ export const RemotionRoot = () => {
 			<Composition
 				id="HelloWorld"
 				component={HelloWorld}
-				durationInFrames={15000}
+				durationInFrames={DURATION}
 				fps={30}
 				height={1920}
 				width={1080}
-				defaultProps={{
-					titleText: 'Welcome to Remotion',
-					titleColor: 'black',
-				}}
 			/>
 		</>
 	);

@@ -4,9 +4,11 @@ import uuid
 from urllib.parse import urlparse
 from App import celery_config, bot
 from typing import List
-from App.Editor.Schema import EditorRequest, LinkInfo
+from App.Editor.Schema import EditorRequest, LinkInfo, Assets
 from celery.signals import worker_process_init
 from asgiref.sync import async_to_sync
+import json
+import os
 
 celery = Celery()
 celery.config_from_object(celery_config)
@@ -19,6 +21,22 @@ celery.conf.update(
 @worker_process_init.connect
 def worker_process_init_handler(**kwargs):
     bot.start()
+
+
+@celery.task
+def create_json_file(assets: List[Assets], asset_dir: str):
+    for asset in assets:
+        filename = f"{asset.type}Sequences.json"
+        filename = filename.capitalize()
+        # Convert dictionary to JSON string
+        json_string = json.dumps(asset.sequence)
+
+        # Create directory if it doesn't exist
+        os.makedirs(asset_dir, exist_ok=True)
+
+        # Write JSON string to file
+        with open(os.path.join(asset_dir, filename), "w") as f:
+            f.write(json_string)
 
 
 def create_symlink(source_dir, target_dir, symlink_name):
@@ -83,10 +101,12 @@ def celery_task(video_task: EditorRequest):
     project_id = str(uuid.uuid4())
     temp_dir = f"/tmp/{project_id}"
     output_dir = f"/tmp/{project_id}/out/video.mp4"
+    assets_dir = os.path.join(temp_dir, "src/Assets")
 
     chain(
         copy_remotion_app.si(remotion_app_dir, temp_dir),
         install_dependencies.si(temp_dir),
+        create_json_file.si(video_task.assets, assets_dir),
         download_assets.si(video_task.links, temp_dir) if video_task.links else None,
         render_video.si(temp_dir, output_dir),
         cleanup_temp_directory.si(temp_dir, output_dir),
