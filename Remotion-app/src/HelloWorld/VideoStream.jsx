@@ -1,12 +1,12 @@
 import {Series} from 'remotion';
 import React from 'react';
-import {Video, staticFile, useVideoConfig, Sequence} from 'remotion';
+import {Video, OffthreadVideo, staticFile, useVideoConfig} from 'remotion';
 import videoSequences from './Assets/VideoSequences.json';
 import {TransitionSeries} from '@remotion/transitions';
 export default function VideoStream() {
 	const {fps} = useVideoConfig();
 	return (
-		<div
+		<TransitionSeries
 			style={{
 				color: 'white',
 				position: 'absolute',
@@ -15,15 +15,15 @@ export default function VideoStream() {
 		>
 			{videoSequences.map((entry, index) => {
 				return (
-					<Sequence
+					<TransitionSeries.Sequence
 						key={index}
 						from={fps * entry.start}
 						durationInFrames={fps * (entry.end - entry.start)}
 					>
-						<Video {...entry.props} src={staticFile(entry.name)} />
-					</Sequence>
+						<OffthreadVideo {...entry.props} src={staticFile(entry.name)} />
+					</TransitionSeries.Sequence>
 				);
 			})}
-		</div>
+		</TransitionSeries>
 	);
 }
