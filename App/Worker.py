@@ -33,7 +33,7 @@ def create_json_file(assets: List[Assets], asset_dir: str):
 
         # Create directory if it doesn't exist
         os.makedirs(asset_dir, exist_ok=True)
-
+        print(os.path.join(asset_dir, filename))
         # Write JSON string to file
         with open(os.path.join(asset_dir, filename), "w") as f:
             f.write(json_string)
@@ -101,6 +101,7 @@ def celery_task(video_task: EditorRequest):
     project_id = str(uuid.uuid4())
     temp_dir = f"/tmp/{project_id}"
     output_dir = f"/tmp/{project_id}/out/video.mp4"
+
     assets_dir = os.path.join(temp_dir, "src/HelloWorld/Assets")
 
     chain(

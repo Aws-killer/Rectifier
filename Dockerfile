@@ -1,5 +1,5 @@
 # Builder stage
-FROM python:3.10.0 as builder
+FROM python:3.10.0-alpine as builder
 
 RUN useradd -ms /bin/bash admin
 
