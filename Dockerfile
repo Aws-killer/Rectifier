@@ -62,6 +62,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 #install unsilence
 RUN pipx install unsilence
+RUN pipx ensurepath
 
 
 
