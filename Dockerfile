@@ -60,6 +60,8 @@ RUN node -v
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+#install unsilence
+RUN pipx install unsilence
 
 
 
