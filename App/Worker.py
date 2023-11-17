@@ -66,7 +66,7 @@ def copy_remotion_app(src: str, dest: str):
 def unsilence(directory: str):
     output_dir = os.path.join(directory, "out/video.mp4")
     shortered_dir = os.path.join(directory, "out/temp.mp4")
-    os.system(f"unsilence {output_dir} {shortered_dir} -y")
+    os.system(f"pipx run unsilence {output_dir} {shortered_dir} -y")
     os.remove(output_dir)
     os.rename(shortered_dir, output_dir)
 
