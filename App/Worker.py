@@ -118,7 +118,7 @@ def celery_task(video_task: EditorRequest):
         create_json_file.si(video_task.assets, assets_dir),
         download_assets.si(video_task.links, temp_dir) if video_task.links else None,
         render_video.si(temp_dir, output_dir),
-        unsilence.si(temp_dir),
+        # unsilence.si(temp_dir),
         cleanup_temp_directory.si(temp_dir, output_dir),
     ).apply_async(
         # link_error=handle_error
