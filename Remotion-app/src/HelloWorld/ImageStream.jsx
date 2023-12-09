@@ -9,8 +9,6 @@ export default function ImageStream() {
 		<TransitionSeries
 			style={{
 				color: 'white',
-				position: 'absolute',
-				zIndex: 4,
 			}}
 		>
 			{imageSequences.map((entry, index) => {
