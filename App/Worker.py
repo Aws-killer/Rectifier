@@ -22,6 +22,7 @@ celery.conf.update(
 def worker_process_init_handler(**kwargs):
     name = kwargs.get("name")
     if name == "send":
+        print("its time")
         bot.start()
 
 
