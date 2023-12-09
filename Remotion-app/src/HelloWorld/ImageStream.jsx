@@ -24,7 +24,7 @@ export default function ImageStream() {
 						</TransitionSeries.Sequence>
 						<TransitionSeries.Transition
 							presentation={slide()}
-							timing={linearTiming({durationInFrames: 10})}
+							timing={linearTiming({durationInFrames: 1})}
 						/>
 					</>
 				);
