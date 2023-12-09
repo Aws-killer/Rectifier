@@ -20,7 +20,7 @@ const subtitle = {
 	fontFamily: FONT_FAMILY,
 	fontSize: 120,
 	textAlign: 'center',
-	display: 'relative',
+	display: 'absolute',
 	bottom: 140,
 	width: '100%',
 };
