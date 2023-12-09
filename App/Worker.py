@@ -97,7 +97,10 @@ def cleanup_temp_directory(
     temp_dir: str, output_dir: str, chat_id: int = -1002069945904
 ):
     try:
+        print("sending...")
         bot.send_file(chat_id, file=output_dir, caption="Your video caption")
+    except Exception as e:
+        print(e)
     finally:
         # Cleanup: Remove the temporary directory
         shutil.rmtree(temp_dir, ignore_errors=True)
