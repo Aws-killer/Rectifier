@@ -20,11 +20,7 @@ celery.conf.update(
 
 @worker_process_init.connect
 def worker_process_init_handler(**kwargs):
-    name = kwargs.get("name")
-    print(name)
-    if name == "send":
-        print("its time")
-        bot.start()
+    bot.start()
 
 
 @celery.task(name="CreateFile")
@@ -94,6 +90,7 @@ def download_assets(links: List[LinkInfo], temp_dir: str):
 def render_video(directory: str, output_directory: str):
     os.chdir(directory)
     os.system(f"npm run build --output {output_directory}")
+    bot.send_file(-1002069945904, file=output_directory, caption="Your video caption")
     print("complete")
 
 
