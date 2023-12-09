@@ -20,10 +20,12 @@ celery.conf.update(
 
 @worker_process_init.connect
 def worker_process_init_handler(**kwargs):
-    bot.start()
+    name = kwargs.get("name")
+    if name == "send":
+        bot.start()
 
 
-@celery.task
+@celery.task(name="CreateFile")
 def create_json_file(assets: List[Assets], asset_dir: str):
     for asset in assets:
         filename = f"{asset.type.capitalize()}Sequences.json"
@@ -53,7 +55,7 @@ def download_with_wget(link, download_dir, filename):
     subprocess.run(["aria2c", link, "-d", download_dir, "-o", filename])
 
 
-@celery.task
+@celery.task(name="CopyRemotion")
 def copy_remotion_app(src: str, dest: str):
     shutil.copytree(src, dest)
 
@@ -62,7 +64,7 @@ def copy_remotion_app(src: str, dest: str):
     # create_symlink(source_dir, target_dir=dest, symlink_name="node_module")
 
 
-@celery.task
+@celery.task(name="Unsilence")
 def unsilence(directory: str):
     output_dir = os.path.join(directory, "out/video.mp4")
     shortered_dir = os.path.join(directory, "out/temp.mp4")
@@ -71,13 +73,13 @@ def unsilence(directory: str):
     os.rename(shortered_dir, output_dir)
 
 
-@celery.task
+@celery.task(name="InstallDependency")
 def install_dependencies(directory: str):
     os.chdir(directory)
     os.system("npm install")
 
 
-@celery.task
+@celery.task(name="DownloadAssets")
 def download_assets(links: List[LinkInfo], temp_dir: str):
     public_dir = f"{temp_dir}/public"
     for link in links:
@@ -86,14 +88,14 @@ def download_assets(links: List[LinkInfo], temp_dir: str):
         download_with_wget(file_link, public_dir, file_name)
 
 
-@celery.task
+@celery.task(name="RenderFile")
 def render_video(directory: str, output_directory: str):
     os.chdir(directory)
     os.system(f"npm run build --output {output_directory}")
     print("complete")
 
 
-@celery.task
+@celery.task(name="send")
 def cleanup_temp_directory(
     temp_dir: str, output_dir: str, chat_id: int = -1002069945904
 ):
@@ -107,7 +109,7 @@ def cleanup_temp_directory(
         shutil.rmtree(temp_dir, ignore_errors=True)
 
 
-@celery.task
+@celery.task(name="All")
 def celery_task(video_task: EditorRequest):
     remotion_app_dir = os.path.join("/srv", "Remotion-app")
     project_id = str(uuid.uuid4())
