@@ -20,7 +20,9 @@ celery.conf.update(
 
 @worker_process_init.connect
 def worker_process_init_handler(**kwargs):
-    bot.start()
+    task = kwargs.get("task")
+    if task == "RenderFile":
+        bot.start()
 
 
 @celery.task(name="CreateFile")
