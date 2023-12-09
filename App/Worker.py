@@ -18,13 +18,6 @@ celery.conf.update(
 )
 
 
-@worker_process_init.connect
-def worker_process_init_handler(**kwargs):
-    task = kwargs.get("task")
-    if task == "RenderFile":
-        bot.start()
-
-
 @celery.task(name="CreateFile")
 def create_json_file(assets: List[Assets], asset_dir: str):
     for asset in assets:
@@ -92,6 +85,7 @@ def download_assets(links: List[LinkInfo], temp_dir: str):
 def render_video(directory: str, output_directory: str):
     os.chdir(directory)
     os.system(f"npm run build --output {output_directory}")
+    bot.start()
     bot.send_file(-1002069945904, file=output_directory, caption="Your video caption")
     print("complete")
 
@@ -102,6 +96,7 @@ def cleanup_temp_directory(
 ):
     try:
         print("sending...")
+        bot.start()
         bot.send_file(chat_id, file=output_dir, caption="Your video caption")
     except Exception as e:
         print(e)
