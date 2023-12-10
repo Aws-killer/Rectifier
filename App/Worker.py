@@ -85,19 +85,16 @@ def download_assets(links: List[LinkInfo], temp_dir: str):
 def render_video(directory: str, output_directory: str):
     os.chdir(directory)
     os.system(f"npm run build --output {output_directory}")
-    bot.start()
-    bot.send_file(-1002069945904, file=output_directory, caption="Your video caption")
     print("complete")
 
 
 # @celery.task(name="send")
-def cleanup_temp_directory(
+async def cleanup_temp_directory(
     temp_dir: str, output_dir: str, chat_id: int = -1002069945904
 ):
     try:
         print("sending...")
-        bot.start()
-        bot.send_file(chat_id, file=output_dir, caption="Your video caption")
+        await bot.send_file(chat_id, file=output_dir, caption="Your video caption")
     except Exception as e:
         print(e)
     finally:
@@ -106,7 +103,7 @@ def cleanup_temp_directory(
 
 
 # @celery.task(name="All")
-def celery_task(video_task: EditorRequest):
+async def celery_task(video_task: EditorRequest):
     remotion_app_dir = os.path.join("/srv", "Remotion-app")
     project_id = str(uuid.uuid4())
     temp_dir = f"/tmp/{project_id}"
@@ -119,8 +116,8 @@ def celery_task(video_task: EditorRequest):
     create_json_file(video_task.assets, assets_dir),
     download_assets(video_task.links, temp_dir) if video_task.links else None,
     render_video(temp_dir, output_dir),
-    # unsilence.si(temp_dir),
-    cleanup_temp_directory.si(temp_dir, output_dir),
+    unsilence(temp_dir),
+    await cleanup_temp_directory.si(temp_dir, output_dir),
 
     # chain(
     #     copy_remotion_app.si(remotion_app_dir, temp_dir),
