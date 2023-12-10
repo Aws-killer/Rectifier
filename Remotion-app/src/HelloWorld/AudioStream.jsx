@@ -8,6 +8,7 @@ export default function AudioStream() {
 			{audioSequences.map((entry, index) => {
 				return (
 					<Audio
+						key={index}
 						endAt={entry.props.endAt}
 						startFrom={entry.props.startFrom}
 						src={staticFile(entry.name)}

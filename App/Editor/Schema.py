@@ -22,7 +22,6 @@ class Assets(BaseModel):
 class EditorRequest(BaseModel):
     links: Optional[List[LinkInfo]]  # List of LinkInfo objects
     assets: List[Assets]
-    script: str
 
 
 class TaskInfo(BaseModel):
