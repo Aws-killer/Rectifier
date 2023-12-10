@@ -15,6 +15,7 @@ export default function SfxStream() {
 						durationInFrames={fps * (entry.end - entry.start)}
 					>
 						<Audio
+							volume={entry.props.volume}
 							endAt={entry.props.endAt}
 							startFrom={entry.props.startFrom}
 							src={staticFile(entry.name)}

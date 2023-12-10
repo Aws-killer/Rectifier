@@ -10,6 +10,9 @@ export default function ImageStream() {
 		<TransitionSeries
 			style={{
 				color: 'white',
+				position: 'absolute',
+				zIndex: 0,
+				objectFit: 'cover',
 			}}
 		>
 			{imageSequences.map((entry, index) => {
@@ -19,7 +22,7 @@ export default function ImageStream() {
 						from={fps * entry.start}
 						durationInFrames={fps * (entry.end - entry.start)}
 					>
-						<Img src={staticFile(entry.name)} />
+						<Img className="zoomInOut" src={staticFile(entry.name)} />
 					</TransitionSeries.Sequence>
 				);
 			})}
