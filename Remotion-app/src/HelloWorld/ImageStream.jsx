@@ -22,7 +22,7 @@ export default function ImageStream() {
 						from={fps * entry.start}
 						durationInFrames={fps * (entry.end - entry.start) + 1}
 					>
-						<Img className="zoomInOut" src={staticFile(entry.name)} />
+						<Img src={staticFile(entry.name)} />
 					</TransitionSeries.Sequence>
 				);
 			})}
