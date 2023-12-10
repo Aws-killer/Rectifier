@@ -11,7 +11,8 @@ uvicorn==0.21.1
 gunicorn
 requests
 celery
-telethon
+pyrogram
+TgCrypto
 git+https://github.com/redis/redis-py.git
 asgiref
 pipx
