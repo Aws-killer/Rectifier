@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, BackgroundTasks
 from .Schema import EditorRequest, TaskInfo
 from App.Worker import celery_task
 from celery.result import AsyncResult
@@ -7,9 +7,10 @@ videditor_router = APIRouter(tags=["vidEditor"])
 
 
 @videditor_router.post("/create-video")
-async def create_video(videoRequest: EditorRequest):
-    result = celery_task.delay(videoRequest)
-    return {"task_id": result.task_id}
+async def create_video(videoRequest: EditorRequest, background_task: BackgroundTasks):
+    background_task.add_task(celery_task, videoRequest)
+    # result = celery_task.delay(videoRequest)
+    return {"task_id": "started"}
 
 
 @videditor_router.get("/progress/{task_id}", response_model=TaskInfo)
