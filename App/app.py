@@ -10,6 +10,11 @@ async def startup_event():
     await bot.start()
 
 
+@app.on_event("shutdown")
+async def shutdown_event():
+    await bot.stop()
+
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
