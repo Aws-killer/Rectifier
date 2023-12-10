@@ -12,7 +12,7 @@ export default function SfxStream() {
 					<TransitionSeries.Sequence
 						key={index}
 						from={fps * entry.start}
-						durationInFrames={fps * (entry.end - entry.start) + 1}
+						durationInFrames={30}
 					>
 						<Audio
 							volume={entry.props.volume}
