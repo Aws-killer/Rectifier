@@ -14,7 +14,7 @@ class Assets(BaseModel):
 
     @validator("type")
     def valid_type(cls, v):
-        if v not in ["video", "audio", "text", "image", "sfx"]:
+        if v not in ["video", "audio", "text", "image", "sfx", "background"]:
             raise ValueError("Invalid asset type")
         return v
 
