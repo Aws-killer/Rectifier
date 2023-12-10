@@ -1,7 +1,7 @@
 import {Composition} from 'remotion';
 import {HelloWorld} from './HelloWorld';
 import {DURATION} from './HelloWorld/constants';
-import 'index.css';
+import './index.css';
 export const RemotionRoot = () => {
 	return (
 		<>
