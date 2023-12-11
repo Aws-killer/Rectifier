@@ -26,20 +26,10 @@ export default function ImageStream() {
 			{imageSequences.map((entry, index) => {
 				const durationInFrames = (entry.end - entry.start) * fps;
 
-				const driver = spring({
-					frame,
-					fps,
-				});
 				const zoom = interpolate(
-					driver,
-					[
-						0,
-						durationInFrames / 4,
-						2 * (durationInFrames / 4),
-						3 * (durationInFrames / 4),
-						durationInFrames,
-					],
-					[1, 1.2, 1, 1.2, 1],
+					frame,
+					[0, 2 * (durationInFrames / 4), durationInFrames],
+					[1, 1.2, 1],
 					{extrapolateRight: 'clamp'}
 				);
 
