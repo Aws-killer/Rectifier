@@ -1,4 +1,4 @@
-import {Series} from 'remotion';
+import {Series, useCurrentFrame} from 'remotion';
 import React from 'react';
 import {staticFile, useVideoConfig, Img} from 'remotion';
 import {slide} from '@remotion/transitions/slide';
@@ -6,6 +6,8 @@ import imageSequences from './Assets/ImageSequences.json';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
 export default function ImageStream() {
 	const {fps} = useVideoConfig();
+
+	const frame = useCurrentFrame();
 	return (
 		<TransitionSeries
 			style={{
@@ -21,13 +23,33 @@ export default function ImageStream() {
 			}}
 		>
 			{imageSequences.map((entry, index) => {
+				const durationInFrames = (entry.end - entry.start) * fps;
+				const zoom = interpolate(
+					frame,
+					[
+						0,
+						durationInFrames / 4,
+						2 * (durationInFrames / 4),
+						3 * (durationInFrames / 4),
+						durationInFrames,
+					],
+					[1, 1.2, 1, 1.2, 1],
+					{extrapolateRight: 'clamp'}
+				);
+
 				return (
 					<TransitionSeries.Sequence
 						key={index}
 						from={fps * entry.start}
 						durationInFrames={fps * (entry.end - entry.start)}
 					>
-						<Img src={staticFile(entry.name)} />
+						<Img
+							style={{
+								transform: `scale(${zoom})`,
+								transition: 'all 1s ease',
+							}}
+							src={staticFile(entry.name)}
+						/>
 					</TransitionSeries.Sequence>
 				);
 			})}
