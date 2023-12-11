@@ -40,9 +40,9 @@ export const TextStream = () => {
 			<TransitionSeries>
 				{transcriptData.map((entry, index) => {
 					const duration =
-						fps * (entry.end - entry.start) > 0.1
+						fps * (entry.end - entry.start) > 1
 							? fps * (entry.end - entry.start)
-							: 0.1;
+							: 1;
 
 					return (
 						<TransitionSeries.Sequence
