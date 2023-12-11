@@ -9,8 +9,13 @@ export default function ImageStream() {
 	return (
 		<TransitionSeries
 			style={{
+				top: '50%',
+				left: '50%',
+				transform: 'translate(-50%, -50%)',
 				color: 'white',
 				position: 'absolute',
+				width: '100%',
+				height: '100%',
 				zIndex: 0,
 				objectFit: 'cover',
 			}}
