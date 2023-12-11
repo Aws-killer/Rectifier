@@ -28,7 +28,11 @@ export default function ImageStream() {
 
 				const zoom = interpolate(
 					frame,
-					[frame, frame + 2 * (durationInFrames / 4), frame + durationInFrames],
+					[
+						fps * entry.start,
+						fps * entry.start + 2 * (durationInFrames / 4),
+						fps * entry.start + durationInFrames,
+					],
 					[1, 1.2, 1],
 					{extrapolateRight: 'clamp'}
 				);
