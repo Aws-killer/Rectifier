@@ -18,7 +18,7 @@ const codeStyle = (index) => {
 
 const subtitle = {
 	fontFamily: FONT_FAMILY,
-	fontSize: 120,
+	fontSize: 90,
 	textAlign: 'center',
 	display: 'absolute',
 	bottom: 140,
