@@ -16,7 +16,7 @@ export default function SfxStream() {
 					>
 						<Audio
 							volume={entry.props.volume}
-							endAt={entry.props.endAt}
+							// endAt={entry.props.endAt}
 							startFrom={entry.props.startFrom}
 							src={staticFile(entry.name)}
 						/>

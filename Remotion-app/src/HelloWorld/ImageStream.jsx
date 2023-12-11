@@ -20,7 +20,7 @@ export default function ImageStream() {
 					<TransitionSeries.Sequence
 						key={index}
 						from={fps * entry.start}
-						durationInFrames={fps * (entry.end - entry.start) + 1}
+						durationInFrames={fps * (entry.end - entry.start)}
 					>
 						<Img src={staticFile(entry.name)} />
 					</TransitionSeries.Sequence>
