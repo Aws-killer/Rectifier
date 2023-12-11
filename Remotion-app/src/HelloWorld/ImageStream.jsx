@@ -1,4 +1,4 @@
-import {Series, interpolate, useCurrentFrame} from 'remotion';
+import {Series, interpolate, spring, useCurrentFrame} from 'remotion';
 import React from 'react';
 import {staticFile, useVideoConfig, Img} from 'remotion';
 import {slide} from '@remotion/transitions/slide';
@@ -25,8 +25,13 @@ export default function ImageStream() {
 		>
 			{imageSequences.map((entry, index) => {
 				const durationInFrames = (entry.end - entry.start) * fps;
-				const zoom = interpolate(
+
+				const driver = spring({
 					frame,
+					fps,
+				});
+				const zoom = interpolate(
+					driver,
 					[
 						0,
 						durationInFrames / 4,
