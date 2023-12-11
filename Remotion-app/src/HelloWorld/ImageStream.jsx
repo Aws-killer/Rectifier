@@ -1,9 +1,10 @@
-import {Series, useCurrentFrame} from 'remotion';
+import {Series, interpolate, useCurrentFrame} from 'remotion';
 import React from 'react';
 import {staticFile, useVideoConfig, Img} from 'remotion';
 import {slide} from '@remotion/transitions/slide';
 import imageSequences from './Assets/ImageSequences.json';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
+
 export default function ImageStream() {
 	const {fps} = useVideoConfig();
 
