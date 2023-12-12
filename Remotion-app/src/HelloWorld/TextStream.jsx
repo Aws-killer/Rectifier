@@ -1,5 +1,5 @@
 import React, {createElement} from 'react';
-import {useVideoConfig} from 'remotion';
+import {useVideoConfig, AbsoluteFill, TransitionSeries} from 'remotion';
 import * as Fonts from '@remotion/google-fonts';
 import transcriptData from './Assets/TextSequences.json';
 import {FONT_FAMILY} from './constants';
@@ -36,36 +36,39 @@ export const TextStream = () => {
 	const {fps} = useVideoConfig();
 
 	return (
-		<div style={subtitle}>
+		<AbsoluteFill
+			style={{
+				backgroundColor: 'transparent',
+				justifyContent: 'center',
+				alignItems: 'center',
+				position: 'relative',
+				color: 'white',
+				fontSize: 120,
+				fontFamily: FONT_FAMILY,
+				fontWeight: 'bolder',
+				WebkitBackfaceVisibility: 'hidden',
+			}}
+		>
 			<TransitionSeries>
 				{transcriptData.map((entry, index) => {
-					const duration =
-						fps * (entry.end - entry.start) > 1
-							? fps * (entry.end - entry.start)
-							: 1;
-
 					return (
 						<TransitionSeries.Sequence
+							style={subtitle}
 							key={index}
 							from={entry.start * fps}
-							durationInFrames={duration}
+							durationInFrames={fps * (entry.end - entry.start) + 1}
 						>
-							<Letter index={index} color="#0b84f3">
+							<Letter style={subtitle} index={index} color="#0b84f3">
 								{entry.text}
 							</Letter>
 						</TransitionSeries.Sequence>
 					);
 				})}
 			</TransitionSeries>
-		</div>
+		</AbsoluteFill>
 	);
 };
 
-export function Letter({children, color, index}) {
-	const x = codeStyle(index);
-	return createElement(
-		'div',
-		{className: 'greeting', style: {...x, color: 'white'}},
-		children
-	);
+export function Letter({children, color, index, style}) {
+	return createElement('div', {style: style}, children);
 }
