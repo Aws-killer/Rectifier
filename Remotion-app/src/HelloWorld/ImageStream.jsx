@@ -1,12 +1,12 @@
 import {Series, interpolate, spring, useCurrentFrame} from 'remotion';
 import React from 'react';
-import {staticFile, useVideoConfig, Img} from 'remotion';
+import {staticFile, useVideoConfig, Img, Easing} from 'remotion';
 import {slide} from '@remotion/transitions/slide';
 import imageSequences from './Assets/ImageSequences.json';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
 
 export default function ImageStream() {
-	const {width, height, fps, durationInFrames} = useVideoConfig();
+	const {fps} = useVideoConfig();
 
 	const frame = useCurrentFrame();
 	return (
@@ -24,13 +24,21 @@ export default function ImageStream() {
 			}}
 		>
 			{imageSequences.map((entry, index) => {
-				// const durationInFrames = (entry.end - entry.start) * fps;
+				const durationInFrames = (entry.end - entry.start) * fps;
 
 				const zoom = interpolate(
 					frame,
-					[0, 2 * (durationInFrames / 4), durationInFrames],
-					[1, 1.2, 1]
-					// {extrapolateRight: 'clamp'}
+					[
+						fps * entry.start,
+						fps * entry.start + 2 * (durationInFrames / 4),
+						fps * entry.end,
+					],
+					[1, 1.2, 1],
+					{
+						easing: Easing.bezier(0.8, 0.22, 0.96, 0.65),
+						extrapolateLeft: 'clamp',
+						extrapolateRight: 'clamp',
+					}
 				);
 
 				return (
