@@ -6,7 +6,7 @@ import imageSequences from './Assets/ImageSequences.json';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
 
 export default function ImageStream() {
-	const {fps} = useVideoConfig();
+	const {fps, durationInFrames} = useVideoConfig();
 
 	const frame = useCurrentFrame();
 	return (
@@ -24,20 +24,16 @@ export default function ImageStream() {
 			}}
 		>
 			{imageSequences.map((entry, index) => {
-				const durationInFrames = (entry.end - entry.start) * fps;
+				// const durationInFrames = (entry.end - entry.start) * fps;
 
 				const zoom = interpolate(
 					frame,
-					[
-						fps * entry.start,
-						fps * entry.start + 2 * (durationInFrames / 4),
-						fps * entry.end,
-					],
+					[0, durationInFrames * 0.5, durationInFrames],
 					[1, 1.2, 1],
 					{
 						easing: Easing.bezier(0.8, 0.22, 0.96, 0.65),
-						extrapolateLeft: 'clamp',
-						extrapolateRight: 'clamp',
+						// extrapolateLeft: 'clamp',
+						// extrapolateRight: 'clamp',
 					}
 				);
 
