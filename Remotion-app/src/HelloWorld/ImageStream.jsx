@@ -40,7 +40,7 @@ export default function ImageStream() {
 							fps * entry.start + 2 * (durationInFrames / 4),
 							fps * entry.end,
 						],
-						[1, 1.2, 1],
+						[1, 1.5, 1.3],
 						{
 							// easing: Easing.bezier(0.8, 0.22, 0.96, 0.65),
 							extrapolateLeft: 'clamp',
@@ -57,7 +57,6 @@ export default function ImageStream() {
 							<Img
 								style={{
 									transform: `scale(${zoom})`,
-									transition: 'all 1s ease',
 								}}
 								src={staticFile(entry.name)}
 							/>
