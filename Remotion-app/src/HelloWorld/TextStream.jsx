@@ -46,7 +46,7 @@ export const TextStream = () => {
 							style={subtitle}
 							key={index}
 							from={(entry.start + 0.2) * fps}
-							durationInFrames={fps * (entry.end - entry.start)}
+							durationInFrames={fps * (entry.end - entry.start + 0.2)}
 						>
 							<Letter style={subtitle}>{entry.text}</Letter>
 						</TransitionSeries.Sequence>
