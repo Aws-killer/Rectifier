@@ -7,12 +7,11 @@ import {
 } from 'remotion';
 import React from 'react';
 import {staticFile, useVideoConfig, Img, Easing} from 'remotion';
-import {slide} from '@remotion/transitions/slide';
 import imageSequences from './Assets/ImageSequences.json';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
 
 export default function ImageStream() {
-	const {fps, durationInFrames} = useVideoConfig();
+	const {fps} = useVideoConfig();
 
 	const frame = useCurrentFrame();
 	return (
@@ -37,7 +36,7 @@ export default function ImageStream() {
 						frame,
 						[
 							fps * entry.start,
-							fps * entry.start + 2 * (durationInFrames / 4),
+							fps * entry.start + durationInFrames / 2,
 							fps * entry.end,
 						],
 						[1, 1.5, 1.3],
@@ -57,6 +56,7 @@ export default function ImageStream() {
 							<Img
 								style={{
 									transform: `scale(${zoom})`,
+									// transition: 'all 5s ease',
 								}}
 								src={staticFile(entry.name)}
 							/>

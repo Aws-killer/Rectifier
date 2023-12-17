@@ -5,23 +5,17 @@ import transcriptData from './Assets/TextSequences.json';
 import {FONT_FAMILY} from './constants';
 import {TransitionSeries} from '@remotion/transitions';
 
-const codeStyle = (index) => {
-	return {
-		color: 'white',
-		position: 'absolute',
-		top: '50%',
-		zIndex: 50,
-		transform: 'translate(-50%, -50%)',
-		left: '50%',
-	};
-};
-
 const subtitle = {
 	fontFamily: FONT_FAMILY,
-	fontSize: 90,
+	fontSize: 150,
 	textAlign: 'center',
-	display: 'absolute',
-	bottom: 140,
+	textShadow:
+		'-5px -5px 0 #00ff, 0   -5px 0 #00ff, 5px -5px 0 #00ff, 5px  0   0 #00ff, 5px  5px 0 #00ff, 0    5px 0 #00ff, -5px  5px 0 #00ff, -5px  0   0 #00ff',
+	position: 'fixed',
+	fontWeight: 'bolder',
+	color: 'white',
+	bottom: 200,
+	height: 'fit-content',
 	width: '100%',
 };
 
@@ -42,11 +36,7 @@ export const TextStream = () => {
 				justifyContent: 'center',
 				alignItems: 'center',
 				position: 'relative',
-				color: 'white',
-				fontSize: 120,
-				fontFamily: FONT_FAMILY,
-				fontWeight: 'bolder',
-				WebkitBackfaceVisibility: 'hidden',
+				// backgroundColor: 'red',
 			}}
 		>
 			<TransitionSeries>
@@ -55,12 +45,10 @@ export const TextStream = () => {
 						<TransitionSeries.Sequence
 							style={subtitle}
 							key={index}
-							from={entry.start * fps}
-							durationInFrames={fps * (entry.end - entry.start) + 1}
+							from={(entry.start + 0.2) * fps}
+							durationInFrames={fps * (entry.end - entry.start)}
 						>
-							<Letter style={subtitle} index={index} color="#0b84f3">
-								{entry.text}
-							</Letter>
+							<Letter style={subtitle}>{entry.text}</Letter>
 						</TransitionSeries.Sequence>
 					);
 				})}
@@ -69,6 +57,6 @@ export const TextStream = () => {
 	);
 };
 
-export function Letter({children, color, index, style}) {
-	return createElement('div', {style: style}, children);
+export function Letter({children, style}) {
+	return <div style={style}>{children}</div>;
 }
