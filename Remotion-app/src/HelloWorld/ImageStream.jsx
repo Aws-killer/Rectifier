@@ -13,7 +13,6 @@ import {slide} from '@remotion/transitions/slide';
 export default function ImageStream() {
 	const {fps} = useVideoConfig();
 
-	const frame = useCurrentFrame();
 	return (
 		<AbsoluteFill
 			style={{
@@ -30,22 +29,6 @@ export default function ImageStream() {
 		>
 			<TransitionSeries>
 				{imageSequences.map((entry, index) => {
-					const durationInFrames = (entry.end - entry.start) * fps;
-
-					const zoom = interpolate(
-						frame,
-						[
-							fps * entry.start,
-							fps * entry.start + durationInFrames / 2,
-							fps * entry.end,
-						],
-						[1, 1.5, 1.3],
-						{
-							extrapolateLeft: 'clamp',
-							extrapolateRight: 'clamp',
-						}
-					);
-
 					return (
 						<>
 							<TransitionSeries.Sequence
@@ -53,12 +36,7 @@ export default function ImageStream() {
 								// from={fps * entry.start}
 								durationInFrames={fps * (entry.end - entry.start)}
 							>
-								<Img
-									style={{
-										transform: `scale(${zoom})`,
-									}}
-									src={staticFile(entry.name)}
-								/>
+								<Images key={index} entry={entry} />;
 							</TransitionSeries.Sequence>
 							<TransitionSeries.Transition
 								presentation={slide('from-left')}
@@ -74,3 +52,38 @@ export default function ImageStream() {
 		</AbsoluteFill>
 	);
 }
+
+const Images = ({entry, key}) => {
+	const {fps} = useVideoConfig();
+	const frame = useCurrentFrame();
+	const durationInFrames = (entry.end - entry.start) * fps;
+	const spr = spring({
+		fps,
+		frame,
+		config: {
+			damping: 100,
+		},
+		delay: 0,
+		from: 0,
+		to: 1,
+		durationInFrames: durationInFrames,
+	});
+
+	const zoom = interpolate(spr, [0, 0.5, 1], [1, 1.5, 1.3], {
+		// easing: Easing.bezier(0.8, 0.22, 0.96, 0.65),
+		extrapolateLeft: 'clamp',
+		extrapolateRight: 'clamp',
+	});
+
+	return (
+		<>
+			<Img
+				style={{
+					transform: `scale(${zoom})`,
+					// transition: 'all 5s ease',
+				}}
+				src={staticFile(entry.name)}
+			/>
+		</>
+	);
+};
