@@ -41,12 +41,13 @@ export const TextStream = () => {
 		>
 			<TransitionSeries>
 				{transcriptData.map((entry, index) => {
+					const delta = entry.end - entry.start < 1 / 30 ? 0.2 : 0;
 					return (
 						<TransitionSeries.Sequence
 							style={subtitle}
 							key={index}
-							from={(entry.start + 0.2) * fps}
-							durationInFrames={fps * (entry.end - entry.start + 0.2)}
+							from={(entry.start + delta) * fps}
+							durationInFrames={fps * (entry.end - entry.start + delta)}
 						>
 							<Letter style={subtitle}>{entry.text}</Letter>
 						</TransitionSeries.Sequence>
