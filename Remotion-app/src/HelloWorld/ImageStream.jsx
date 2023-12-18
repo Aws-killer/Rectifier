@@ -40,7 +40,11 @@ export default function ImageStream() {
 							fps * entry.end,
 						],
 						[1, 1.5, 1.3],
-						[1, 1.2, 1]
+						[1, 1.2, 1],
+						{
+							extrapolateLeft: 'clamp',
+							extrapolateRight: 'clamp',
+						}
 					);
 
 					return (
