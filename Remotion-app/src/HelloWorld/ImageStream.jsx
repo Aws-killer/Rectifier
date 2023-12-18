@@ -44,7 +44,9 @@ export default function ImageStream() {
 									durationInFrames: 1,
 									easing: Easing.bezier(0.02, 1.85, 0.83, 0.43),
 								})}
-							/>
+							>
+								jelllo
+							</TransitionSeries.Transition>
 						</>
 					);
 				})}
@@ -68,8 +70,25 @@ const Images = ({entry, key}) => {
 		to: 1,
 		durationInFrames: durationInFrames,
 	});
+	const initialSpring = spring({
+		fps,
+		frame,
+		config: {
+			damping: 100,
+		},
+		delay: 0,
+		from: 0,
+		to: 1,
+		durationInFrames: 2,
+	});
 
 	const zoom = interpolate(spr, [0, 0.5, 1], [1, 1.5, 1.3], {
+		// easing: Easing.bezier(0.8, 0.22, 0.96, 0.65),
+		extrapolateLeft: 'clamp',
+		extrapolateRight: 'clamp',
+	});
+
+	const blur = interpolate(initialSpring, [0, 1], [30, 0], {
 		// easing: Easing.bezier(0.8, 0.22, 0.96, 0.65),
 		extrapolateLeft: 'clamp',
 		extrapolateRight: 'clamp',
@@ -80,6 +99,8 @@ const Images = ({entry, key}) => {
 			<Img
 				style={{
 					transform: `scale(${zoom})`,
+					filter: `blur(${blur}px)`,
+					transform: `translateX((${blur * 10}px)`,
 					// transition: 'all 5s ease',
 				}}
 				src={staticFile(entry.name)}
