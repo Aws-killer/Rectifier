@@ -36,13 +36,13 @@ export default function ImageStream() {
 								// from={fps * entry.start}
 								durationInFrames={fps * (entry.end - entry.start)}
 							>
-								<Images key={index} entry={entry} />;
+								<Images entry={entry} />;
 							</TransitionSeries.Sequence>
 							<TransitionSeries.Transition
 								presentation={slide('from-left')}
 								timing={linearTiming({
 									durationInFrames: 1,
-									easing: Easing.bezier(0.02, 1.85, 0.83, 0.43),
+									// easing: Easing.bezier(0.02, 1.85, 0.83, 0.43),
 								})}
 							>
 								jelllo
@@ -55,7 +55,7 @@ export default function ImageStream() {
 	);
 }
 
-const Images = ({entry, key}) => {
+const Images = ({entry}) => {
 	const {fps} = useVideoConfig();
 	const frame = useCurrentFrame();
 	const durationInFrames = (entry.end - entry.start) * fps;
@@ -79,7 +79,7 @@ const Images = ({entry, key}) => {
 		delay: 0,
 		from: 0,
 		to: 1,
-		durationInFrames: 2,
+		durationInFrames: 0.5 * fps,
 	});
 
 	const zoom = interpolate(spr, [0, 0.5, 1], [1, 1.5, 1.3], {
@@ -89,22 +89,49 @@ const Images = ({entry, key}) => {
 	});
 
 	const blur = interpolate(initialSpring, [0, 1], [30, 0], {
-		// easing: Easing.bezier(0.8, 0.22, 0.96, 0.65),
+		easing: Easing.bezier(0.23, 1, 0.32, 1),
 		extrapolateLeft: 'clamp',
 		extrapolateRight: 'clamp',
 	});
 
 	return (
 		<>
+			<div
+				style={{
+					fontSize: 150,
+					position: 'absolute',
+					zIndex: 1,
+				}}
+			>
+				{blur}
+			</div>
+
 			<Img
 				style={{
-					transform: `scale(${zoom})`,
+					transform: `scale(${zoom}) translateX(-${blur * 5}px)`,
 					filter: `blur(${blur}px)`,
-					transform: `translateX((${blur * 10}px)`,
+					// opacity: 0.1
+					// transform: `translateX(-${blur * 5}px)`,
 					// transition: 'all 5s ease',
 				}}
 				src={staticFile(entry.name)}
 			/>
+
+			{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => {
+				return (
+					<Img
+						key={i}
+						style={{
+							transform: `scale(${zoom}) translateX(-${blur * i * 5}px)`,
+							filter: `blur(${(blur / i) * 2}px)`,
+							opacity: 0.1,
+							// transform: `translateX(-${blur * 5}px)`,
+							// transition: 'all 5s ease',
+						}}
+						src={staticFile(entry.name)}
+					/>
+				);
+			})}
 		</>
 	);
 };
