@@ -10,10 +10,10 @@ const subtitle = {
 	fontSize: 150,
 	textAlign: 'center',
 	textShadow:
-		'-5px -5px 0 #00ff, 0   -5px 0 #00ff, 5px -5px 0 #00ff, 5px  0   0 #00ff, 5px  5px 0 #00ff, 0    5px 0 #00ff, -5px  5px 0 #00ff, -5px  0   0 #00ff',
+		'-10px -10px 0 #000, 0   -10px 0 #000, 10px -10px 0 #000, 10px  0   0 #000, 10px  10px 0 #000, 0    10px 0 #000, -10px  10px 0 #000, -10px  0   0 #000',
 	position: 'fixed',
 	fontWeight: 'bolder',
-	color: 'white',
+	color: 'yellow',
 	bottom: 200,
 	height: 'fit-content',
 	width: '100%',

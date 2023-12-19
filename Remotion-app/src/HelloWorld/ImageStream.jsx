@@ -79,7 +79,7 @@ const Images = ({entry}) => {
 		durationInFrames: durationInFrames,
 	});
 
-	const zoom = interpolate(spr, [0, 0.5, 1], [1, 1.2, 1.1], {
+	const zoom = interpolate(spr, [0, 0.5, 1], [1, 1.3, 1.2], {
 		easing: Easing.bezier(0.23, 1, 0.32, 1),
 		// extrapolateLeft: 'clamp',
 		// extrapolateRight: 'clamp',
