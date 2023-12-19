@@ -32,21 +32,18 @@ export default function ImageStream() {
 					return (
 						<>
 							<TransitionSeries.Sequence
-								key={index}
-								// from={fps * entry.start}
+								key={entry.start}
 								durationInFrames={fps * (entry.end - entry.start)}
 							>
-								<Images entry={entry} />;
+								<Images key={index} entry={entry} />;
 							</TransitionSeries.Sequence>
 							<TransitionSeries.Transition
 								presentation={slide('from-left')}
 								timing={linearTiming({
-									durationInFrames: 1,
-									// easing: Easing.bezier(0.02, 1.85, 0.83, 0.43),
+									durationInFrames: 2,
+									easing: Easing.bezier(0.02, 1.85, 0.83, 0.43),
 								})}
-							>
-								jelllo
-							</TransitionSeries.Transition>
+							/>
 						</>
 					);
 				})}
@@ -79,23 +76,36 @@ const Images = ({entry}) => {
 		delay: 0,
 		from: 0,
 		to: 1,
-		durationInFrames: 0.5 * fps,
+		durationInFrames: durationInFrames,
 	});
 
-	const zoom = interpolate(spr, [0, 0.5, 1], [1, 1.5, 1.3], {
-		// easing: Easing.bezier(0.8, 0.22, 0.96, 0.65),
-		extrapolateLeft: 'clamp',
-		extrapolateRight: 'clamp',
-	});
-
-	const blur = interpolate(initialSpring, [0, 1], [30, 0], {
+	const zoom = interpolate(spr, [0, 0.5, 1], [1, 1.2, 1.1], {
 		easing: Easing.bezier(0.23, 1, 0.32, 1),
-		extrapolateLeft: 'clamp',
-		extrapolateRight: 'clamp',
+		// extrapolateLeft: 'clamp',
+		// extrapolateRight: 'clamp',
 	});
+
+	const blur = interpolate(
+		initialSpring,
+		[0.0, 0.09, 0.99, 1],
+		[20, 0, 0, 10],
+		{
+			easing: Easing.bezier(0.23, 1, 0.32, 1),
+			extrapolateLeft: 'identity',
+			extrapolateRight: 'identity',
+		}
+	);
 
 	return (
 		<>
+			<svg xmlns="http://www.w3.org/2000/svg" version="1.1" className="filters">
+				<defs>
+					<filter id="blur">
+						<feGaussianBlur in="SourceGraphic" stdDeviation={`${blur * 5},0`} />
+					</filter>
+				</defs>
+			</svg>
+
 			<div
 				style={{
 					fontSize: 150,
@@ -108,30 +118,18 @@ const Images = ({entry}) => {
 
 			<Img
 				style={{
-					transform: `scale(${zoom}) translateX(-${blur * 5}px)`,
-					filter: `blur(${blur}px)`,
+					transform: `scale(${zoom}) ${
+						initialSpring > 0.99
+							? `translateX(${blur * 5}px)`
+							: `translateX(-${blur * 5}px)`
+					}`,
+					filter: `url(#blur)`,
 					// opacity: 0.1
 					// transform: `translateX(-${blur * 5}px)`,
 					// transition: 'all 5s ease',
 				}}
 				src={staticFile(entry.name)}
 			/>
-
-			{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => {
-				return (
-					<Img
-						key={i}
-						style={{
-							transform: `scale(${zoom}) translateX(-${blur * i * 5}px)`,
-							filter: `blur(${(blur / i) * 2}px)`,
-							opacity: 0.1,
-							// transform: `translateX(-${blur * 5}px)`,
-							// transition: 'all 5s ease',
-						}}
-						src={staticFile(entry.name)}
-					/>
-				);
-			})}
 		</>
 	);
 };
