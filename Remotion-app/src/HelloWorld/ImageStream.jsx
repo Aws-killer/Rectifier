@@ -118,12 +118,24 @@ const Images = ({entry}) => {
 
 			<Img
 				style={{
-					transform: `scale(${zoom}) ${
+					transform: ` scale(${zoom}) ${
 						initialSpring > 0.99
 							? `translateX(${blur * 5}px)`
 							: `translateX(-${blur * 5}px)`
 					}`,
 					filter: `url(#blur)`,
+					objectPosition: 'center',
+					objectFit: 'cover',
+
+					position: 'absolute',
+					top: '50%', // Center vertically
+					left: '50%', // Center horizontally
+					transform: 'translate(-50%, -50%)',
+					// zIndex: 150,
+					// height: '100vh',
+					width: 1080,
+					height: 1920,
+					// transformOrigin: 'center center', // Move rotation origin to the
 					// opacity: 0.1
 					// transform: `translateX(-${blur * 5}px)`,
 					// transition: 'all 5s ease',
