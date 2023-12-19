@@ -87,8 +87,8 @@ const Images = ({entry}) => {
 
 	const blur = interpolate(
 		initialSpring,
-		[0.0, 0.09, 0.99, 1],
-		[20, 0, 0, 10],
+		[0.0, 0.09, 0.99, 0.995, 1],
+		[20, 0, 0, 0, 5],
 		{
 			easing: Easing.bezier(0.23, 1, 0.32, 1),
 			extrapolateLeft: 'identity',
@@ -105,17 +105,6 @@ const Images = ({entry}) => {
 					</filter>
 				</defs>
 			</svg>
-
-			<div
-				style={{
-					fontSize: 150,
-					position: 'absolute',
-					zIndex: 1,
-				}}
-			>
-				{blur}
-			</div>
-
 			<Img
 				style={{
 					transform: ` scale(${zoom}) ${
