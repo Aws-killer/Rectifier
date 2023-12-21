@@ -14,7 +14,7 @@ const subtitle = {
 	position: 'fixed',
 	fontWeight: 'bolder',
 	color: 'yellow',
-	bottom: 200,
+	bottom: '30vh',
 	height: 'fit-content',
 	width: '100%',
 };
