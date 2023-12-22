@@ -7,7 +7,6 @@ import {TransitionSeries} from '@remotion/transitions';
 
 const subtitle = Constants?.text
 	? {
-			...Constants.text,
 			fontFamily: 'Luckiest Guy',
 			fontSize: 120,
 			textAlign: 'center',
@@ -19,6 +18,7 @@ const subtitle = Constants?.text
 			bottom: '30vh',
 			height: 'fit-content',
 			width: '100%',
+			...Constants.text,
 	  }
 	: {
 			fontFamily: 'Luckiest Guy',
