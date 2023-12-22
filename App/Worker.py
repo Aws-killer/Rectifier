@@ -35,7 +35,10 @@ def create_json_file(assets: List[Assets], asset_dir: str):
 
 def create_constants_json_file(constants: Constants, asset_dir: str):
     filename = "Constants.json"
-    json_string = json.dumps(constants.dict())
+    if constants:
+        json_string = json.dumps(constants.dict())
+    else:
+        json_string = json.dumps({})
     os.makedirs(asset_dir, exist_ok=True)
     with open(os.path.join(asset_dir, filename), "w") as f:
         f.write(json_string)
