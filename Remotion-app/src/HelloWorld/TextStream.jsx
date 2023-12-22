@@ -4,35 +4,25 @@ import * as Fonts from '@remotion/google-fonts';
 import transcriptData from './Assets/TextSequences.json';
 import Constants from './Assets/Constants.json';
 import {TransitionSeries} from '@remotion/transitions';
-
+const defaultText = {
+	fontFamily: 'Luckiest Guy',
+	fontSize: 120,
+	textAlign: 'center',
+	textShadow:
+		'-10px -10px 0 #000, 0   -10px 0 #000, 10px -10px 0 #000, 10px  0   0 #000, 10px  10px 0 #000, 0    10px 0 #000, -10px  10px 0 #000, -10px  0   0 #000',
+	position: 'fixed',
+	fontWeight: 'bolder',
+	color: 'yellow',
+	bottom: '30vh',
+	height: 'fit-content',
+	width: '100%',
+};
 const subtitle = Constants?.text
 	? {
-			fontFamily: 'Luckiest Guy',
-			fontSize: 120,
-			textAlign: 'center',
-			textShadow:
-				'-10px -10px 0 #000, 0   -10px 0 #000, 10px -10px 0 #000, 10px  0   0 #000, 10px  10px 0 #000, 0    10px 0 #000, -10px  10px 0 #000, -10px  0   0 #000',
-			position: 'fixed',
-			fontWeight: 'bolder',
-			color: 'yellow',
-			bottom: '30vh',
-			height: 'fit-content',
-			width: '100%',
+			...defaultText,
 			...Constants.text,
 	  }
-	: {
-			fontFamily: 'Luckiest Guy',
-			fontSize: 120,
-			textAlign: 'center',
-			textShadow:
-				'-10px -10px 0 #000, 0   -10px 0 #000, 10px -10px 0 #000, 10px  0   0 #000, 10px  10px 0 #000, 0    10px 0 #000, -10px  10px 0 #000, -10px  0   0 #000',
-			position: 'fixed',
-			fontWeight: 'bolder',
-			color: 'yellow',
-			bottom: '30vh',
-			height: 'fit-content',
-			width: '100%',
-	  };
+	: defaultText;
 Fonts.getAvailableFonts()
 	.filter((font) => {
 		return font.fontFamily === subtitle.fontFamily;
