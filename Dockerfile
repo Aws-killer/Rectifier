@@ -71,7 +71,7 @@ RUN pipx install unsilence
 # Command to run the application
 # CMD python -m uvicorn App.app:app --host 0.0.0.0 --port 7860 &  python -m celery -A App.Worker.celery worker -c 4  --max-tasks-per-child=1 
 
-CMD python -m uvicorn App.app:app --host 0.0.0.0  --port 7860  --workers 4
+CMD python -m uvicorn App.app:app --host 0.0.0.0  --port 7860  --workers 2
 
 
 EXPOSE 7860
