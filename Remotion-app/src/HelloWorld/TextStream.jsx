@@ -2,26 +2,40 @@ import React, {createElement} from 'react';
 import {useVideoConfig, AbsoluteFill, TransitionSeries} from 'remotion';
 import * as Fonts from '@remotion/google-fonts';
 import transcriptData from './Assets/TextSequences.json';
-import {FONT_FAMILY} from './constants';
+import Constants from './Assets/Constants.json';
 import {TransitionSeries} from '@remotion/transitions';
 
-const subtitle = {
-	fontFamily: FONT_FAMILY,
-	fontSize: 150,
-	textAlign: 'center',
-	textShadow:
-		'-10px -10px 0 #000, 0   -10px 0 #000, 10px -10px 0 #000, 10px  0   0 #000, 10px  10px 0 #000, 0    10px 0 #000, -10px  10px 0 #000, -10px  0   0 #000',
-	position: 'fixed',
-	fontWeight: 'bolder',
-	color: 'yellow',
-	bottom: '30vh',
-	height: 'fit-content',
-	width: '100%',
-};
-
+const subtitle = Constants?.text
+	? {
+			...Constants.text,
+			fontFamily: 'Luckiest Guy',
+			fontSize: 120,
+			textAlign: 'center',
+			textShadow:
+				'-10px -10px 0 #000, 0   -10px 0 #000, 10px -10px 0 #000, 10px  0   0 #000, 10px  10px 0 #000, 0    10px 0 #000, -10px  10px 0 #000, -10px  0   0 #000',
+			position: 'fixed',
+			fontWeight: 'bolder',
+			color: 'yellow',
+			bottom: '30vh',
+			height: 'fit-content',
+			width: '100%',
+	  }
+	: {
+			fontFamily: 'Luckiest Guy',
+			fontSize: 120,
+			textAlign: 'center',
+			textShadow:
+				'-10px -10px 0 #000, 0   -10px 0 #000, 10px -10px 0 #000, 10px  0   0 #000, 10px  10px 0 #000, 0    10px 0 #000, -10px  10px 0 #000, -10px  0   0 #000',
+			position: 'fixed',
+			fontWeight: 'bolder',
+			color: 'yellow',
+			bottom: '30vh',
+			height: 'fit-content',
+			width: '100%',
+	  };
 Fonts.getAvailableFonts()
 	.filter((font) => {
-		return font.fontFamily === FONT_FAMILY;
+		return font.fontFamily === subtitle.fontFamily;
 	})[0]
 	.load()
 	.then((font) => font.loadFont());

@@ -8,6 +8,13 @@ class LinkInfo(BaseModel):
     link: HttpUrl
 
 
+class Constants(BaseModel):
+    duration: Optional[int]
+    height: Optional[int]
+    width: Optional[int]
+    text: Optional[dict]
+
+
 class Assets(BaseModel):
     type: str
     sequence: List[dict]
@@ -22,6 +29,7 @@ class Assets(BaseModel):
 class EditorRequest(BaseModel):
     links: Optional[List[LinkInfo]]  # List of LinkInfo objects
     assets: List[Assets]
+    constants: Optional[Constants]
 
 
 class TaskInfo(BaseModel):

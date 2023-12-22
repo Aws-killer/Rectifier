@@ -4,7 +4,7 @@ import uuid
 from urllib.parse import urlparse
 from App import celery_config, bot
 from typing import List
-from App.Editor.Schema import EditorRequest, LinkInfo, Assets
+from App.Editor.Schema import EditorRequest, LinkInfo, Assets, Constants
 from celery.signals import worker_process_init
 from asgiref.sync import async_to_sync
 import json
@@ -31,6 +31,14 @@ def create_json_file(assets: List[Assets], asset_dir: str):
         # Write JSON string to file
         with open(os.path.join(asset_dir, filename), "w") as f:
             f.write(json_string)
+
+
+def create_constants_json_file(constants: Constants, asset_dir: str):
+    filename = "Constants.json"
+    json_string = json.dumps(constants.dict())
+    os.makedirs(asset_dir, exist_ok=True)
+    with open(os.path.join(asset_dir, filename), "w") as f:
+        f.write(json_string)
 
 
 def create_symlink(source_dir, target_dir, symlink_name):
@@ -114,6 +122,7 @@ async def celery_task(video_task: EditorRequest):
 
     copy_remotion_app(remotion_app_dir, temp_dir),
     install_dependencies(temp_dir),
+    create_constants_json_file(video_task.constants, assets_dir),
     create_json_file(video_task.assets, assets_dir),
     download_assets(video_task.links, temp_dir) if video_task.links else None,
     render_video(temp_dir, output_dir),
