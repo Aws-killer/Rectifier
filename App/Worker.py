@@ -32,7 +32,7 @@ def create_json_file(assets: List[Assets], asset_dir: str):
         with open(os.path.join(asset_dir, filename), "w") as f:
             f.write(json_string)
 
-
+@celery.task(name="Constants")
 def create_constants_json_file(constants: Constants, asset_dir: str):
     filename = "Constants.json"
     if constants:
