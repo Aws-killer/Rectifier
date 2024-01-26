@@ -135,7 +135,7 @@ def celery_task(video_task: EditorRequest):
     chain(
         copy_remotion_app.si(remotion_app_dir, temp_dir),
         install_dependencies.si(temp_dir),
-        create_constants_json_file(video_task.constants, assets_dir),
+        create_constants_json_file.si(video_task.constants, assets_dir),
         create_json_file.si(video_task.assets, assets_dir),
         download_assets.si(video_task.links, temp_dir) if video_task.links else None,
         render_video.si(temp_dir, output_dir),
