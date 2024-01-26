@@ -7,12 +7,12 @@ app = FastAPI()
 
 @app.on_event("startup")
 async def startup_event():
-    await bot.start()
+    bot.start()
 
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    await bot.stop()
+    bot.stop()
 
 
 @app.get("/")
