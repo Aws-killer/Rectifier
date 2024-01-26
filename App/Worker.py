@@ -105,8 +105,8 @@ def cleanup_temp_directory(
 ):
     try:
         print("sending...")
-        bot.send_video(chat_id=chat_id,caption="Your Video Caption",video=output_dir)
-        # await bot.send_file(chat_id, file=output_dir, caption="Your video caption")
+        # bot.send_video(chat_id=chat_id,caption="Your Video Caption",video=output_dir)
+        bot.send_file(chat_id, file=output_dir, caption="Your video caption")
     except Exception as e:
         print(e)
     finally:

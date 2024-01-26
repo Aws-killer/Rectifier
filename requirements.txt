@@ -17,3 +17,4 @@ TgCrypto
 git+https://github.com/redis/redis-py.git
 asgiref
 pipx
+cryptg
