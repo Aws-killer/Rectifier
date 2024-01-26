@@ -95,7 +95,7 @@ def download_assets(links: List[LinkInfo], temp_dir: str):
 @celery.task(name="RenderFile")
 def render_video(directory: str, output_directory: str):
     os.chdir(directory)
-    os.system(f"npm run build --output {output_directory}")
+    os.system(f"npm run build --enable-multiprocess-on-linux --output {output_directory}")
     print("complete")
 
 
