@@ -115,7 +115,7 @@ def cleanup_temp_directory(
 
 
 @celery.task(name="All")
-async def celery_task(video_task: EditorRequest):
+def celery_task(video_task: EditorRequest):
     remotion_app_dir = os.path.join("/srv", "Remotion-app")
     project_id = str(uuid.uuid4())
     temp_dir = f"/tmp/{project_id}"
