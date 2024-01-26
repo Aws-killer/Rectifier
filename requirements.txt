@@ -10,7 +10,7 @@ Werkzeug==2.2.2
 uvicorn==0.21.1
 gunicorn
 requests
-celery
+celery==5.3.0
 pyrogram
 Telethon
 TgCrypto

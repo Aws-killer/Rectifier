@@ -9,7 +9,7 @@ RUN chmod -R 755 /srv
 
 # Install dependencies
 RUN apt-get update && \
-  apt-get install -y libu2f-udev libvulkan1 mesa-vulkan-drivers wget ffmpeg curl aria2
+  apt-get install -y   wget ffmpeg curl aria2
 
 RUN apt-get install -y \
   fonts-liberation \
@@ -26,6 +26,7 @@ RUN apt-get install -y \
   libvulkan1 \
   libxcomposite1 \
   libxdamage1 \
+  mesa-vulkan-drivers\
   libxfixes3 \
   libasound2 \
   libxkbcommon0 \
@@ -69,9 +70,9 @@ RUN pipx install unsilence
 
 
 # Command to run the application
-# CMD python -m uvicorn App.app:app --host 0.0.0.0 --port 7860 &  python -m celery -A App.Worker.celery worker -c 4  --max-tasks-per-child=1 
+CMD python -m uvicorn App.app:app --host 0.0.0.0 --port 7860 &  python -m celery -A App.Worker.celery worker -c 5  --max-tasks-per-child=1  --without-heartbeat 
 
-CMD python -m uvicorn App.app:app --host 0.0.0.0  --port 7860  --workers 2
+# CMD python -m uvicorn App.app:app --host 0.0.0.0  --port 7860  --workers 2
 
 
 EXPOSE 7860
