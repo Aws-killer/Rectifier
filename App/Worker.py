@@ -105,6 +105,7 @@ def cleanup_temp_directory(
 ):
     try:
         print("sending...")
+        bot.start()
         # bot.send_video(chat_id=chat_id,caption="Your Video Caption",video=output_dir)
         bot.send_file(chat_id, file=output_dir, caption="Your video caption")
     except Exception as e:
@@ -120,7 +121,6 @@ def celery_task(video_task: EditorRequest):
     project_id = str(uuid.uuid4())
     temp_dir = f"/tmp/{project_id}"
     output_dir = f"/tmp/{project_id}/out/video.mp4"
-
     assets_dir = os.path.join(temp_dir, "src/HelloWorld/Assets")
 
     # copy_remotion_app(remotion_app_dir, temp_dir),
