@@ -11,7 +11,6 @@ export const HelloWorld = () => {
 	return (
 		<AbsoluteFill style={{position: 'relative', backgroundColor: 'black'}}>
 			<BackgroundStream />
-			<SfxStream />
 			<ImageStream />
 			<TextStream />
 			<VideoStream />
