@@ -68,11 +68,18 @@ export function Letter({children, style,duration}) {
 	
 	const Textimeline =()=>{
 		let timeline=gsap.timeline();
-		timeline.fromTo('#letter',{yPercent:100},{yPercent:0,duration:duration/2, ease:"power2.inOut"})		
+		timeline.fromTo('#letter',{yPercent:100},{yPercent:0,duration:duration, ease:"power2.inOut"})		
 		return timeline
 		}
 	
-	return <GsapAnimation Timeline={Textimeline} className='h-fit' style={style}>
+	return <GsapAnimation Timeline={Textimeline} className='h-fit' style={{
+
+		backgroundColor: 'transparent',
+		justifyContent: 'center',
+		alignItems: 'center',
+		position: 'relative',
+		...style,
+	}}>
 		
 	
 		<div id="letter">
