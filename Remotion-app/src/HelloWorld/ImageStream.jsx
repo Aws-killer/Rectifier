@@ -6,7 +6,7 @@ import {
 	useCurrentFrame,
 } from 'remotion';
 import React from 'react';
-import {staticFile, useVideoConfig, Img, Easing} from 'remotion';
+import {staticFile, useVideoConfig, Img, Easing,Audio} from 'remotion';
 import imageSequences from './Assets/ImageSequences.json';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
 import GsapAnimation from './Components/GsapAnimation';
