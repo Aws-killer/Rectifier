@@ -1,4 +1,3 @@
-import {Series} from 'remotion';
 import React from 'react';
 import {staticFile, useVideoConfig, Audio} from 'remotion';
 import backgroundSequences from './Assets/BackgroundSequences.json';

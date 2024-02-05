@@ -1,1 +1,1924 @@
-[]
+{
+	"links": [
+		{
+			"file_name": "image_0.webp",
+			"link": "https://image.lexica.art/full_webp/ae221476-5b64-4734-83ee-f5fd78541a55"
+		},
+		{
+			"file_name": "image_1.webp",
+			"link": "https://image.lexica.art/full_webp/2f7aa85b-1861-41b5-8b48-c14242cfff92"
+		},
+		{
+			"file_name": "image_2.webp",
+			"link": "https://image.lexica.art/full_webp/72cfd59d-aaa0-497e-8941-09d349e136ad"
+		},
+		{
+			"file_name": "image_3.webp",
+			"link": "https://image.lexica.art/full_webp/cb39115a-28b1-4bd1-8558-2873aa3edfb9"
+		},
+		{
+			"file_name": "image_4.webp",
+			"link": "https://image.lexica.art/full_webp/67c015a1-dca7-4591-9031-43746fcb584d"
+		},
+		{
+			"file_name": "image_5.webp",
+			"link": "https://image.lexica.art/full_webp/df75070e-9dde-4fbf-81cf-a55aa3a03235"
+		},
+		{
+			"file_name": "image_6.webp",
+			"link": "https://image.lexica.art/full_webp/381be0f6-f801-4149-a085-c0410de5fa72"
+		},
+		{
+			"file_name": "image_7.webp",
+			"link": "https://image.lexica.art/full_webp/9c864135-00f3-4978-b7d7-fe577de48c36"
+		},
+		{
+			"file_name": "image_8.webp",
+			"link": "https://image.lexica.art/full_webp/ae221476-5b64-4734-83ee-f5fd78541a55"
+		},
+		{
+			"file_name": "image_9.webp",
+			"link": "https://image.lexica.art/full_webp/ae221476-5b64-4734-83ee-f5fd78541a55"
+		},
+		{
+			"file_name": "image_10.webp",
+			"link": "https://image.lexica.art/full_webp/381be0f6-f801-4149-a085-c0410de5fa72"
+		},
+		{
+			"file_name": "image_11.webp",
+			"link": "https://image.lexica.art/full_webp/9c864135-00f3-4978-b7d7-fe577de48c36"
+		},
+		{
+			"file_name": "image_12.webp",
+			"link": "https://image.lexica.art/full_webp/ae221476-5b64-4734-83ee-f5fd78541a55"
+		},
+		{
+			"file_name": "image_13.webp",
+			"link": "https://image.lexica.art/full_webp/2f7aa85b-1861-41b5-8b48-c14242cfff92"
+		},
+		{
+			"file_name": "image_14.webp",
+			"link": "https://image.lexica.art/full_webp/72cfd59d-aaa0-497e-8941-09d349e136ad"
+		},
+		{
+			"file_name": "image_15.webp",
+			"link": "https://image.lexica.art/full_webp/ae221476-5b64-4734-83ee-f5fd78541a55"
+		},
+		{
+			"file_name": "image_16.webp",
+			"link": "https://image.lexica.art/full_webp/2f7aa85b-1861-41b5-8b48-c14242cfff92"
+		},
+		{
+			"file_name": "image_17.webp",
+			"link": "https://image.lexica.art/full_webp/df75070e-9dde-4fbf-81cf-a55aa3a03235"
+		},
+		{
+			"file_name": "image_18.webp",
+			"link": "https://image.lexica.art/full_webp/381be0f6-f801-4149-a085-c0410de5fa72"
+		},
+		{
+			"file_name": "image_19.webp",
+			"link": "https://image.lexica.art/full_webp/129c66b6-438c-490c-83b8-3eaf4750e90a"
+		},
+		{
+			"file_name": "sfx_1.mp3",
+			"link": "https://dm0qx8t0i9gc9.cloudfront.net/previews/audio/BsTwCwBHBjzwub4i4/audioblocks-small-whoosh-fast-short-transition-7_rKsg4EzIRw8_NWM.mp3?type=preview&origin=AUDIOBLOCKS&timestamp_ms=1702236157718&publicKey=kUhrS9sKVrQMTvByQMAGMM0jwRbJ4s31HTPVkfDGmwGhYqzmWJHsjIw5fZCkI7ba&organizationId=105711&apiVersion=2.0&stockItemId=170316&resolution=&endUserId=3f36f92e8578d1d2d44cb9e5111c9314bab6ea9a&projectId=5bb8fe91-b8af-40fb-b8a5-a0308325652c&searchId=ca070fb2-5136-4cd0-9155-04bb257d830d&searchPageId=ab171052-83b1-49ca-8040-019d114446ae"
+		},
+		{
+			"file_name": "transcript.wav",
+			"link": "https://production-273614-assets.storage.googleapis.com/c1711a79-bf86-405f-9520-977878eeb59a/a84b4f6a-f52c-4de8-b296-805b974a700a.wav?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=GOOG1EFZ4XO3FUIRXKQS4WNAKTVH7WYUDBQBH4S55LLUDARIW7BMD5OL723IQ%2F20231210%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20231210T205714Z&X-Amz-Expires=43200&X-Amz-Signature=3b1a709d713d5f213fde9b1052345ea8f3b543e46d036915afd0c0ce772a5622&X-Amz-SignedHeaders=host&response-cache-control=private%2C%20max-age%3D43200%2C%20immutable"
+		},
+		{
+			"file_name": "background.mp3",
+			"link": "https://dm0qx8t0i9gc9.cloudfront.net/previews/audio/SYMgkXBp8kbgp9z1o/audioblocks-04_cin_ep_aj-epic-inspirational_power-of-epic-orchestra_instr_rYoik_vIq_NWM.mp3?type=preview&origin=AUDIOBLOCKS&timestamp_ms=1702226430687&publicKey=kUhrS9sKVrQMTvByQMAGMM0jwRbJ4s31HTPVkfDGmwGhYqzmWJHsjIw5fZCkI7ba&organizationId=105711&apiVersion=2.0&stockItemId=347002387&resolution=&endUserId=3f36f92e8578d1d2d44cb9e5111c9314bab6ea9a&projectId=5bb8fe91-b8af-40fb-b8a5-a0308325652c&searchId=37b57e93-bc35-4751-837b-ce09d504d8f6&searchPageId=ab508d3f-9703-4dd4-96dc-dd0d22d70189"
+		}
+	],
+	"assets": [
+		{
+			"type": "text",
+			"sequence": [
+				{
+					"start": 0.0,
+					"end": 0.24,
+					"probability": 0.6714049577713013,
+					"text": " This"
+				},
+				{
+					"start": 0.24,
+					"end": 0.5,
+					"probability": 0.9762039184570312,
+					"text": " woman"
+				},
+				{
+					"start": 0.5,
+					"end": 0.74,
+					"probability": 0.9984784722328186,
+					"text": " is"
+				},
+				{
+					"start": 0.74,
+					"end": 1.42,
+					"probability": 0.9907891154289246,
+					"text": " extraordinary."
+				},
+				{
+					"start": 1.74,
+					"end": 1.84,
+					"probability": 0.9907077550888062,
+					"text": " She"
+				},
+				{
+					"start": 1.84,
+					"end": 2.04,
+					"probability": 0.9929599165916443,
+					"text": " is"
+				},
+				{
+					"start": 2.04,
+					"end": 2.26,
+					"probability": 0.9947006702423096,
+					"text": " a"
+				},
+				{
+					"start": 2.26,
+					"end": 2.54,
+					"probability": 0.9961410164833069,
+					"text": " fierce"
+				},
+				{
+					"start": 2.54,
+					"end": 2.84,
+					"probability": 0.9890923500061035,
+					"text": " and"
+				},
+				{
+					"start": 2.84,
+					"end": 3.22,
+					"probability": 0.9947437047958374,
+					"text": " talented"
+				},
+				{
+					"start": 3.22,
+					"end": 3.62,
+					"probability": 0.9965943694114685,
+					"text": " dancer"
+				},
+				{
+					"start": 3.62,
+					"end": 3.84,
+					"probability": 0.9555509686470032,
+					"text": " who"
+				},
+				{
+					"start": 3.84,
+					"end": 4.02,
+					"probability": 0.989871084690094,
+					"text": " is"
+				},
+				{
+					"start": 4.02,
+					"end": 4.22,
+					"probability": 0.9986718893051147,
+					"text": " about"
+				},
+				{
+					"start": 4.22,
+					"end": 4.44,
+					"probability": 0.9972483515739441,
+					"text": " to"
+				},
+				{
+					"start": 4.44,
+					"end": 4.62,
+					"probability": 0.996292233467102,
+					"text": " take"
+				},
+				{
+					"start": 4.62,
+					"end": 4.8,
+					"probability": 0.9984669089317322,
+					"text": " the"
+				},
+				{
+					"start": 4.8,
+					"end": 5.04,
+					"probability": 0.9982944130897522,
+					"text": " world"
+				},
+				{
+					"start": 5.04,
+					"end": 5.36,
+					"probability": 0.9973336458206177,
+					"text": " by"
+				},
+				{
+					"start": 5.36,
+					"end": 5.78,
+					"probability": 0.9975805282592773,
+					"text": " storm."
+				},
+				{
+					"start": 6.06,
+					"end": 6.08,
+					"probability": 0.9407963752746582,
+					"text": " Meet"
+				},
+				{
+					"start": 6.08,
+					"end": 6.58,
+					"probability": 0.9250969489415487,
+					"text": " Inayat,"
+				},
+				{
+					"start": 6.76,
+					"end": 6.96,
+					"probability": 0.9957624077796936,
+					"text": " the"
+				},
+				{
+					"start": 6.96,
+					"end": 7.38,
+					"probability": 0.9140483140945435,
+					"text": " protagonist"
+				},
+				{
+					"start": 7.38,
+					"end": 7.64,
+					"probability": 0.9943031072616577,
+					"text": " of"
+				},
+				{
+					"start": 7.64,
+					"end": 7.84,
+					"probability": 0.9956594109535217,
+					"text": " the"
+				},
+				{
+					"start": 7.84,
+					"end": 8.46,
+					"probability": 0.996244877576828,
+					"text": " electrifying"
+				},
+				{
+					"start": 8.46,
+					"end": 8.84,
+					"probability": 0.9945023059844971,
+					"text": " movie"
+				},
+				{
+					"start": 8.84,
+					"end": 9.16,
+					"probability": 0.620722234249115,
+					"text": " Street"
+				},
+				{
+					"start": 9.16,
+					"end": 9.56,
+					"probability": 0.9740679562091827,
+					"text": " Dancer"
+				},
+				{
+					"start": 9.56,
+					"end": 10.32,
+					"probability": 0.941430389881134,
+					"text": " 3D."
+				},
+				{
+					"start": 10.52,
+					"end": 10.6,
+					"probability": 0.9892666339874268,
+					"text": " Are"
+				},
+				{
+					"start": 10.6,
+					"end": 10.8,
+					"probability": 0.9994889497756958,
+					"text": " you"
+				},
+				{
+					"start": 10.8,
+					"end": 11.0,
+					"probability": 0.998097836971283,
+					"text": " ready"
+				},
+				{
+					"start": 11.0,
+					"end": 11.24,
+					"probability": 0.9984726309776306,
+					"text": " to"
+				},
+				{
+					"start": 11.24,
+					"end": 11.5,
+					"probability": 0.9983617663383484,
+					"text": " witness"
+				},
+				{
+					"start": 11.5,
+					"end": 11.78,
+					"probability": 0.9968786239624023,
+					"text": " her"
+				},
+				{
+					"start": 11.78,
+					"end": 12.28,
+					"probability": 0.9987747073173523,
+					"text": " incredible"
+				},
+				{
+					"start": 12.28,
+					"end": 12.6,
+					"probability": 0.998272180557251,
+					"text": " journey"
+				},
+				{
+					"start": 12.6,
+					"end": 12.84,
+					"probability": 0.9989148378372192,
+					"text": " of"
+				},
+				{
+					"start": 12.84,
+					"end": 13.32,
+					"probability": 0.9953091740608215,
+					"text": " passion,"
+				},
+				{
+					"start": 13.82,
+					"end": 14.38,
+					"probability": 0.9955123066902161,
+					"text": " determination,"
+				},
+				{
+					"start": 14.94,
+					"end": 15.12,
+					"probability": 0.9988607168197632,
+					"text": " and"
+				},
+				{
+					"start": 15.12,
+					"end": 15.6,
+					"probability": 0.9981403350830078,
+					"text": " redemption?"
+				},
+				{
+					"start": 15.9,
+					"end": 16.18,
+					"probability": 0.9947601556777954,
+					"text": " Brace"
+				},
+				{
+					"start": 16.18,
+					"end": 16.6,
+					"probability": 0.9812273979187012,
+					"text": " yourself"
+				},
+				{
+					"start": 16.6,
+					"end": 16.84,
+					"probability": 0.9981503486633301,
+					"text": " for"
+				},
+				{
+					"start": 16.84,
+					"end": 17.0,
+					"probability": 0.9926608800888062,
+					"text": " a"
+				},
+				{
+					"start": 17.0,
+					"end": 17.56,
+					"probability": 0.864110509554545,
+					"text": " rollercoaster"
+				},
+				{
+					"start": 17.56,
+					"end": 17.8,
+					"probability": 0.9990695118904114,
+					"text": " of"
+				},
+				{
+					"start": 17.8,
+					"end": 18.22,
+					"probability": 0.9965614676475525,
+					"text": " emotions"
+				},
+				{
+					"start": 18.22,
+					"end": 18.48,
+					"probability": 0.9718522429466248,
+					"text": " as"
+				},
+				{
+					"start": 18.48,
+					"end": 18.92,
+					"probability": 0.9948323965072632,
+					"text": " Inayat"
+				},
+				{
+					"start": 18.92,
+					"end": 19.3,
+					"probability": 0.9951607584953308,
+					"text": " battles"
+				},
+				{
+					"start": 19.3,
+					"end": 19.76,
+					"probability": 0.9991911053657532,
+					"text": " against"
+				},
+				{
+					"start": 19.76,
+					"end": 20.02,
+					"probability": 0.9990140199661255,
+					"text": " all"
+				},
+				{
+					"start": 20.02,
+					"end": 20.26,
+					"probability": 0.9993946552276611,
+					"text": " odds"
+				},
+				{
+					"start": 20.26,
+					"end": 20.48,
+					"probability": 0.9962847232818604,
+					"text": " to"
+				},
+				{
+					"start": 20.48,
+					"end": 20.86,
+					"probability": 0.9972565770149231,
+					"text": " reclaim"
+				},
+				{
+					"start": 20.86,
+					"end": 21.12,
+					"probability": 0.9990460276603699,
+					"text": " her"
+				},
+				{
+					"start": 21.12,
+					"end": 21.4,
+					"probability": 0.9966893196105957,
+					"text": " lost"
+				},
+				{
+					"start": 21.4,
+					"end": 21.8,
+					"probability": 0.9969040751457214,
+					"text": " glory,"
+				},
+				{
+					"start": 22.1,
+					"end": 22.34,
+					"probability": 0.9965131878852844,
+					"text": " and"
+				},
+				{
+					"start": 22.34,
+					"end": 22.6,
+					"probability": 0.9962843656539917,
+					"text": " prove"
+				},
+				{
+					"start": 22.6,
+					"end": 22.84,
+					"probability": 0.9954687356948853,
+					"text": " that"
+				},
+				{
+					"start": 22.84,
+					"end": 23.12,
+					"probability": 0.9953619837760925,
+					"text": " dreams"
+				},
+				{
+					"start": 23.12,
+					"end": 23.34,
+					"probability": 0.9963085055351257,
+					"text": " do"
+				},
+				{
+					"start": 23.34,
+					"end": 23.58,
+					"probability": 0.9990850687026978,
+					"text": " come"
+				},
+				{
+					"start": 23.58,
+					"end": 23.94,
+					"probability": 0.9993834495544434,
+					"text": " true."
+				},
+				{
+					"start": 24.08,
+					"end": 24.3,
+					"probability": 0.9921687245368958,
+					"text": " In"
+				},
+				{
+					"start": 24.3,
+					"end": 24.62,
+					"probability": 0.9859528541564941,
+					"text": " Street"
+				},
+				{
+					"start": 24.62,
+					"end": 25.02,
+					"probability": 0.9982699751853943,
+					"text": " Dancer"
+				},
+				{
+					"start": 25.02,
+					"end": 25.58,
+					"probability": 0.9985061585903168,
+					"text": " 3D,"
+				},
+				{
+					"start": 25.7,
+					"end": 26.04,
+					"probability": 0.9987308979034424,
+					"text": " Inayat"
+				},
+				{
+					"start": 26.04,
+					"end": 26.38,
+					"probability": 0.99616539478302,
+					"text": " finds"
+				},
+				{
+					"start": 26.38,
+					"end": 26.84,
+					"probability": 0.9989675283432007,
+					"text": " herself"
+				},
+				{
+					"start": 26.84,
+					"end": 27.0,
+					"probability": 0.9980725049972534,
+					"text": " in"
+				},
+				{
+					"start": 27.0,
+					"end": 27.16,
+					"probability": 0.9968852400779724,
+					"text": " a"
+				},
+				{
+					"start": 27.16,
+					"end": 27.46,
+					"probability": 0.9955325126647949,
+					"text": " fierce"
+				},
+				{
+					"start": 27.46,
+					"end": 27.74,
+					"probability": 0.9972992539405823,
+					"text": " dance"
+				},
+				{
+					"start": 27.74,
+					"end": 28.1,
+					"probability": 0.9954118132591248,
+					"text": " battle"
+				},
+				{
+					"start": 28.1,
+					"end": 28.44,
+					"probability": 0.9969577789306641,
+					"text": " against"
+				},
+				{
+					"start": 28.44,
+					"end": 28.66,
+					"probability": 0.9944431185722351,
+					"text": " a"
+				},
+				{
+					"start": 28.66,
+					"end": 28.96,
+					"probability": 0.9982226490974426,
+					"text": " rival"
+				},
+				{
+					"start": 28.96,
+					"end": 29.32,
+					"probability": 0.35004162788391113,
+					"text": " dance"
+				},
+				{
+					"start": 29.32,
+					"end": 29.52,
+					"probability": 0.9156143665313721,
+					"text": " group"
+				},
+				{
+					"start": 29.52,
+					"end": 29.76,
+					"probability": 0.9785217046737671,
+					"text": " from"
+				},
+				{
+					"start": 29.76,
+					"end": 30.46,
+					"probability": 0.9894974231719971,
+					"text": " Pakistan."
+				},
+				{
+					"start": 30.76,
+					"end": 30.86,
+					"probability": 0.9744652509689331,
+					"text": " As"
+				},
+				{
+					"start": 30.86,
+					"end": 31.12,
+					"probability": 0.9949755668640137,
+					"text": " the"
+				},
+				{
+					"start": 31.12,
+					"end": 31.32,
+					"probability": 0.9994250535964966,
+					"text": " stakes"
+				},
+				{
+					"start": 31.32,
+					"end": 31.56,
+					"probability": 0.9948945045471191,
+					"text": " get"
+				},
+				{
+					"start": 31.56,
+					"end": 31.88,
+					"probability": 0.9961218237876892,
+					"text": " higher"
+				},
+				{
+					"start": 31.88,
+					"end": 32.16,
+					"probability": 0.9735984802246094,
+					"text": " and"
+				},
+				{
+					"start": 32.16,
+					"end": 32.46,
+					"probability": 0.987872838973999,
+					"text": " tensions"
+				},
+				{
+					"start": 32.46,
+					"end": 32.92,
+					"probability": 0.9868122935295105,
+					"text": " rise,"
+				},
+				{
+					"start": 33.08,
+					"end": 33.24,
+					"probability": 0.9824008345603943,
+					"text": " she"
+				},
+				{
+					"start": 33.24,
+					"end": 33.5,
+					"probability": 0.9975677132606506,
+					"text": " must"
+				},
+				{
+					"start": 33.5,
+					"end": 33.82,
+					"probability": 0.9962723255157471,
+					"text": " gather"
+				},
+				{
+					"start": 33.82,
+					"end": 33.96,
+					"probability": 0.9982438087463379,
+					"text": " a"
+				},
+				{
+					"start": 33.96,
+					"end": 34.18,
+					"probability": 0.9982535243034363,
+					"text": " team"
+				},
+				{
+					"start": 34.18,
+					"end": 34.38,
+					"probability": 0.9994320273399353,
+					"text": " of"
+				},
+				{
+					"start": 34.38,
+					"end": 34.84,
+					"probability": 0.9963247179985046,
+					"text": " talented"
+				},
+				{
+					"start": 34.84,
+					"end": 35.3,
+					"probability": 0.997444748878479,
+					"text": " dancers"
+				},
+				{
+					"start": 35.3,
+					"end": 35.56,
+					"probability": 0.9985846281051636,
+					"text": " from"
+				},
+				{
+					"start": 35.56,
+					"end": 35.8,
+					"probability": 0.9995348453521729,
+					"text": " all"
+				},
+				{
+					"start": 35.8,
+					"end": 36.06,
+					"probability": 0.9995169639587402,
+					"text": " walks"
+				},
+				{
+					"start": 36.06,
+					"end": 36.26,
+					"probability": 0.9988835453987122,
+					"text": " of"
+				},
+				{
+					"start": 36.26,
+					"end": 36.48,
+					"probability": 0.9989635944366455,
+					"text": " life"
+				},
+				{
+					"start": 36.48,
+					"end": 36.68,
+					"probability": 0.9955343008041382,
+					"text": " to"
+				},
+				{
+					"start": 36.68,
+					"end": 36.96,
+					"probability": 0.9935116171836853,
+					"text": " compete"
+				},
+				{
+					"start": 36.96,
+					"end": 37.1,
+					"probability": 0.998967170715332,
+					"text": " in"
+				},
+				{
+					"start": 37.1,
+					"end": 37.2,
+					"probability": 0.9883372187614441,
+					"text": " the"
+				},
+				{
+					"start": 37.2,
+					"end": 37.64,
+					"probability": 0.9578045010566711,
+					"text": " ultimate"
+				},
+				{
+					"start": 37.64,
+					"end": 37.98,
+					"probability": 0.9932112693786621,
+					"text": " dance"
+				},
+				{
+					"start": 37.98,
+					"end": 38.48,
+					"probability": 0.9878769218921661,
+					"text": " showdown."
+				},
+				{
+					"start": 38.76,
+					"end": 38.98,
+					"probability": 0.9953243136405945,
+					"text": " Along"
+				},
+				{
+					"start": 38.98,
+					"end": 39.2,
+					"probability": 0.9991639852523804,
+					"text": " the"
+				},
+				{
+					"start": 39.2,
+					"end": 39.42,
+					"probability": 0.9996950626373291,
+					"text": " way,"
+				},
+				{
+					"start": 39.62,
+					"end": 39.7,
+					"probability": 0.9972917437553406,
+					"text": " she"
+				},
+				{
+					"start": 39.7,
+					"end": 40.1,
+					"probability": 0.9957358837127686,
+					"text": " faces"
+				},
+				{
+					"start": 40.1,
+					"end": 40.62,
+					"probability": 0.995875895023346,
+					"text": " personal"
+				},
+				{
+					"start": 40.62,
+					"end": 41.14,
+					"probability": 0.9973360896110535,
+					"text": " struggles,"
+				},
+				{
+					"start": 41.52,
+					"end": 41.94,
+					"probability": 0.996796190738678,
+					"text": " confronts"
+				},
+				{
+					"start": 41.94,
+					"end": 42.1,
+					"probability": 0.9981762170791626,
+					"text": " her"
+				},
+				{
+					"start": 42.1,
+					"end": 42.34,
+					"probability": 0.99724942445755,
+					"text": " own"
+				},
+				{
+					"start": 42.34,
+					"end": 42.62,
+					"probability": 0.9989390969276428,
+					"text": " inner"
+				},
+				{
+					"start": 42.62,
+					"end": 42.98,
+					"probability": 0.9917449355125427,
+					"text": " demons,"
+				},
+				{
+					"start": 43.46,
+					"end": 43.68,
+					"probability": 0.998016357421875,
+					"text": " and"
+				},
+				{
+					"start": 43.68,
+					"end": 43.96,
+					"probability": 0.9976475834846497,
+					"text": " learns"
+				},
+				{
+					"start": 43.96,
+					"end": 44.18,
+					"probability": 0.9973690509796143,
+					"text": " the"
+				},
+				{
+					"start": 44.18,
+					"end": 44.4,
+					"probability": 0.998842716217041,
+					"text": " true"
+				},
+				{
+					"start": 44.4,
+					"end": 44.68,
+					"probability": 0.9990019202232361,
+					"text": " meaning"
+				},
+				{
+					"start": 44.68,
+					"end": 44.92,
+					"probability": 0.9993829727172852,
+					"text": " of"
+				},
+				{
+					"start": 44.92,
+					"end": 45.24,
+					"probability": 0.9890549182891846,
+					"text": " unity"
+				},
+				{
+					"start": 45.24,
+					"end": 45.56,
+					"probability": 0.9973262548446655,
+					"text": " and"
+				},
+				{
+					"start": 45.56,
+					"end": 46.08,
+					"probability": 0.998375415802002,
+					"text": " friendship."
+				},
+				{
+					"start": 46.36,
+					"end": 46.5,
+					"probability": 0.04002461954951286,
+					"text": " Get"
+				},
+				{
+					"start": 46.5,
+					"end": 46.76,
+					"probability": 0.9926623106002808,
+					"text": " ready"
+				},
+				{
+					"start": 46.76,
+					"end": 47.0,
+					"probability": 0.9984250068664551,
+					"text": " to"
+				},
+				{
+					"start": 47.0,
+					"end": 47.14,
+					"probability": 0.9648380875587463,
+					"text": " groove"
+				},
+				{
+					"start": 47.14,
+					"end": 47.32,
+					"probability": 0.9937402009963989,
+					"text": " to"
+				},
+				{
+					"start": 47.32,
+					"end": 47.5,
+					"probability": 0.9971367120742798,
+					"text": " the"
+				},
+				{
+					"start": 47.5,
+					"end": 47.64,
+					"probability": 0.9970424771308899,
+					"text": " beat"
+				},
+				{
+					"start": 47.64,
+					"end": 47.84,
+					"probability": 0.8194652199745178,
+					"text": " as"
+				},
+				{
+					"start": 47.84,
+					"end": 48.24,
+					"probability": 0.8763656616210938,
+					"text": " Inayat"
+				},
+				{
+					"start": 48.24,
+					"end": 48.44,
+					"probability": 0.9902290105819702,
+					"text": " and"
+				},
+				{
+					"start": 48.44,
+					"end": 48.66,
+					"probability": 0.9986957907676697,
+					"text": " her"
+				},
+				{
+					"start": 48.66,
+					"end": 48.82,
+					"probability": 0.9990416169166565,
+					"text": " crew"
+				},
+				{
+					"start": 48.82,
+					"end": 49.24,
+					"probability": 0.9977003931999207,
+					"text": " deliver"
+				},
+				{
+					"start": 49.24,
+					"end": 49.6,
+					"probability": 0.99837327003479,
+					"text": " mind"
+				},
+				{
+					"start": 49.6,
+					"end": 49.9,
+					"probability": 0.9108395278453827,
+					"text": "-blowing"
+				},
+				{
+					"start": 49.9,
+					"end": 50.3,
+					"probability": 0.996242880821228,
+					"text": " dance"
+				},
+				{
+					"start": 50.3,
+					"end": 50.88,
+					"probability": 0.9951834082603455,
+					"text": " performances"
+				},
+				{
+					"start": 50.88,
+					"end": 51.2,
+					"probability": 0.9973388314247131,
+					"text": " that"
+				},
+				{
+					"start": 51.2,
+					"end": 51.4,
+					"probability": 0.9973019361495972,
+					"text": " will"
+				},
+				{
+					"start": 51.4,
+					"end": 51.52,
+					"probability": 0.9967551827430725,
+					"text": " leave"
+				},
+				{
+					"start": 51.52,
+					"end": 51.76,
+					"probability": 0.9983261227607727,
+					"text": " you"
+				},
+				{
+					"start": 51.76,
+					"end": 52.38,
+					"probability": 0.9979926645755768,
+					"text": " breathless."
+				},
+				{
+					"start": 52.42,
+					"end": 52.7,
+					"probability": 0.986330509185791,
+					"text": " From"
+				},
+				{
+					"start": 52.7,
+					"end": 52.98,
+					"probability": 0.9970481991767883,
+					"text": " heart"
+				},
+				{
+					"start": 52.98,
+					"end": 53.36,
+					"probability": 0.9695939620335897,
+					"text": "-pounding"
+				},
+				{
+					"start": 53.36,
+					"end": 53.7,
+					"probability": 0.9980411529541016,
+					"text": " street"
+				},
+				{
+					"start": 53.7,
+					"end": 54.02,
+					"probability": 0.9908825755119324,
+					"text": " battles"
+				},
+				{
+					"start": 54.02,
+					"end": 54.22,
+					"probability": 0.9763803482055664,
+					"text": " to"
+				},
+				{
+					"start": 54.22,
+					"end": 54.88,
+					"probability": 0.9916334946950277,
+					"text": " mesmerizing"
+				},
+				{
+					"start": 54.88,
+					"end": 55.62,
+					"probability": 0.9961078763008118,
+					"text": " choreography,"
+				},
+				{
+					"start": 55.84,
+					"end": 56.08,
+					"probability": 0.9945123195648193,
+					"text": " this"
+				},
+				{
+					"start": 56.08,
+					"end": 56.34,
+					"probability": 0.9979143738746643,
+					"text": " movie"
+				},
+				{
+					"start": 56.34,
+					"end": 56.58,
+					"probability": 0.9985237717628479,
+					"text": " will"
+				},
+				{
+					"start": 56.58,
+					"end": 56.76,
+					"probability": 0.9981508851051331,
+					"text": " keep"
+				},
+				{
+					"start": 56.76,
+					"end": 56.96,
+					"probability": 0.9976387023925781,
+					"text": " you"
+				},
+				{
+					"start": 56.96,
+					"end": 57.1,
+					"probability": 0.9978049397468567,
+					"text": " on"
+				},
+				{
+					"start": 57.1,
+					"end": 57.26,
+					"probability": 0.9952248334884644,
+					"text": " the"
+				},
+				{
+					"start": 57.26,
+					"end": 57.42,
+					"probability": 0.9992839694023132,
+					"text": " edge"
+				},
+				{
+					"start": 57.42,
+					"end": 57.54,
+					"probability": 0.9987384676933289,
+					"text": " of"
+				},
+				{
+					"start": 57.54,
+					"end": 57.78,
+					"probability": 0.9977473616600037,
+					"text": " your"
+				},
+				{
+					"start": 57.78,
+					"end": 58.04,
+					"probability": 0.9987886548042297,
+					"text": " seat."
+				},
+				{
+					"start": 58.04,
+					"end": 58.42,
+					"probability": 0.9004867672920227,
+					"text": " Will"
+				},
+				{
+					"start": 58.42,
+					"end": 58.84,
+					"probability": 0.8668194015820821,
+					"text": " Inayat"
+				},
+				{
+					"start": 58.84,
+					"end": 59.02,
+					"probability": 0.9946284890174866,
+					"text": " and"
+				},
+				{
+					"start": 59.02,
+					"end": 59.2,
+					"probability": 0.9986963868141174,
+					"text": " her"
+				},
+				{
+					"start": 59.2,
+					"end": 59.42,
+					"probability": 0.9982919096946716,
+					"text": " team"
+				},
+				{
+					"start": 59.42,
+					"end": 59.82,
+					"probability": 0.9973577857017517,
+					"text": " triumph"
+				},
+				{
+					"start": 59.82,
+					"end": 60.14,
+					"probability": 0.9992626309394836,
+					"text": " over"
+				},
+				{
+					"start": 60.14,
+					"end": 60.34,
+					"probability": 0.9980846643447876,
+					"text": " their"
+				},
+				{
+					"start": 60.34,
+					"end": 60.74,
+					"probability": 0.9974523186683655,
+					"text": " rivals?"
+				},
+				{
+					"start": 61.06,
+					"end": 61.18,
+					"probability": 0.9911565780639648,
+					"text": " Can"
+				},
+				{
+					"start": 61.18,
+					"end": 61.4,
+					"probability": 0.9987372756004333,
+					"text": " they"
+				},
+				{
+					"start": 61.4,
+					"end": 61.62,
+					"probability": 0.9984710812568665,
+					"text": " prove"
+				},
+				{
+					"start": 61.62,
+					"end": 61.84,
+					"probability": 0.9957709908485413,
+					"text": " that"
+				},
+				{
+					"start": 61.84,
+					"end": 62.08,
+					"probability": 0.9750763177871704,
+					"text": " dance"
+				},
+				{
+					"start": 62.08,
+					"end": 62.3,
+					"probability": 0.9980326294898987,
+					"text": " has"
+				},
+				{
+					"start": 62.3,
+					"end": 62.52,
+					"probability": 0.993221640586853,
+					"text": " the"
+				},
+				{
+					"start": 62.52,
+					"end": 62.74,
+					"probability": 0.9986326098442078,
+					"text": " power"
+				},
+				{
+					"start": 62.74,
+					"end": 62.98,
+					"probability": 0.9982470273971558,
+					"text": " to"
+				},
+				{
+					"start": 62.98,
+					"end": 63.18,
+					"probability": 0.9984999895095825,
+					"text": " bridge"
+				},
+				{
+					"start": 63.18,
+					"end": 63.62,
+					"probability": 0.9985705614089966,
+					"text": " divides"
+				},
+				{
+					"start": 63.62,
+					"end": 63.9,
+					"probability": 0.9972085356712341,
+					"text": " and"
+				},
+				{
+					"start": 63.9,
+					"end": 64.08,
+					"probability": 0.998420238494873,
+					"text": " bring"
+				},
+				{
+					"start": 64.08,
+					"end": 64.42,
+					"probability": 0.9988641738891602,
+					"text": " people"
+				},
+				{
+					"start": 64.42,
+					"end": 64.86,
+					"probability": 0.9993281364440918,
+					"text": " together?"
+				},
+				{
+					"start": 65.12,
+					"end": 65.36,
+					"probability": 0.9967014193534851,
+					"text": " Join"
+				},
+				{
+					"start": 65.36,
+					"end": 65.8,
+					"probability": 0.995927075544993,
+					"text": " Inayat"
+				},
+				{
+					"start": 65.8,
+					"end": 65.96,
+					"probability": 0.9947963356971741,
+					"text": " on"
+				},
+				{
+					"start": 65.96,
+					"end": 66.16,
+					"probability": 0.9973601698875427,
+					"text": " her"
+				},
+				{
+					"start": 66.16,
+					"end": 66.76,
+					"probability": 0.9964210589726766,
+					"text": " exhilarating"
+				},
+				{
+					"start": 66.76,
+					"end": 67.14,
+					"probability": 0.998664140701294,
+					"text": " journey"
+				},
+				{
+					"start": 67.14,
+					"end": 67.44,
+					"probability": 0.9888877272605896,
+					"text": " and"
+				},
+				{
+					"start": 67.44,
+					"end": 67.66,
+					"probability": 0.998561680316925,
+					"text": " find"
+				},
+				{
+					"start": 67.66,
+					"end": 67.84,
+					"probability": 0.9983670115470886,
+					"text": " out"
+				},
+				{
+					"start": 67.84,
+					"end": 68.06,
+					"probability": 0.9986559152603149,
+					"text": " for"
+				},
+				{
+					"start": 68.06,
+					"end": 68.5,
+					"probability": 0.9988569021224976,
+					"text": " yourself."
+				},
+				{
+					"start": 68.8,
+					"end": 69.0,
+					"probability": 0.9890056550502777,
+					"text": " Don't"
+				},
+				{
+					"start": 69.0,
+					"end": 69.22,
+					"probability": 0.9977778792381287,
+					"text": " miss"
+				},
+				{
+					"start": 69.22,
+					"end": 69.46,
+					"probability": 0.9852741956710815,
+					"text": " the"
+				},
+				{
+					"start": 69.46,
+					"end": 69.66,
+					"probability": 0.9984810948371887,
+					"text": " chance"
+				},
+				{
+					"start": 69.66,
+					"end": 70.0,
+					"probability": 0.9986190795898438,
+					"text": " to"
+				},
+				{
+					"start": 70.0,
+					"end": 70.48,
+					"probability": 0.9987648725509644,
+					"text": " experience"
+				},
+				{
+					"start": 70.48,
+					"end": 70.76,
+					"probability": 0.9560555219650269,
+					"text": " the"
+				},
+				{
+					"start": 70.76,
+					"end": 71.2,
+					"probability": 0.9249315857887268,
+					"text": " adrenaline"
+				},
+				{
+					"start": 71.2,
+					"end": 71.48,
+					"probability": 0.9922646284103394,
+					"text": " rush"
+				},
+				{
+					"start": 71.48,
+					"end": 71.78,
+					"probability": 0.9942530989646912,
+					"text": " of"
+				},
+				{
+					"start": 71.78,
+					"end": 71.96,
+					"probability": 0.8139204978942871,
+					"text": " Street"
+				},
+				{
+					"start": 71.96,
+					"end": 72.38,
+					"probability": 0.9338688850402832,
+					"text": " Dancer"
+				},
+				{
+					"start": 72.38,
+					"end": 72.96,
+					"probability": 0.96389439702034,
+					"text": " 3D."
+				},
+				{
+					"start": 73.18,
+					"end": 73.66,
+					"probability": 0.9958009123802185,
+					"text": " Subscribe"
+				},
+				{
+					"start": 73.66,
+					"end": 73.88,
+					"probability": 0.9962561130523682,
+					"text": " to"
+				},
+				{
+					"start": 73.88,
+					"end": 74.02,
+					"probability": 0.9961307048797607,
+					"text": " my"
+				},
+				{
+					"start": 74.02,
+					"end": 74.4,
+					"probability": 0.9983187913894653,
+					"text": " channel"
+				},
+				{
+					"start": 74.4,
+					"end": 74.58,
+					"probability": 0.9804666638374329,
+					"text": " and"
+				},
+				{
+					"start": 74.58,
+					"end": 74.78,
+					"probability": 0.9987280964851379,
+					"text": " hit"
+				},
+				{
+					"start": 74.78,
+					"end": 74.92,
+					"probability": 0.9988275170326233,
+					"text": " the"
+				},
+				{
+					"start": 74.92,
+					"end": 75.16,
+					"probability": 0.997775137424469,
+					"text": " bell"
+				},
+				{
+					"start": 75.16,
+					"end": 75.58,
+					"probability": 0.9984180927276611,
+					"text": " icon"
+				},
+				{
+					"start": 75.58,
+					"end": 75.84,
+					"probability": 0.9955112934112549,
+					"text": " to"
+				},
+				{
+					"start": 75.84,
+					"end": 75.98,
+					"probability": 0.9990886449813843,
+					"text": " stay"
+				},
+				{
+					"start": 75.98,
+					"end": 76.42,
+					"probability": 0.9908073544502258,
+					"text": " updated"
+				},
+				{
+					"start": 76.42,
+					"end": 76.7,
+					"probability": 0.9989223480224609,
+					"text": " with"
+				},
+				{
+					"start": 76.7,
+					"end": 76.84,
+					"probability": 0.9947648048400879,
+					"text": " the"
+				},
+				{
+					"start": 76.84,
+					"end": 77.12,
+					"probability": 0.9976970553398132,
+					"text": " latest"
+				},
+				{
+					"start": 77.12,
+					"end": 77.52,
+					"probability": 0.9790279269218445,
+					"text": " movie"
+				},
+				{
+					"start": 77.52,
+					"end": 77.92,
+					"probability": 0.9985647797584534,
+					"text": " reviews"
+				},
+				{
+					"start": 77.92,
+					"end": 78.24,
+					"probability": 0.9985437393188477,
+					"text": " and"
+				},
+				{
+					"start": 78.24,
+					"end": 79.02,
+					"probability": 0.9973748922348022,
+					"text": " recommendations."
+				},
+				{
+					"start": 79.36,
+					"end": 79.5,
+					"probability": 0.9942469596862793,
+					"text": " Get"
+				},
+				{
+					"start": 79.5,
+					"end": 79.74,
+					"probability": 0.9730036854743958,
+					"text": " ready"
+				},
+				{
+					"start": 79.74,
+					"end": 79.98,
+					"probability": 0.999203622341156,
+					"text": " to"
+				},
+				{
+					"start": 79.98,
+					"end": 80.18,
+					"probability": 0.9882746934890747,
+					"text": " dance"
+				},
+				{
+					"start": 80.18,
+					"end": 80.4,
+					"probability": 0.9984216690063477,
+					"text": " your"
+				},
+				{
+					"start": 80.4,
+					"end": 80.52,
+					"probability": 0.994549572467804,
+					"text": " heart"
+				},
+				{
+					"start": 80.52,
+					"end": 80.82,
+					"probability": 0.9995819926261902,
+					"text": " out."
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 0.0,
+					"end": 1.0,
+					"props": {"volume": 0.5, "startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 1.42,
+					"end": 2.42,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 6.42,
+					"end": 7.42,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 11.42,
+					"end": 12.42,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 16.42,
+					"end": 17.42,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 24.08,
+					"end": 25.08,
+					"props": {"volume": 0.5, "startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 28.96,
+					"end": 29.96,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 33.96,
+					"end": 34.96,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 38.96,
+					"end": 39.96,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 46.36,
+					"end": 47.36,
+					"props": {"volume": 0.5, "startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 50.3,
+					"end": 51.3,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 55.3,
+					"end": 56.3,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 60.3,
+					"end": 61.3,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 65.3,
+					"end": 66.3,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 70.3,
+					"end": 71.3,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 79.36,
+					"end": 80.36,
+					"props": {"volume": 0.5, "startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 80.82,
+					"end": 81.82,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 58.04,
+					"end": 59.04,
+					"props": {"volume": 0.5, "startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 60.74,
+					"end": 61.74,
+					"props": {"startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "sfx",
+			"sequence": [
+				{
+					"type": "sfx",
+					"name": "sfx_1.mp3",
+					"start": 68.8,
+					"end": 69.8,
+					"props": {"volume": 0.5, "startFrom": 0}
+				}
+			]
+		},
+		{
+			"type": "audio",
+			"sequence": [
+				{
+					"type": "audio",
+					"name": "transcript.wav",
+					"start": 0.0,
+					"end": 80.82,
+					"props": {"startFrom": 0.0, "endAt": 2424.6, "volume": 4}
+				}
+			]
+		},
+		{
+			"type": "background",
+			"sequence": [
+				{
+					"type": "background",
+					"name": "background.mp3",
+					"start": 0.0,
+					"end": 80.82,
+					"props": {"startFrom": 0.0, "endAt": 2424.6, "volume": 0.05}
+				}
+			]
+		},
+		{
+			"type": "image",
+			"sequence": [
+				{"type": "image", "name": "image_0.webp", "start": 0.0, "end": 1.42},
+				{"type": "image", "name": "image_1.webp", "start": 1.42, "end": 6.42},
+				{"type": "image", "name": "image_2.webp", "start": 6.42, "end": 11.42},
+				{"type": "image", "name": "image_3.webp", "start": 11.42, "end": 16.42},
+				{"type": "image", "name": "image_4.webp", "start": 16.42, "end": 21.42},
+				{"type": "image", "name": "image_5.webp", "start": 24.08, "end": 28.96},
+				{"type": "image", "name": "image_6.webp", "start": 28.96, "end": 33.96},
+				{"type": "image", "name": "image_7.webp", "start": 33.96, "end": 38.96},
+				{"type": "image", "name": "image_8.webp", "start": 38.96, "end": 43.96},
+				{"type": "image", "name": "image_9.webp", "start": 46.36, "end": 50.3},
+				{"type": "image", "name": "image_10.webp", "start": 50.3, "end": 55.3},
+				{"type": "image", "name": "image_11.webp", "start": 55.3, "end": 60.3},
+				{"type": "image", "name": "image_12.webp", "start": 60.3, "end": 65.3},
+				{"type": "image", "name": "image_13.webp", "start": 65.3, "end": 70.3},
+				{"type": "image", "name": "image_14.webp", "start": 70.3, "end": 75.3},
+				{
+					"type": "image",
+					"name": "image_15.webp",
+					"start": 79.36,
+					"end": 80.82
+				},
+				{
+					"type": "image",
+					"name": "image_16.webp",
+					"start": 80.82,
+					"end": 80.82
+				},
+				{
+					"type": "image",
+					"name": "image_17.webp",
+					"start": 58.04,
+					"end": 60.74
+				},
+				{
+					"type": "image",
+					"name": "image_18.webp",
+					"start": 60.74,
+					"end": 65.74000000000001
+				},
+				{"type": "image", "name": "image_19.webp", "start": 68.8, "end": 72.96}
+			]
+		}
+	]
+}
