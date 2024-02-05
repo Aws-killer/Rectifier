@@ -10,7 +10,7 @@ timezone = "Europe/Oslo"
 enable_utc = True
 
 broker_url = f"amqps://llmgzyix:WZZdL_6mmwvoawt58_gYYJV4veF8dOZm@beaver.rmq.cloudamqp.com/llmgzyix"
-result_backend = f"db+postgresql+psycopg2://postgres:PkkneZrSFsnJR6B@db.vfhoydxvxuesxhrcdnmx.supabase.co:5432/postgres"
+
 
 # SSL/TLS and SNI configuration
 # broker_use_ssl = {

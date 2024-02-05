@@ -12,3 +12,4 @@ Config.overrideWebpackConfig((currentConfiguration) => {
 });
 
 Config.setVideoImageFormat('jpeg');
+Config.setConcurrency(15);
