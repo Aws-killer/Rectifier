@@ -4,7 +4,7 @@ import * as Fonts from '@remotion/google-fonts';
 import transcriptData from './Assets/TextSequences.json';
 import Constants from './Assets/Constants.json';
 import {TransitionSeries} from '@remotion/transitions';
-import {GsapAnimation} from './Components/GsapAnimation';
+import GsapAnimation from './Components/GsapAnimation';
 import gsap from 'gsap';
 const defaultText = {
 	fontFamily: 'Luckiest Guy',
@@ -67,7 +67,7 @@ export const TextStream = () => {
 export function Letter({children, style,duration}) {
 	
 	const Textimeline =()=>{
-		let timeline=gsap.timeline()
+		let timeline=gsap.timeline();
 		timeline.fromTo('#letter',{yPercent:100},{yPercent:0,duration:duration/2, ease:"power2.inOut"})		
 		return timeline
 		}
