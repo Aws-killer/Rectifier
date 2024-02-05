@@ -1,4 +1,4 @@
-import { useGsapTimeline } from '../../../lib/useGsapTimeline'
+import { useGsapTimeline } from '../../lib/useGsapTimeline'
 import { AbsoluteFill } from 'remotion';
 import gsap from 'gsap';
 
