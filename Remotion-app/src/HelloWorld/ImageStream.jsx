@@ -62,22 +62,8 @@ const Images = ({entry}) => {
 			},
 			0
 		);
-		tlContainer.fromTo(
-			'#imagex',
-			{
-				scale: 1.1,
-				xPercent:-10,
-			},
-			{
-				scale: 1,
-				xPercent:0,
-				duration: 1/2,
-			},
-			0
-		);
 		return tlContainer;
 	};
-
 	return (
 		<>
 		<GsapAnimation
