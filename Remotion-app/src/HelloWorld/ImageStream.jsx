@@ -9,7 +9,9 @@ import React from 'react';
 import {staticFile, useVideoConfig, Img, Easing} from 'remotion';
 import imageSequences from './Assets/ImageSequences.json';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
-import {slide} from '@remotion/transitions/slide';
+import GsapAnimation from './Components/GsapAnimation';
+import gsap from 'gsap';
+
 export default function ImageStream() {
 	const {fps} = useVideoConfig();
 
@@ -37,13 +39,6 @@ export default function ImageStream() {
 							>
 								<Images key={index} entry={entry} />;
 							</TransitionSeries.Sequence>
-							<TransitionSeries.Transition
-								presentation={slide('from-left')}
-								timing={linearTiming({
-									durationInFrames: 2,
-									easing: Easing.bezier(0.02, 1.85, 0.83, 0.43),
-								})}
-							/>
 						</>
 					);
 				})}
@@ -53,65 +48,59 @@ export default function ImageStream() {
 }
 
 const Images = ({entry}) => {
-	const {fps} = useVideoConfig();
-	const frame = useCurrentFrame();
-	const durationInFrames = (entry.end - entry.start) * fps;
-	const spr = spring({
-		fps,
-		frame,
-		config: {
-			damping: 100,
-		},
-		delay: 0,
-		from: 0,
-		to: 1,
-		durationInFrames: durationInFrames,
-	});
-	const initialSpring = spring({
-		fps,
-		frame,
-		config: {
-			damping: 100,
-		},
-		delay: 0,
-		from: 0,
-		to: 1,
-		durationInFrames: durationInFrames,
-	});
+	const gsapTimeline = () => {
+		let tlContainer = gsap.timeline();
+		tlContainer.fromTo(
+			'#gaussianBlur',
+			{
+				attr: {stdDeviation: `250,0`},
+			},
+			{
+				attr: {stdDeviation: `0,0`},
 
-	const zoom = interpolate(spr, [0, 0.5, 1], [1, 1.3, 1.2], {
-		easing: Easing.bezier(0.23, 1, 0.32, 1),
-		// extrapolateLeft: 'clamp',
-		// extrapolateRight: 'clamp',
-	});
-
-	const blur = interpolate(
-		initialSpring,
-		[0.0, 0.09, 0.99, 0.995, 1],
-		[20, 0, 0, 0, 5],
-		{
-			easing: Easing.bezier(0.23, 1, 0.32, 1),
-			extrapolateLeft: 'identity',
-			extrapolateRight: 'identity',
-		}
-	);
+				duration: 1/2,
+			},
+			0
+		);
+		tlContainer.fromTo(
+			'#imagex',
+			{
+				scale: 1.1,
+				xPercent:-10,
+			},
+			{
+				scale: 1,
+				xPercent:0,
+				duration: 1/2,
+			},
+			0
+		);
+		return tlContainer;
+	};
 
 	return (
 		<>
+		<GsapAnimation
+			style={{
+				BackgroundColor: 'black',
+			}}
+			className="bg-black"
+			Timeline={gsapTimeline}
+		>
+			<Audio src={staticFile('sfx_1.mp3')} />
 			<svg xmlns="http://www.w3.org/2000/svg" version="1.1" className="filters">
 				<defs>
 					<filter id="blur">
-						<feGaussianBlur in="SourceGraphic" stdDeviation={`${blur * 5},0`} />
+						<feGaussianBlur
+							id="gaussianBlur"
+							in="SourceGraphic"
+						/>
 					</filter>
 				</defs>
 			</svg>
 			<Img
+							id="imagex"
 				style={{
-					transform: ` scale(${zoom}) ${
-						initialSpring > 0.99
-							? `translateX(${blur * 5}px)`
-							: `translateX(-${blur * 5}px)`
-					}`,
 					filter: `url(#blur)`,
 					objectPosition: 'center',
 					objectFit: 'cover',
@@ -120,17 +109,14 @@ const Images = ({entry}) => {
 					top: '50%', // Center vertically
 					left: '50%', // Center horizontally
 					transform: 'translate(-50%, -50%)',
-					// zIndex: 150,
-					// height: '100vh',
+
 					width: 1080,
 					height: 1920,
-					// transformOrigin: 'center center', // Move rotation origin to the
-					// opacity: 0.1
-					// transform: `translateX(-${blur * 5}px)`,
-					// transition: 'all 5s ease',
+
 				}}
 				src={staticFile(entry.name)}
 			/>
+					</GsapAnimation>
 		</>
 	);
 };
