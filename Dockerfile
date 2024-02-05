@@ -33,6 +33,17 @@ RUN apt-get install -y \
   libxrandr2 \
   xdg-utils
 
+# Download youtubeuploader
+ADD https://github.com/porjo/youtubeuploader/releases/download/23.06/youtubeuploader_23.06_Linux_x86_64.tar.gz youtubeuploader.tar.gz
+
+
+# Create youtube directory and extract youtubeuploader there
+RUN mkdir -p /srv/youtube && \
+    tar -zxvf youtubeuploader.tar.gz -C /srv/youtube && \
+    rm youtubeuploader.tar.gz && \
+    chmod +x /srv/youtube/youtubeuploader
+
+
 # Copy the application code
 COPY --chown=admin . /srv
 
@@ -47,8 +58,6 @@ RUN npm install npm@latest -g && \
 
 
 
-RUN echo npm -v
-RUN node -v
 
 #install the stuff
 # RUN cd /srv/Remotion-app && npm install

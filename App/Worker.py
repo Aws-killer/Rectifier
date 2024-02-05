@@ -2,6 +2,7 @@ from celery import Celery, chain
 import os, shutil, subprocess
 import uuid
 from urllib.parse import urlparse
+from subprocess import run
 from App import celery_config, bot
 from typing import List
 from App.Editor.Schema import EditorRequest, LinkInfo, Assets, Constants
@@ -9,6 +10,18 @@ from celery.signals import worker_process_init
 from asgiref.sync import async_to_sync
 import json
 import os
+from pydantic import BaseModel
+
+class YouTubeUploadTask(BaseModel):
+    filename: str
+    title: str = "Default Title"
+    description: str = "Default Description"
+    category_id: str = "22"  # Default to a generic category, update as needed
+    privacy: str = "private"
+    tags: str = ""
+    thumbnail: str = None
+
+
 
 celery = Celery()
 celery.config_from_object(celery_config)
@@ -81,6 +94,31 @@ def unsilence(directory: str):
 def install_dependencies(directory: str):
     os.chdir(directory)
     os.system("npm install")
+
+
+@celery.task(name="uploadTime")
+def upload_video_to_youtube(task_data: dict):
+    # Convert dict to Pydantic model
+    task = YouTubeUploadTask(**task_data)
+
+    # Build the command
+    command = [
+        '/srv/youtube/youtubeuploader',  # Adjust the path as needed
+        '-filename', task.filename,
+        '-title', task.title,
+        '-description', task.description,
+        '-categoryId', task.category_id,
+        '-privacy', task.privacy,
+        '-tags', task.tags
+    ]
+
+    if task.thumbnail:
+        command.extend(['-thumbnail', task.thumbnail])
+
+    # Execute the command
+    result = run(command, capture_output=True, text=True)
+
+    return result.stdout
 
 
 @celery.task(name="DownloadAssets")
