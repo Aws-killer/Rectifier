@@ -11,9 +11,12 @@ import imageSequences from './Assets/ImageSequences.json';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
 import GsapAnimation from './Components/GsapAnimation';
 import gsap from 'gsap';
+import {MotionPathPlugin} from 'gsap-trial/all';
+
 
 export default function ImageStream() {
 	const {fps} = useVideoConfig();
+
 
 	return (
 		<AbsoluteFill
@@ -48,6 +51,7 @@ export default function ImageStream() {
 }
 
 const Images = ({entry}) => {
+	const plugins = [MotionPathPlugin];
 	const gsapTimeline = () => {
 		let tlContainer = gsap.timeline();
 		tlContainer.fromTo(
@@ -78,6 +82,7 @@ const Images = ({entry}) => {
 	return (
 		<>
 		<GsapAnimation
+		plugins={plugins}
 			style={{
 				BackgroundColor: 'black',
 			}}
