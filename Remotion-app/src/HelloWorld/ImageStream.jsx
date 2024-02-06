@@ -61,7 +61,7 @@ const Images = ({entry}) => {
 			},
 			{
 				attr: {stdDeviation: `0,0`},
-
+				scale:1.5,
 				duration: 1/2,
 			},
 			0
@@ -70,7 +70,7 @@ const Images = ({entry}) => {
 			duration: 2, // Total duration for one loop
 			ease: "power1.inOut",
 			motionPath: {
-					path: "M0,0 C50,0 100,50 100,100 C100,150 50,200 0,200 C-50,200 -100,150 -100,100 C-100,50 -50,0 0,0",
+					path: "M0,0 l50,50 l-50,50 l50,50 l-50,50",
 					align: "#imagex",
 					alignOrigin: [0.5, 0.5],
 					autoRotate: false
