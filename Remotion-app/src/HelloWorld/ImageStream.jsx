@@ -61,11 +61,15 @@ const Images = ({entry}) => {
 			},
 			{
 				attr: {stdDeviation: `0,0`},
-				scale: 1.5,
+
 				duration: 1/2,
 			},
 			0
 		);
+		tlContainer.to("#imagex", {
+			ease: "power1.inOut",
+			scale: 1.5,
+		},0);
 		tlContainer.to("#imagex", {
 			duration: 2, // Total duration for one loop
 			ease: "power1.inOut",
