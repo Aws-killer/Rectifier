@@ -68,7 +68,7 @@ const Images = ({entry}) => {
 		);
 		tlContainer.to("#imagex", {
 			ease: "power1.inOut",
-			scale: 1.5,
+			scale: 1.2,
 		},0);
 		tlContainer.to("#imagex", {
 			duration: 2, // Total duration for one loop
