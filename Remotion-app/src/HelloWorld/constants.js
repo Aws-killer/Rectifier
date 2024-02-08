@@ -4,3 +4,5 @@ export const FONT_FAMILY = 'Luckiest Guy';
 export const FPS = 30;
 
 export const DURATION = 70 * FPS; // 30 seconds
+
+
