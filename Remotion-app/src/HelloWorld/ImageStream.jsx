@@ -68,12 +68,12 @@ const Images = ({entry,index}) => {
 			duration: 2, // Total duration for one loop
 			ease: 'power1.inOut',
 			scale: 1.2,
-			motionPath: {
-				path: CAMERA_PATHS[index % CAMERA_PATHS.length],
-				align: '#imagex',
-				alignOrigin: [0.5, 0.5],
-				autoRotate: false,
-			},
+			// motionPath: {
+			// 	path: CAMERA_PATHS[index % CAMERA_PATHS.length],
+			// 	align: '#imagex',
+			// 	alignOrigin: [0.5, 0.5],
+			// 	autoRotate: false,
+			// },
 		});
 
 		return tlContainer;
