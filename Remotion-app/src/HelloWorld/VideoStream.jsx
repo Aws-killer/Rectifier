@@ -8,7 +8,7 @@ export default function VideoStream() {
 	return (
 		<TransitionSeries
 			style={{
-				color: 'white',
+				// color: 'white',
 				position: 'absolute',
 				zIndex: 1,
 			}}

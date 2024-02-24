@@ -39,7 +39,7 @@ export const TextStream = () => {
 				backgroundColor: 'transparent',
 				justifyContent: 'center',
 				alignItems: 'center',
-				position: 'relative',
+				position: 'abdolute',
 				// backgroundColor: 'red',
 			}}
 		>
