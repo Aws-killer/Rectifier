@@ -12,6 +12,7 @@ import json
 import os
 from pydantic import BaseModel
 
+
 class YouTubeUploadTask(BaseModel):
     filename: str
     title: str = "Default Title"
@@ -20,7 +21,6 @@ class YouTubeUploadTask(BaseModel):
     privacy: str = "private"
     tags: str = ""
     thumbnail: str = None
-
 
 
 celery = Celery()
@@ -44,6 +44,7 @@ def create_json_file(assets: List[Assets], asset_dir: str):
         # Write JSON string to file
         with open(os.path.join(asset_dir, filename), "w") as f:
             f.write(json_string)
+
 
 @celery.task(name="Constants")
 def create_constants_json_file(constants: Constants, asset_dir: str):
@@ -103,17 +104,23 @@ def upload_video_to_youtube(task_data: dict):
 
     # Build the command
     command = [
-        '/srv/youtube/youtubeuploader',  # Adjust the path as needed
-        '-filename', task.filename,
-        '-title', task.title,
-        '-description', task.description,
-        '-categoryId', task.category_id,
-        '-privacy', task.privacy,
-        '-tags', task.tags
+        "/srv/youtube/youtubeuploader",  # Adjust the path as needed
+        "-filename",
+        task.filename,
+        "-title",
+        task.title,
+        "-description",
+        task.description,
+        "-categoryId",
+        task.category_id,
+        "-privacy",
+        task.privacy,
+        "-tags",
+        task.tags,
     ]
 
     if task.thumbnail:
-        command.extend(['-thumbnail', task.thumbnail])
+        command.extend(["-thumbnail", task.thumbnail])
 
     # Execute the command
     result = run(command, capture_output=True, text=True)
@@ -133,7 +140,9 @@ def download_assets(links: List[LinkInfo], temp_dir: str):
 @celery.task(name="RenderFile")
 def render_video(directory: str, output_directory: str):
     os.chdir(directory)
-    os.system(f"npm run build --enable-multiprocess-on-linux --output {output_directory}")
+    os.system(
+        f"npm run build --enable-multiprocess-on-linux --output {output_directory}"
+    )
     print("complete")
 
 
@@ -177,7 +186,7 @@ def celery_task(video_task: EditorRequest):
         create_json_file.si(video_task.assets, assets_dir),
         download_assets.si(video_task.links, temp_dir) if video_task.links else None,
         render_video.si(temp_dir, output_dir),
-        unsilence.si(temp_dir),
+        # unsilence.si(temp_dir),
         cleanup_temp_directory.si(temp_dir, output_dir),
     ).apply_async(
         # link_error=handle_error
