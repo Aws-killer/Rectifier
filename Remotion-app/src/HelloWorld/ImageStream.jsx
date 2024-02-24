@@ -48,22 +48,22 @@ export default function ImageStream() {
 	);
 }
 
-const Images = ({entry,index}) => {
+const Images = ({entry, index}) => {
 	const plugins = [MotionPathPlugin];
 	const gsapTimeline = () => {
 		let tlContainer = gsap.timeline();
-		tlContainer.fromTo(
-			'#gaussianBlur',
-			{
-				attr: {stdDeviation: `250,0`},
-			},
-			{
-				attr: {stdDeviation: `0,0`},
+		// tlContainer.fromTo(
+		// 	'#gaussianBlur',
+		// 	{
+		// 		attr: {stdDeviation: `250,0`},
+		// 	},
+		// 	{
+		// 		attr: {stdDeviation: `0,0`},
 
-				duration: 1 / 2,
-			},
-			0
-		);
+		// 		duration: 1 / 2,
+		// 	},
+		// 	0
+		// );
 		tlContainer.to('#imagex', {
 			duration: 2, // Total duration for one loop
 			ease: 'power1.inOut',
