@@ -10,7 +10,7 @@ export default function VideoStream() {
 			style={{
 				color: 'white',
 				position: 'absolute',
-				zIndex: 0,
+				zIndex: 1,
 			}}
 		>
 			{videoSequences.map((entry, index) => {
