@@ -3,6 +3,8 @@ import React from 'react';
 import {Video, staticFile, useVideoConfig} from 'remotion';
 import videoSequences from './Assets/VideoSequences.json';
 import {TransitionSeries} from '@remotion/transitions';
+
+
 export default function VideoStream() {
 	const {fps} = useVideoConfig();
 	return (
