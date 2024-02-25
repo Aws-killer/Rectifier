@@ -43,8 +43,6 @@ const TextStream = React.memo(() => {
 				backgroundColor: 'transparent',
 				justifyContent: 'center',
 				alignItems: 'center',
-				position: 'abdolute',
-				// backgroundColor: 'red',
 			}}
 		>
 			<TransitionSeries>
