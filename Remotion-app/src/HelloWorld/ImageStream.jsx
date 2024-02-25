@@ -49,8 +49,9 @@ export default function ImageStream() {
 }
 
 const Images = ({entry, index}) => {
-	const plugins = [MotionPathPlugin];
-	const gsapTimeline = () => {
+	const plugins = useMemo(() => [MotionPathPlugin], []);
+
+	const gsapTimeline = useMemo(() => {
 		let tlContainer = gsap.timeline();
 		// tlContainer.fromTo(
 		// 	'#gaussianBlur',
@@ -77,7 +78,8 @@ const Images = ({entry, index}) => {
 		});
 
 		return tlContainer;
-	};
+	}, []);
+
 	return (
 		<>
 			<GsapAnimation
@@ -89,17 +91,6 @@ const Images = ({entry, index}) => {
 				Timeline={gsapTimeline}
 			>
 				<Audio src={staticFile('sfx_1.mp3')} />
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					version="1.1"
-					className="filters"
-				>
-					<defs>
-						<filter id="blur">
-							<feGaussianBlur id="gaussianBlur" in="SourceGraphic" />
-						</filter>
-					</defs>
-				</svg>
 				<Img
 					id="imagex"
 					style={{

@@ -1,4 +1,4 @@
-import React, {createElement} from 'react';
+import React, {useMemo} from 'react';
 import {useVideoConfig, AbsoluteFill, TransitionSeries} from 'remotion';
 import * as Fonts from '@remotion/google-fonts';
 import transcriptData from './Assets/TextSequences.json';
@@ -33,6 +33,10 @@ Fonts.getAvailableFonts()
 export const TextStream = () => {
 	const {fps} = useVideoConfig();
 
+	const memoizedTranscriptData = useMemo(() => {
+		return transcriptData;
+	}, []);
+
 	return (
 		<AbsoluteFill
 			style={{
@@ -44,7 +48,7 @@ export const TextStream = () => {
 			}}
 		>
 			<TransitionSeries>
-				{transcriptData.map((entry, index) => {
+				{memoizedTranscriptData.map((entry, index) => {
 					const delta = entry.end - entry.start < 1 / 30 ? 0.2 : 0;
 					return (
 						<TransitionSeries.Sequence

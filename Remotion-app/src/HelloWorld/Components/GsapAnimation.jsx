@@ -1,15 +1,24 @@
-import { useGsapTimeline } from '../../lib/useGsapTimeline'
-import { AbsoluteFill } from 'remotion';
+import {useGsapTimeline} from '../../lib/useGsapTimeline';
+import {AbsoluteFill} from 'remotion';
+import React, {useMemo} from 'react';
 import gsap from 'gsap';
 
+export default function GsapAnimation({
+	Timeline,
+	style,
+	className,
+	children,
+	plugins = [],
+}) {
+	const memoizedPlugins = useMemo(() => {
+		return [...plugins];
+	}, [plugins]);
 
-
-export default function GsapAnimation({ Timeline, style, className, children, plugins = [] }) {
-  gsap.registerPlugin(...plugins);
-  const ContainerRef = useGsapTimeline(Timeline);
-  return (
-    <AbsoluteFill className={className} style={style} ref={ContainerRef}>
-      {children}
-    </AbsoluteFill>
-  );
+	gsap.registerPlugin(memoizedPlugins);
+	const ContainerRef = useGsapTimeline(Timeline);
+	return (
+		<AbsoluteFill className={className} style={style} ref={ContainerRef}>
+			{children}
+		</AbsoluteFill>
+	);
 }
