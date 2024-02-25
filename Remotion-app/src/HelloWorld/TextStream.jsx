@@ -64,8 +64,8 @@ const TextStream = React.memo(() => {
 	);
 });
 
-export function Letter({children, style}) {
+const Letter = React.memo(({children, style}) => {
 	return <div style={style}>{children}</div>;
-}
+});
 
 export default TextStream;
