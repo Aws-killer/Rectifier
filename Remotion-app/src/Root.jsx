@@ -1,7 +1,7 @@
 import {Composition} from 'remotion';
-import {HelloWorld} from './HelloWorld';
 import Constants from './HelloWorld/Assets/Constants.json';
 import './index.css';
+import HelloWorld from './HelloWorld';
 export const RemotionRoot = () => {
 	return (
 		<>
