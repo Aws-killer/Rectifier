@@ -20,16 +20,23 @@ const AudioStream = React.memo(() => {
 						from={fps * entry.start}
 						durationInFrames={fps * (entry.end - entry.start)}
 					>
-						<Audio
-							volume={entry.props.volume}
-							endAt={entry.props.endAt}
-							startFrom={entry.props.startFrom}
-							src={staticFile(entry.name)}
-						/>
+						<AudioX entry={entry} />
 					</TransitionSeries.Sequence>
 				);
 			})}
 		</TransitionSeries>
+	);
+});
+
+const AudioX = React.memo(({entry}) => {
+	const {fps} = useVideoConfig();
+	return (
+		<Audio
+			startFrom={fps * entry.props.startFrom}
+			endAt={fps * entry.props.endAt}
+			volume={entry.props.volume}
+			src={staticFile(entry.name)}
+		/>
 	);
 });
 

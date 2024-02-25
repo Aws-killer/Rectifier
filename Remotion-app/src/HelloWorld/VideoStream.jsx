@@ -4,13 +4,11 @@ import {Video, staticFile, useVideoConfig} from 'remotion';
 import videoSequences from './Assets/VideoSequences.json';
 import {TransitionSeries} from '@remotion/transitions';
 
-
-export default function VideoStream() {
+const VideoStream = React.memo(() => {
 	const {fps} = useVideoConfig();
 	return (
 		<TransitionSeries
 			style={{
-				// color: 'white',
 				position: 'absolute',
 				zIndex: 1,
 			}}
@@ -22,10 +20,24 @@ export default function VideoStream() {
 						from={fps * entry.start}
 						durationInFrames={fps * (entry.end - entry.start)}
 					>
-						<Video {...entry.props} src={staticFile(entry.name)} />
+						<VideoX entry={entry} />
 					</TransitionSeries.Sequence>
 				);
 			})}
 		</TransitionSeries>
 	);
-}
+});
+
+const VideoX = React.memo(({entry}) => {
+	const {fps} = useVideoConfig();
+	return (
+		<Video
+			startFrom={fps * entry.props.startFrom}
+			endAt={fps * entry.props.endAt}
+			volume={entry.props.volume}
+			src={staticFile(entry.name)}
+		/>
+	);
+});
+
+export default VideoStream;
