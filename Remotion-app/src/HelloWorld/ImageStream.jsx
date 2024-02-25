@@ -27,7 +27,12 @@ const ImageStream = React.memo(() => {
 				{imageSequences.map((entry, index) => {
 					return (
 						<>
-							<Images key={index} index={index} entry={entry} />;
+							<TransitionSeries.Sequence
+								key={entry.start}
+								durationInFrames={fps * (entry.end - entry.start)}
+							>
+								<Images key={index} index={index} entry={entry} />;
+							</TransitionSeries.Sequence>
 						</>
 					);
 				})}
@@ -70,38 +75,33 @@ const Images = React.memo(({entry, index}) => {
 	};
 
 	return (
-		<TransitionSeries.Sequence
-			key={entry.start}
-			durationInFrames={fps * (entry.end - entry.start)}
+		<GsapAnimation
+			plugins={plugins}
+			style={{
+				BackgroundColor: 'black',
+			}}
+			className="bg-black"
+			Timeline={gsapTimeline}
 		>
-			<GsapAnimation
-				plugins={plugins}
+			<Audio src={staticFile('sfx_1.mp3')} />
+			<Img
+				id="imagex"
 				style={{
-					BackgroundColor: 'black',
+					filter: `url(#blur)`,
+					objectPosition: 'center',
+					objectFit: 'cover',
+
+					position: 'absolute',
+					top: '50%', // Center vertically
+					left: '50%', // Center horizontally
+					transform: 'translate(-50%, -50%)',
+
+					width: 1080,
+					height: 1920,
 				}}
-				className="bg-black"
-				Timeline={gsapTimeline}
-			>
-				<Audio src={staticFile('sfx_1.mp3')} />
-				<Img
-					id="imagex"
-					style={{
-						filter: `url(#blur)`,
-						objectPosition: 'center',
-						objectFit: 'cover',
-
-						position: 'absolute',
-						top: '50%', // Center vertically
-						left: '50%', // Center horizontally
-						transform: 'translate(-50%, -50%)',
-
-						width: 1080,
-						height: 1920,
-					}}
-					src={staticFile(entry.name)}
-				/>
-			</GsapAnimation>
-		</TransitionSeries.Sequence>
+				src={staticFile(entry.name)}
+			/>
+		</GsapAnimation>
 	);
 });
 
