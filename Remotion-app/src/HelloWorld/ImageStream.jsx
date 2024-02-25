@@ -1,11 +1,6 @@
-import {
-	AbsoluteFill,
-	Series,
-	interpolate,
-	spring,
-	useCurrentFrame,
-} from 'remotion';
-import React from 'react';
+import {AbsoluteFill} from 'remotion';
+
+import React, {useMemo} from 'react';
 import {staticFile, useVideoConfig, Img, Easing, Audio} from 'remotion';
 import imageSequences from './Assets/ImageSequences.json';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
