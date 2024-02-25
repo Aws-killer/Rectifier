@@ -9,8 +9,6 @@ import gsap from 'gsap';
 import {MotionPathPlugin} from 'gsap-trial/all';
 
 const ImageStream = React.memo(() => {
-	const {fps} = useVideoConfig();
-
 	return (
 		<AbsoluteFill
 			style={{
@@ -29,12 +27,7 @@ const ImageStream = React.memo(() => {
 				{imageSequences.map((entry, index) => {
 					return (
 						<>
-							<TransitionSeries.Sequence
-								key={entry.start}
-								durationInFrames={fps * (entry.end - entry.start)}
-							>
-								<Images key={index} index={index} entry={entry} />;
-							</TransitionSeries.Sequence>
+							<Images key={index} index={index} entry={entry} />;
 						</>
 					);
 				})}
@@ -44,6 +37,7 @@ const ImageStream = React.memo(() => {
 });
 
 const Images = React.memo(({entry, index}) => {
+	const {fps} = useVideoConfig();
 	const plugins = useMemo(() => [MotionPathPlugin], []);
 
 	const gsapTimeline = () => {
@@ -76,7 +70,10 @@ const Images = React.memo(({entry, index}) => {
 	};
 
 	return (
-		<>
+		<TransitionSeries.Sequence
+			key={entry.start}
+			durationInFrames={fps * (entry.end - entry.start)}
+		>
 			<GsapAnimation
 				plugins={plugins}
 				style={{
@@ -104,7 +101,7 @@ const Images = React.memo(({entry, index}) => {
 					src={staticFile(entry.name)}
 				/>
 			</GsapAnimation>
-		</>
+		</TransitionSeries.Sequence>
 	);
 });
 
