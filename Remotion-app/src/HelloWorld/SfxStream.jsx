@@ -3,7 +3,7 @@ import React from 'react';
 import {staticFile, useVideoConfig, Audio} from 'remotion';
 import sfxSequences from './Assets/SfxSequences.json';
 import {TransitionSeries} from '@remotion/transitions';
-export default function SfxStream() {
+const SfxStream = React.memo(() => {
 	const {fps} = useVideoConfig();
 	return (
 		<TransitionSeries>
@@ -24,4 +24,6 @@ export default function SfxStream() {
 			})}
 		</TransitionSeries>
 	);
-}
+});
+
+export default SfxStream;

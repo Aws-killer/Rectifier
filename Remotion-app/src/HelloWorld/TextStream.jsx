@@ -30,7 +30,7 @@ Fonts.getAvailableFonts()
 	.load()
 	.then((font) => font.loadFont());
 
-export const TextStream = () => {
+const TextStream = React.memo(() => {
 	const {fps} = useVideoConfig();
 
 	const memoizedTranscriptData = useMemo(() => {
@@ -64,8 +64,10 @@ export const TextStream = () => {
 			</TransitionSeries>
 		</AbsoluteFill>
 	);
-};
+});
 
 export function Letter({children, style}) {
 	return <div style={style}>{children}</div>;
 }
+
+export default TextStream;

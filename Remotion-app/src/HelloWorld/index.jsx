@@ -1,13 +1,12 @@
 import {AbsoluteFill} from 'remotion';
 import VideoStream from './VideoStream';
-import {TextStream} from './TextStream';
-
 import AudioStream from './AudioStream';
 import ImageStream from './ImageStream';
-import SfxStream from './SfxStream';
 import BackgroundStream from './BackGroundStream';
+import TextStream from './TextStream';
+import React from 'react';
 
-export const HelloWorld = () => {
+const HelloWorld = React.memo(() => {
 	return (
 		<AbsoluteFill style={{position: 'relative', backgroundColor: 'black'}}>
 			<BackgroundStream />
@@ -17,4 +16,6 @@ export const HelloWorld = () => {
 			<AudioStream />
 		</AbsoluteFill>
 	);
-};
+});
+
+export default HelloWorld;

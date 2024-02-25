@@ -2,7 +2,8 @@ import React from 'react';
 import {staticFile, useVideoConfig, Audio} from 'remotion';
 import backgroundSequences from './Assets/BackgroundSequences.json';
 import {TransitionSeries} from '@remotion/transitions';
-export default function BackgroundStream() {
+
+const BackgroundStream = React.memo(() => {
 	const {fps} = useVideoConfig();
 	return (
 		<TransitionSeries
@@ -30,4 +31,6 @@ export default function BackgroundStream() {
 			})}
 		</TransitionSeries>
 	);
-}
+});
+
+export default BackgroundStream;

@@ -3,7 +3,7 @@ import React from 'react';
 import {staticFile, useVideoConfig, Audio} from 'remotion';
 import audioSequences from './Assets/AudioSequences.json';
 import {TransitionSeries} from '@remotion/transitions';
-export default function AudioStream() {
+const AudioStream = React.memo(() => {
 	const {fps} = useVideoConfig();
 	return (
 		<TransitionSeries
@@ -31,4 +31,6 @@ export default function AudioStream() {
 			})}
 		</TransitionSeries>
 	);
-}
+});
+
+export default AudioStream;
