@@ -88,7 +88,7 @@ def create_constants_json_file(constants: Constants, asset_dir: str):
         json_string = json.dumps({})
     os.makedirs(asset_dir, exist_ok=True)
     with open(instrunction_file, "w") as f:
-        if constants.instrunctions:
+        if constants.frames:
             f.write(json.dumps({"frames": constants.frames}))
         else:
             f.write(json.dumps({"frames": [0, constants.duration]}))
@@ -207,7 +207,7 @@ async def cleanup_temp_directory(
     except Exception as e:
         print(e)
     finally:
-        remotion_app_dir = os.path.join("/srv", "Remotion-app")
+        remotion_app_dir = '/workspace/Rectifier/Remotion-app'
         shutil.rmtree(remotion_app_dir)
         # use the cache
         shutil.copytree(temp_dir, remotion_app_dir)
@@ -219,7 +219,7 @@ async def cleanup_temp_directory(
 
 # @celery.task(name="All")
 async def celery_task(video_task: EditorRequest):
-    remotion_app_dir = os.path.join("/srv", "Remotion-app")
+    remotion_app_dir ='/workspace/Rectifier/Remotion-app'
     project_id = str(uuid.uuid4())
     temp_dir = f"/tmp/{project_id}"
     output_dir = f"/tmp/{project_id}/out/video.mp4"
@@ -228,14 +228,14 @@ async def celery_task(video_task: EditorRequest):
     copy_remotion_app(remotion_app_dir, temp_dir)
 
     # use the cached stuff
-    if not SERVER_STATE.CACHED:
-        install_dependencies(temp_dir)
+    # if not SERVER_STATE.CACHED:
+    install_dependencies(temp_dir)
 
     create_constants_json_file(video_task.constants, assets_dir)
     create_json_file(video_task.assets, assets_dir)
     download_assets(video_task.links, temp_dir)
     render_video(temp_dir, output_dir)
-    unsilence(temp_dir)
+    # unsilence(temp_dir)
     await cleanup_temp_directory(temp_dir, output_dir, video_task)
 
     # chain(

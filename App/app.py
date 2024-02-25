@@ -14,6 +14,7 @@ async def startup_event():
     response = await manager.register_worker()
     if not response:
         print("Error registering worker")
+    await manager.get_all_nodes()
 
 
 @app.get("/")
