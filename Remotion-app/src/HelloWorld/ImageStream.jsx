@@ -46,7 +46,7 @@ const ImageStream = React.memo(() => {
 const Images = ({entry, index}) => {
 	const plugins = useMemo(() => [MotionPathPlugin], []);
 
-	const gsapTimeline = useMemo(() => {
+	const gsapTimeline = () => {
 		let tlContainer = gsap.timeline();
 		// tlContainer.fromTo(
 		// 	'#gaussianBlur',
@@ -73,7 +73,7 @@ const Images = ({entry, index}) => {
 		});
 
 		return tlContainer;
-	}, []);
+	};
 
 	return (
 		<>
