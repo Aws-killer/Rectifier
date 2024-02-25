@@ -9,6 +9,7 @@ starlette==0.25.0
 Werkzeug==2.2.2
 uvicorn==0.21.1
 gunicorn
+aiofiles
 requests
 celery==5.3.0
 pyrogram==2.0.100

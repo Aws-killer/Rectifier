@@ -9,10 +9,13 @@ class LinkInfo(BaseModel):
 
 
 class Constants(BaseModel):
+    task: Optional[str]
+    chunk: Optional[int]
     duration: Optional[int]
     height: Optional[int]
     width: Optional[int]
     text: Optional[dict]
+    frames: Optional[dict]
 
 
 class Assets(BaseModel):

@@ -4,11 +4,13 @@
 // Note: When using the Node.JS APIs, the config file doesn't apply. Instead, pass options directly to the APIs
 
 import {Config} from '@remotion/cli/config';
-
+import Instructions from './ServerInstructions.json';
 import {enableTailwind} from '@remotion/tailwind';
 Config.overrideWebpackConfig((currentConfiguration) => {
 	return enableTailwind(currentConfiguration);
 });
 
+Config.setC;
 Config.setVideoImageFormat('jpeg');
+Config.setFrameRange(Instructions.frames);
 // Config.setConcurrency(15);
