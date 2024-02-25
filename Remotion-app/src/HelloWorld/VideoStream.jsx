@@ -29,12 +29,13 @@ const VideoStream = React.memo(() => {
 });
 
 const VideoX = React.memo(({entry}) => {
+	const {fps} = useVideoConfig();
 	return (
 		<Video
-			startFrom={entry.props.startFrom}
-			endAt={entry.props.endAt}
-			volume={entry.props.volume}
-			src={staticFile(entry.name)}
+			startFrom={(fps * entry.props.startFrom) / 30}
+			endAt={(fps * entry.props.endAt) / 30}
+			volume={(fps * entry.props.volume) / 30}
+			src={staticFile((fps * entry.name) / 30)}
 		/>
 	);
 });
