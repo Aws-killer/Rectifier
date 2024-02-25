@@ -9,6 +9,7 @@ import gsap from 'gsap';
 import {MotionPathPlugin} from 'gsap-trial/all';
 
 const ImageStream = React.memo(() => {
+	const {fps} = useVideoConfig();
 	return (
 		<AbsoluteFill
 			style={{
@@ -42,7 +43,6 @@ const ImageStream = React.memo(() => {
 });
 
 const Images = React.memo(({entry, index}) => {
-	const {fps} = useVideoConfig();
 	const plugins = useMemo(() => [MotionPathPlugin], []);
 
 	const gsapTimeline = () => {
