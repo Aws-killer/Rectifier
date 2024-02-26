@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status, BackgroundTasks, UploadFil
 from .Schema import EditorRequest, TaskInfo
 from App.Worker import celery_task, concatenate_videos
 from celery.result import AsyncResult
-import aiofiles, os, uuid, aiohttp, pprint
+import aiofiles, os, uuid, aiohttp, pprint, json
 from App import SERVER_STATE, Task
 
 videditor_router = APIRouter(tags=["vidEditor"])
@@ -48,7 +48,7 @@ async def create_chunks(videoRequest: EditorRequest, background_task: Background
             data = videoRequest.json()
             # pprint.pprint(data)
             async with session.post(
-                f"{node.SPACE_HOST}/create-video", json=data
+                f"{node.SPACE_HOST}/create-video", data=json.loads(data)
             ) as response:
                 if response.status != 200:
                     raise HTTPException(
