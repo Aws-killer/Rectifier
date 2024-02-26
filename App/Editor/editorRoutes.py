@@ -48,7 +48,7 @@ async def create_chunks(videoRequest: EditorRequest, background_task: Background
             data = videoRequest.json()
             # pprint.pprint(data)
             async with session.post(
-                f"{node.SPACE_HOST}/create-video", data=data
+                f"{node.SPACE_HOST}/create-video", json=data
             ) as response:
                 if response.status != 200:
                     raise HTTPException(
