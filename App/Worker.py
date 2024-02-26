@@ -40,7 +40,7 @@ async def concatenate_videos(input_dir):
             ]
         )
     else:
-        output_file=os.path.join(input_dir, files[0])
+        output_file = os.path.join(input_dir, files[0])
     await bot.start()
     await bot.send_file(-1002069945904, file=output_file, caption="finally done!")
     return output_file
@@ -118,7 +118,7 @@ def unsilence(directory: str):
 
 def install_dependencies(directory: str):
     os.chdir(directory)
-    os.system(f"npm install  --cache /workspace/Rectifier/Cache")
+    os.system(f"npm install  --cache /srv/Cache")
 
 
 def upload_video_to_youtube(task_data: dict):
@@ -201,7 +201,7 @@ async def cleanup_temp_directory(
     except Exception as e:
         print(e)
     finally:
-        remotion_app_dir = "/workspace/Rectifier/Remotion-app"
+        remotion_app_dir = "/srv/Remotion-app"
         # shutil.rmtree(remotion_app_dir)
         # use the cache
         # shutil.copytree(temp_dir, remotion_app_dir, ignore=ignore_public)
@@ -223,7 +223,7 @@ async def cleanup_temp_directory(
 
 
 async def celery_task(video_task: EditorRequest):
-    remotion_app_dir = "/workspace/Rectifier/Remotion-app"
+    remotion_app_dir = "/srv/Remotion-app"
     project_id = str(uuid.uuid4())
     temp_dir = f"/tmp/{project_id}"
     output_dir = f"/tmp/{project_id}/out/video.mp4"
