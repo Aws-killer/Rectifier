@@ -28,11 +28,12 @@ async def create_chunks(videoRequest: EditorRequest, background_task: Background
     if len(active_nodes) ==0:
         active_nodes.extend(SERVER_STATE.NODES)
 
-    number_of_nodes = len(active_nodes)
+    steps = int(video_duration/len(active_nodes))
     
     ranges = [
-        [i, i + number_of_nodes] for i in range(0, video_duration, number_of_nodes)
+        [i, i + steps] for i in range(0, video_duration, steps)
     ]
+    print(ranges)
     for i, node in enumerate(active_nodes):
         await new_task.add_node(node, i)
 

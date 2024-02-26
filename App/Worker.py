@@ -129,7 +129,7 @@ def unsilence(directory: str):
 # @celery.task(name="InstallDependency")
 def install_dependencies(directory: str):
     os.chdir(directory)
-    os.system("npm install")
+    os.system(f"pnpm install")
 
 
 # @celery.task(name="uploadTime")
@@ -162,6 +162,9 @@ def upload_video_to_youtube(task_data: dict):
 
     return result.stdout
 
+def ignore_public(dir, files):
+    # Ignore files in the 'public' directory, copy folders and their contents
+    return [f for f in files if os.path.isfile(os.path.join(dir, f)) and dir.endswith('public')]
 
 # @celery.task(name="DownloadAssets")
 def download_assets(links: List[LinkInfo], temp_dir: str):
@@ -176,7 +179,7 @@ def download_assets(links: List[LinkInfo], temp_dir: str):
 def render_video(directory: str, output_directory: str):
     os.chdir(directory)
     os.system(
-        f"npm run build --enable-multiprocess-on-linux --output {output_directory}"
+        f"npm run build"
     )
     print("complete")
 
@@ -210,7 +213,7 @@ async def cleanup_temp_directory(
         remotion_app_dir = '/workspace/Rectifier/Remotion-app'
         shutil.rmtree(remotion_app_dir)
         # use the cache
-        shutil.copytree(temp_dir, remotion_app_dir)
+        shutil.copytree(temp_dir, remotion_app_dir,ignore=ignore_public)
         if not SERVER_STATE.CACHED:
             SERVER_STATE.CACHED = True
         # Cleanup: Remove the temporary directory
@@ -226,12 +229,12 @@ async def celery_task(video_task: EditorRequest):
     assets_dir = os.path.join(temp_dir, "src/HelloWorld/Assets")
 
     copy_remotion_app(remotion_app_dir, temp_dir)
-
-    # use the cached stuff
-    # if not SERVER_STATE.CACHED:
+    print('installing',"asdasd"*100)
     install_dependencies(temp_dir)
 
-    create_constants_json_file(video_task.constants, assets_dir)
+    # use the cached stuff
+    if not SERVER_STATE.CACHED:
+        create_constants_json_file(video_task.constants, assets_dir)
     create_json_file(video_task.assets, assets_dir)
     download_assets(video_task.links, temp_dir)
     render_video(temp_dir, output_dir)

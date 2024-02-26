@@ -4,7 +4,7 @@
 	"description": "My Remotion video",
 	"scripts": {
 		"start": "remotion studio",
-		"build": "node --max-old-space-size=8192 ./node_modules/.bin/remotion render HelloWorld out/video.mp4",
+		"build": "remotion render HelloWorld out/video.mp4",
 		"upgrade": "remotion upgrade",
 		"test": "eslint src --ext ts,tsx,js,jsx"
 	},
@@ -35,5 +35,6 @@
 	"devDependencies": {
 		"prettier": "^2.8.8"
 	},
+	
 	"packageManager": "npm@9.6.7"
 }
