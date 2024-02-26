@@ -183,20 +183,22 @@ async def cleanup_temp_directory(
     chat_id: int = -1002069945904,
 ):
     video_folder_dir = f"/tmp/Video/{video_task.constants.task}"
-    try:
-        if not SERVER_STATE.MASTER:
-            await upload_file(
-                output_dir,
-                SERVER_STATE.SPACE_HOST,
-                video_task.constants.chunk,
-                video_task.constants.task,
-            )
-        else:
 
-            os.makedirs(video_folder_dir, exist_ok=True)
-            shutil.copy(
-                output_dir, f"{video_folder_dir}/{video_task.constants.chunk}.mp4"
-            )
+    if not SERVER_STATE.MASTER:
+        print("asdasdasdasdasdasdas")
+        await upload_file(
+            output_dir,
+            SERVER_STATE.SPACE_HOST,
+            video_task.constants.chunk,
+            video_task.constants.task,
+        )
+    else:
+
+        os.makedirs(video_folder_dir, exist_ok=True)
+        shutil.copy(output_dir, f"{video_folder_dir}/{video_task.constants.chunk}.mp4")
+
+    try:
+        pass
 
     except Exception as e:
         print(e)

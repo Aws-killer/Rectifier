@@ -1,16 +1,15 @@
 import aiohttp, asyncio
 from App import SERVER_STATE, Node
-
 import aiohttp
 
 
 async def upload_file(file_path: str, node: str, chunk: int, task: str):
     master_node = SERVER_STATE.get_master()
-    url = f"https://{master_node.SPACE_HOST}/uploadfile/?node={node}&chunk={chunk}&task={task}"
+    url = f"{master_node.SPACE_HOST}/uploadfile/?node={node}&chunk={chunk}&task={task}"
     async with aiohttp.ClientSession() as session:
-        headers = {"Transfer-Encoding": "chunked"}
+        # headers = {"Transfer-Encoding": "chunked"}
         with open(file_path, "rb") as file:
-            async with session.post(url, headers=headers, data=file) as response:
+            async with session.post(url, data=file) as response:
                 if response.status == 200:
                     print("File uploaded successfully")
                 else:
