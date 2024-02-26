@@ -6,7 +6,7 @@ import aiohttp
 
 async def upload_file(file_path: str, node: str, chunk: int, task: str):
     master_node = SERVER_STATE.get_master()
-    url = f"http://{master_node.SPACE_HOST}/uploadfile/?node={node}&chunk={chunk}&task={task}"
+    url = f"{master_node.SPACE_HOST}/uploadfile/?node={node}&chunk={chunk}&task={task}"
     async with aiohttp.ClientSession() as session:
         headers = {"Transfer-Encoding": "chunked"}
         with open(file_path, "rb") as file:
@@ -26,21 +26,23 @@ class WorkerClient:
                 "WORKER_ID": SERVER_STATE.SPACE_HOST,
                 "MASTER": SERVER_STATE.MASTER,
                 "HOST_NAME": SERVER_STATE.SPACE_HOST,
-                "SPACE_HOST": SERVER_STATE.SPACE_HOST,
+                "SPACE_HOST": f"https://{SERVER_STATE.SPACE_HOST}",
             }
             response = await self.get_node()
-            if response:
+            if response != None:
+                print(response, "Server Response", SERVER_STATE.SPACE_HOST)
                 return response
 
             async with session.put(
-                f"{self.base_url}/nodes/{SERVER_STATE.SPACE_HOST}.json", json=data
+                f"{self.base_url}/nodes/{SERVER_STATE.SPACE_HOST.replace('-', '_').replace('.', '_')}.json",
+                json=data,
             ) as resp:
                 return await resp.json()
 
     async def get_node(self):
         async with aiohttp.ClientSession() as session:
             async with session.get(
-                f"{self.base_url}/nodes/{SERVER_STATE.SPACE_HOST}.json"
+                f"{self.base_url}/nodes/{SERVER_STATE.SPACE_HOST.replace('-', '_').replace('.', '_')}.json"
             ) as resp:
                 response = await resp.json()
                 return response
@@ -48,7 +50,7 @@ class WorkerClient:
     async def delete_node(self):
         async with aiohttp.ClientSession() as session:
             async with session.delete(
-                f"{self.base_url}/nodes/{SERVER_STATE.SPACE_HOST}.json"
+                f"{self.base_url}/nodes/{SERVER_STATE.SPACE_HOST.replace('-', '_').replace('.', '_')}.json"
             ) as resp:
                 response = await resp.json()
 

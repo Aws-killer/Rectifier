@@ -32,7 +32,7 @@ class Task(BaseModel):
 
     def mark_node_completed(self, space_host: str):
         for state in self.NODES:
-            if state.NODE.SPACE_HOST == space_host:
+            if space_host in state.NODE.SPACE_HOST:
                 state.COMPLETED = True
                 break
 
@@ -65,7 +65,10 @@ class ServerState(Node):
         return None
 
 
-TELEGRAM_SESSION = os.environ.get("TELEGRAM_SESSION", "1BVtsOIkBu27n6AO2k1BVSWic6CDWl8xZzWi_pMcnpqs3Y_R3aLXHHfj1vYXw47fMt8qa1j-4m44xG4aevqFN3rNXVNtC-hl8feCZF2tgiilAyBGHEG8qXDus5mNYLrH74_qWJnXjn-6xfgEG4ErxrTpROzCOgOt0JBJ4vWcIaTojZsg83-f0yWC5Mb55uyTuLA_aTJTIUzUbnW_GCUVE0JfdVxfVGXVbRPnGPEfE-FqifsSNXqFWpOiUIOfK-Z3_wCKdKZwms15kjFQt4BtYgcDRZv7apj-EvhbHzQUSJFqrqLH3Flwyakz3HVUSGHyUk94W-DcapWLGJ_K96xLQ_ZsgNPK3xik=")
+TELEGRAM_SESSION = os.environ.get(
+    "TELEGRAM_SESSION",
+    "1BVtsOIkBu27n6AO2k1BVSWic6CDWl8xZzWi_pMcnpqs3Y_R3aLXHHfj1vYXw47fMt8qa1j-4m44xG4aevqFN3rNXVNtC-hl8feCZF2tgiilAyBGHEG8qXDus5mNYLrH74_qWJnXjn-6xfgEG4ErxrTpROzCOgOt0JBJ4vWcIaTojZsg83-f0yWC5Mb55uyTuLA_aTJTIUzUbnW_GCUVE0JfdVxfVGXVbRPnGPEfE-FqifsSNXqFWpOiUIOfK-Z3_wCKdKZwms15kjFQt4BtYgcDRZv7apj-EvhbHzQUSJFqrqLH3Flwyakz3HVUSGHyUk94W-DcapWLGJ_K96xLQ_ZsgNPK3xik=",
+)
 TELEGRAM_SESSION_PYROGRAM = os.environ.get("TELEGRAM_SESSION_PYROGRAM", "RANDOM_STRING")
 MASTER_SERVER = bool(os.environ.get("MASTER", 0))
 SPACE_HOST = os.environ.get("SPACE_HOST", "RANDOM_STRING")

@@ -25,14 +25,12 @@ async def create_chunks(videoRequest: EditorRequest, background_task: Background
         for node in SERVER_STATE.NODES
         if await new_task._check_node_online(node.SPACE_HOST)
     ]
-    if len(active_nodes) ==0:
+    if len(active_nodes) == 0:
         active_nodes.extend(SERVER_STATE.NODES)
 
-    steps = int(video_duration/len(active_nodes))
-    
-    ranges = [
-        [i, i + steps-1] for i in range(0, video_duration, steps)
-    ]
+    steps = int(video_duration / len(active_nodes))
+
+    ranges = [[i, i + steps - 1] for i in range(0, video_duration, steps)]
     print(ranges)
     for i, node in enumerate(active_nodes):
         await new_task.add_node(node, i)
@@ -41,14 +39,14 @@ async def create_chunks(videoRequest: EditorRequest, background_task: Background
 
     async with aiohttp.ClientSession() as session:
         for i, node in enumerate(active_nodes):
-            videoRequest.constants.task=task_id
-            videoRequest.constants.chunk=i
+            videoRequest.constants.task = task_id
+            videoRequest.constants.chunk = i
             videoRequest.constants.frames = ranges[i]
-            if node.SPACE_HOST == SERVER_STATE.SPACE_HOST:
+            if node.MASTER:
                 background_task.add_task(celery_task, videoRequest)
                 continue
             async with session.post(
-                "node.SPACE_HOST/create-video", json=videoRequest
+                f"{node.SPACE_HOST}/create-video", json=videoRequest
             ) as response:
                 if response.status != 200:
                     raise HTTPException(
