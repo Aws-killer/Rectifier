@@ -42,6 +42,8 @@ class Task(BaseModel):
 
     @classmethod
     async def _check_node_online(cls, space_host: str) -> bool:
+        if not "https" in space_host:
+            space_host = f"https://{space_host}"
         try:
             async with aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=5)
