@@ -118,7 +118,7 @@ def unsilence(directory: str):
 
 def install_dependencies(directory: str):
     os.chdir(directory)
-    os.system(f"npm install  --cache /srv/Cache")
+    os.system(f"npm install")
 
 
 def upload_video_to_youtube(task_data: dict):
