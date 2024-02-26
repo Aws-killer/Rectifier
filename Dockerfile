@@ -62,7 +62,7 @@ COPY --chown=admin . /srv
 # Command to run the application
 # CMD python -m uvicorn App.app:app --host 0.0.0.0 --port 7860 &  python -m celery -A App.Worker.celery worker -c 5  --max-tasks-per-child=1  --without-heartbeat 
 
-CMD python -m uvicorn App.app:app --host 0.0.0.0 --port 7860  --worker 5
+CMD python -m uvicorn App.app:app --host 0.0.0.0 --port 7860  --workers 5
 
 # Expose port
 EXPOSE 7860
