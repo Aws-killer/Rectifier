@@ -14,6 +14,7 @@ from pydantic import BaseModel
 from App.utilis import upload_file
 
 import subprocess
+from pydantic import BaseModel
 
 
 async def concatenate_videos(input_dir):
@@ -21,7 +22,10 @@ async def concatenate_videos(input_dir):
     files = sorted([f for f in os.listdir(input_dir) if f.endswith(".mp4")])
     if len(files) > 1:
         # Generate the input file list for ffmpeg
-        input_files = "|".join([f"file '{os.path.join(input_dir, f)}'" for f in files])
+        input_file_list = os.path.join(input_dir, "input.txt")
+        with open(input_file_list, "w") as f:
+            for file in files:
+                f.write(f"file '{os.path.join(input_dir, file)}'\n")
 
         output_file = f"{input_dir}/final.mp4"
         # Run the ffmpeg command to concatenate the videos
@@ -33,7 +37,7 @@ async def concatenate_videos(input_dir):
                 "-safe",
                 "0",
                 "-i",
-                f"concat:{input_files}",
+                input_file_list,
                 "-c",
                 "copy",
                 output_file,
