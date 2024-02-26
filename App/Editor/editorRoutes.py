@@ -46,7 +46,7 @@ async def create_chunks(videoRequest: EditorRequest, background_task: Background
                 background_task.add_task(celery_task, videoRequest)
                 continue
             async with session.post(
-                f"{node.SPACE_HOST}/create-video", json=videoRequest
+                f"{node.SPACE_HOST}/create-video", data=videoRequest.__dict__
             ) as response:
                 if response.status != 200:
                     raise HTTPException(
