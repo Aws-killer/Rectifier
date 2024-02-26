@@ -15,7 +15,7 @@ class Constants(BaseModel):
     height: Optional[int]
     width: Optional[int]
     text: Optional[dict]
-    frames: Optional[dict]
+    frames: Optional[list[int]]
 
 
 class Assets(BaseModel):
