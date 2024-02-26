@@ -31,7 +31,7 @@ async def create_chunks(videoRequest: EditorRequest, background_task: Background
     steps = int(video_duration/len(active_nodes))
     
     ranges = [
-        [i, i + steps] for i in range(0, video_duration, steps)
+        [i, i + steps-1] for i in range(0, video_duration, steps)
     ]
     print(ranges)
     for i, node in enumerate(active_nodes):
@@ -41,6 +41,8 @@ async def create_chunks(videoRequest: EditorRequest, background_task: Background
 
     async with aiohttp.ClientSession() as session:
         for i, node in enumerate(active_nodes):
+            videoRequest.constants.task=task_id
+            videoRequest.constants.chunk=i
             videoRequest.constants.frames = ranges[i]
             if node.SPACE_HOST == SERVER_STATE.SPACE_HOST:
                 background_task.add_task(celery_task, videoRequest)

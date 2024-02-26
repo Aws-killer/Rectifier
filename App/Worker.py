@@ -16,31 +16,33 @@ from App.utilis import upload_file
 import subprocess
 
 
-def concatenate_videos(input_dir):
+async def concatenate_videos(input_dir):
     # Get a list of all the mp4 files in the input directory
     files = sorted([f for f in os.listdir(input_dir) if f.endswith(".mp4")])
+    if len(files) > 1:
+        # Generate the input file list for ffmpeg
+        input_files = "|".join([f"file '{os.path.join(input_dir, f)}'" for f in files])
 
-    # Generate the input file list for ffmpeg
-    input_files = "|".join([f"file '{os.path.join(input_dir, f)}'" for f in files])
-
-    output_file = f"{input_dir}/final.mp4"
-    # Run the ffmpeg command to concatenate the videos
-    subprocess.run(
-        [
-            "ffmpeg",
-            "-f",
-            "concat",
-            "-safe",
-            "0",
-            "-i",
-            f"concat:{input_files}",
-            "-c",
-            "copy",
-            output_file,
-        ]
-    )
-    bot.start()
-    bot.send_file(-1002069945904, file=output_file, caption="finally done!")
+        output_file = f"{input_dir}/final.mp4"
+        # Run the ffmpeg command to concatenate the videos
+        subprocess.run(
+            [
+                "ffmpeg",
+                "-f",
+                "concat",
+                "-safe",
+                "0",
+                "-i",
+                f"concat:{input_files}",
+                "-c",
+                "copy",
+                output_file,
+            ]
+        )
+    else:
+        output_file=os.path.join(input_dir, files[0])
+    await bot.start()
+    await bot.send_file(-1002069945904, file=output_file, caption="finally done!")
     return output_file
 
 
@@ -54,15 +56,6 @@ class YouTubeUploadTask(BaseModel):
     thumbnail: str = None
 
 
-# celery = Celery()
-# celery.config_from_object(celery_config)
-# celery.conf.update(
-#     # Other Celery configuration settings
-#     CELERYD_LOG_LEVEL="DEBUG",  # Set log level to DEBUG for the worker
-# )
-
-
-# @celery.task(name="CreateFile")
 def create_json_file(assets: List[Assets], asset_dir: str):
     for asset in assets:
         filename = f"{asset.type.capitalize()}Sequences.json"
@@ -77,7 +70,6 @@ def create_json_file(assets: List[Assets], asset_dir: str):
             f.write(json_string)
 
 
-# @celery.task(name="Constants")
 def create_constants_json_file(constants: Constants, asset_dir: str):
     temp_dir = asset_dir.replace("src/HelloWorld/Assets", "")
     instrunction_file = os.path.join(temp_dir, "ServerInstructions.json")
@@ -112,12 +104,10 @@ def download_with_wget(link, download_dir, filename):
     subprocess.run(["aria2c", link, "-d", download_dir, "-o", filename])
 
 
-# @celery.task(name="CopyRemotion")
 def copy_remotion_app(src: str, dest: str):
     shutil.copytree(src, dest)
 
 
-# @celery.task(name="Unsilence")
 def unsilence(directory: str):
     output_dir = os.path.join(directory, "out/video.mp4")
     shortered_dir = os.path.join(directory, "out/temp.mp4")
@@ -126,13 +116,11 @@ def unsilence(directory: str):
     os.rename(shortered_dir, output_dir)
 
 
-# @celery.task(name="InstallDependency")
 def install_dependencies(directory: str):
     os.chdir(directory)
-    os.system(f"pnpm install")
+    os.system(f"npm install  --cache /workspace/Rectifier/Cache")
 
 
-# @celery.task(name="uploadTime")
 def upload_video_to_youtube(task_data: dict):
     # Convert dict to Pydantic model
     task = YouTubeUploadTask(**task_data)
@@ -162,11 +150,18 @@ def upload_video_to_youtube(task_data: dict):
 
     return result.stdout
 
-def ignore_public(dir, files):
-    # Ignore files in the 'public' directory, copy folders and their contents
-    return [f for f in files if os.path.isfile(os.path.join(dir, f)) and dir.endswith('public')]
 
-# @celery.task(name="DownloadAssets")
+def ignore_public(dir, files):
+    # Ignore files in the 'public' directory and 'node_modules', copy folders and their contents
+    ignored_files = ["public", "node_modules"]
+    return [
+        f
+        for f in files
+        if f in ignored_files
+        or (os.path.isfile(os.path.join(dir, f)) and dir.endswith("public"))
+    ]
+
+
 def download_assets(links: List[LinkInfo], temp_dir: str):
     public_dir = f"{temp_dir}/public"
     for link in links:
@@ -175,16 +170,12 @@ def download_assets(links: List[LinkInfo], temp_dir: str):
         download_with_wget(file_link, public_dir, file_name)
 
 
-# @celery.task(name="RenderFile")
 def render_video(directory: str, output_directory: str):
     os.chdir(directory)
-    os.system(
-        f"npm run build"
-    )
+    os.system(f"npm run build")
     print("complete")
 
 
-# @celery.task(name="send")
 async def cleanup_temp_directory(
     temp_dir: str,
     output_dir: str,
@@ -203,56 +194,50 @@ async def cleanup_temp_directory(
         else:
 
             os.makedirs(video_folder_dir, exist_ok=True)
-            shutil.move(
+            shutil.copy(
                 output_dir, f"{video_folder_dir}/{video_task.constants.chunk}.mp4"
             )
 
     except Exception as e:
         print(e)
     finally:
-        remotion_app_dir = '/workspace/Rectifier/Remotion-app'
-        shutil.rmtree(remotion_app_dir)
+        remotion_app_dir = "/workspace/Rectifier/Remotion-app"
+        # shutil.rmtree(remotion_app_dir)
         # use the cache
-        shutil.copytree(temp_dir, remotion_app_dir,ignore=ignore_public)
+        # shutil.copytree(temp_dir, remotion_app_dir, ignore=ignore_public)
         if not SERVER_STATE.CACHED:
             SERVER_STATE.CACHED = True
+        if SERVER_STATE.MASTER:
+            SERVER_STATE.TASKS[video_task.constants.task].mark_node_completed(
+                SERVER_STATE.SPACE_HOST
+            )
+
+        if SERVER_STATE.TASKS[video_task.constants.task].is_completed():
+            await concatenate_videos(video_folder_dir)
+            print("completed")
+            # upload_video_to_youtube(video_task.constants.task)
         # Cleanup: Remove the temporary directory
+
         shutil.rmtree(temp_dir, ignore_errors=True)
+    return
 
 
-# @celery.task(name="All")
 async def celery_task(video_task: EditorRequest):
-    remotion_app_dir ='/workspace/Rectifier/Remotion-app'
+    remotion_app_dir = "/workspace/Rectifier/Remotion-app"
     project_id = str(uuid.uuid4())
     temp_dir = f"/tmp/{project_id}"
     output_dir = f"/tmp/{project_id}/out/video.mp4"
     assets_dir = os.path.join(temp_dir, "src/HelloWorld/Assets")
 
     copy_remotion_app(remotion_app_dir, temp_dir)
-    print('installing',"asdasd"*100)
     install_dependencies(temp_dir)
 
-    # use the cached stuff
-    if not SERVER_STATE.CACHED:
-        create_constants_json_file(video_task.constants, assets_dir)
+    create_constants_json_file(video_task.constants, assets_dir)
     create_json_file(video_task.assets, assets_dir)
     download_assets(video_task.links, temp_dir)
     render_video(temp_dir, output_dir)
     # unsilence(temp_dir)
     await cleanup_temp_directory(temp_dir, output_dir, video_task)
-
-    # chain(
-    #     copy_remotion_app.si(remotion_app_dir, temp_dir),
-    #     install_dependencies.si(temp_dir),
-    #     create_constants_json_file.si(video_task.constants, assets_dir),
-    #     create_json_file.si(video_task.assets, assets_dir),
-    #     download_assets.si(video_task.links, temp_dir) if video_task.links else None,
-    #     render_video.si(temp_dir, output_dir),
-    #     # unsilence.si(temp_dir),
-    #     cleanup_temp_directory.si(temp_dir, output_dir),
-    # ).apply_async(
-    #     # link_error=handle_error
-    # )  # Link the tasks and handle errors
 
 
 def handle_error(task_id, err, *args, **kwargs):
