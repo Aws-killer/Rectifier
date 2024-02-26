@@ -45,8 +45,8 @@ async def create_chunks(videoRequest: EditorRequest, background_task: Background
             if node.MASTER:
                 background_task.add_task(celery_task, videoRequest)
                 continue
-            data = videoRequest.dict()
-            pprint.pprint(data)
+            data = videoRequest.json()
+            # pprint.pprint(data)
             async with session.post(
                 f"{node.SPACE_HOST}/create-video", data=data
             ) as response:
