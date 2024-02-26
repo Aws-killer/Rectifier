@@ -62,8 +62,8 @@ class ServerState(Node):
 
     def get_master(self) -> Optional[Node]:
         for node in self.NODES:
-            if node.NODE.MASTER:
-                return node.NODE
+            if node.MASTER:
+                return node
         return None
 
 

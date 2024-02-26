@@ -6,7 +6,7 @@ import aiohttp
 
 async def upload_file(file_path: str, node: str, chunk: int, task: str):
     master_node = SERVER_STATE.get_master()
-    url = f"{master_node.SPACE_HOST}/uploadfile/?node={node}&chunk={chunk}&task={task}"
+    url = f"https://{master_node.SPACE_HOST}/uploadfile/?node={node}&chunk={chunk}&task={task}"
     async with aiohttp.ClientSession() as session:
         headers = {"Transfer-Encoding": "chunked"}
         with open(file_path, "rb") as file:

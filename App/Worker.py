@@ -211,10 +211,9 @@ async def cleanup_temp_directory(
             SERVER_STATE.TASKS[video_task.constants.task].mark_node_completed(
                 SERVER_STATE.SPACE_HOST
             )
-
-        if SERVER_STATE.TASKS[video_task.constants.task].is_completed():
-            await concatenate_videos(video_folder_dir)
-            print("completed")
+            if SERVER_STATE.TASKS[video_task.constants.task].is_completed():
+                await concatenate_videos(video_folder_dir)
+                print("completed")
             # upload_video_to_youtube(video_task.constants.task)
         # Cleanup: Remove the temporary directory
 
