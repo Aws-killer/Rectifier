@@ -52,10 +52,10 @@ async def serve_video(request: Request, task_id: str, video_name: str):
 
 
 async def read_file_range(path, start, end):
-    with open(path, "rb") as file:
-        file.seek(start)
+    async with aiofiles.open(path, "rb") as file:
+        await file.seek(start)
         while True:
-            data = file.read(1024 * 1024)  # read in chunks of 1MB
+            data = await file.read(1024 * 1024)  # read in chunks of 1MB
             if not data or file.tell() > end:
                 break
             yield data
