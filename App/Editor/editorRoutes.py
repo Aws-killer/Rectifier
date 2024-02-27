@@ -42,7 +42,7 @@ async def serve_video(request: Request, task_id: str, video_name: str):
         headers = {
             "Content-Range": f"bytes {start}-{end}/{video_size}",
             "Accept-Ranges": "bytes",
-            "content-disposition": f'inline; filename="{video_name}"',
+            # "content-disposition": f'inline; filename="{video_name}"',
         }
 
         content = await read_file_range(video_path, start, end)
