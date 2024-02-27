@@ -47,9 +47,13 @@ async def concatenate_videos(input_dir):
         )
     else:
         output_file = os.path.join(input_dir, files[0])
-    await tl_bot.send_message(
-        f"https://{SERVER_STATE.SPACE_HOST}/videos/{output_file.replace('/tmp/Video/', '')}",
+    print(
+        f"https://{SERVER_STATE.SPACE_HOST}/videos/{output_file.replace('/tmp/Video/', '')}"
     )
+
+    # await tl_bot.send_message(
+    #     f"https://{SERVER_STATE.SPACE_HOST}/videos/{output_file.replace('/tmp/Video/', '')}",
+    # )
 
     return output_file
 
