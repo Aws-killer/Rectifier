@@ -18,7 +18,7 @@ jobs:
         id: get-repo-names
         run: |
           # Make a GET request to get the list of repo names
-          response=$(curl -X GET -H "Content-Type: application/json" ${{ secrets.RTDB }})
+            response=$(curl -X GET -H "Content-Type: application/json" ${{ secrets.RTDB }}/repos.json)
           echo "::set-output name=repos::$(echo $response | jq -r '.repos | join(",")')"
       - name: Push changes to repos
         env:
