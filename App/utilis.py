@@ -1,6 +1,7 @@
 import aiohttp, asyncio
 from App import SERVER_STATE, Node
 import aiohttp
+import asyncio
 
 
 async def upload_file(file_path: str, node: str, chunk: int, task: str):
@@ -18,6 +19,12 @@ async def upload_file(file_path: str, node: str, chunk: int, task: str):
 
 class WorkerClient:
     base_url = SERVER_STATE.DB
+
+    async def discover_node(self):
+        if SERVER_STATE.MASTER:
+            while True:
+                await self.get_all_nodes()
+                await asyncio.sleep(3)
 
     async def register_worker(self):
         async with aiohttp.ClientSession() as session:

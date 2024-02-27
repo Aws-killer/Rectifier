@@ -55,7 +55,7 @@ class Task(BaseModel):
 
 
 class ServerState(Node):
-    CACHED: bool
+    CACHED: Optional[Dict[str:bool]] = []
     TASKS: Optional[Dict[str, Task]] = {}
     NODES: Optional[list[Node]]
     DB: str = "https://herokuserver-185316.firebaseio.com/"
@@ -76,7 +76,7 @@ MASTER_SERVER = os.environ.get("MASTER", 0).lower() in ["true", "1"]
 SPACE_HOST = os.environ.get("SPACE_HOST", "RANDOM_STRING")
 
 
-SERVER_STATE = ServerState(CACHED=False, MASTER=MASTER_SERVER, SPACE_HOST=SPACE_HOST)
+SERVER_STATE = ServerState(MASTER=MASTER_SERVER, SPACE_HOST=SPACE_HOST)
 
 
 bot: TelegramClient = TelegramClient(

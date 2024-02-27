@@ -160,15 +160,14 @@ def upload_video_to_youtube(task_data: dict):
     return result.stdout
 
 
-def ignore_public(dir, files):
-    # Ignore files in the 'public' directory and 'node_modules', copy folders and their contents
-    ignored_files = ["public", "node_modules"]
-    return [
-        f
-        for f in files
-        if f in ignored_files
-        or (os.path.isfile(os.path.join(dir, f)) and dir.endswith("public"))
-    ]
+def delete_files(dir, files):
+    deleted_files = []
+    for f in files:
+        file_path = os.path.join(dir, f)
+        if os.path.isfile(file_path) and dir.endswith("public"):
+            os.remove(file_path)
+            deleted_files.append(f)
+    return deleted_files
 
 
 def download_assets(links: List[LinkInfo], temp_dir: str):
@@ -194,7 +193,6 @@ async def cleanup_temp_directory(
     video_folder_dir = f"/tmp/Video/{video_task.constants.task}"
 
     if not SERVER_STATE.MASTER:
-        print("asdasdasdasdasdasdas")
         await upload_file(
             output_dir,
             SERVER_STATE.SPACE_HOST,
@@ -215,9 +213,8 @@ async def cleanup_temp_directory(
         remotion_app_dir = "/srv/Remotion-app"
         # shutil.rmtree(remotion_app_dir)
         # use the cache
-        # shutil.copytree(temp_dir, remotion_app_dir, ignore=ignore_public)
-        if not SERVER_STATE.CACHED:
-            SERVER_STATE.CACHED = True
+        shutil.copytree(temp_dir, remotion_app_dir, ignore=ignore_public)
+
         if SERVER_STATE.MASTER:
             SERVER_STATE.TASKS[video_task.constants.task].mark_node_completed(
                 SERVER_STATE.SPACE_HOST
@@ -225,22 +222,26 @@ async def cleanup_temp_directory(
             if SERVER_STATE.TASKS[video_task.constants.task].is_completed():
                 await concatenate_videos(video_folder_dir)
                 print("completed")
-            # upload_video_to_youtube(video_task.constants.task)
-        # Cleanup: Remove the temporary directory
 
-        shutil.rmtree(temp_dir, ignore_errors=True)
+        delete_files(temp_dir, os.listdir(temp_dir))
+        SERVER_STATE.CACHED[temp_dir] = False
+
     return
 
 
 async def celery_task(video_task: EditorRequest):
     remotion_app_dir = "/srv/Remotion-app"
-    project_id = str(uuid.uuid4())
-    temp_dir = f"/tmp/{project_id}"
-    output_dir = f"/tmp/{project_id}/out/video.mp4"
-    assets_dir = os.path.join(temp_dir, "src/HelloWorld/Assets")
+    for temp_dir, busy in SERVER_STATE.CACHED.items():
+        if not busy:
+            break
+    else:
+        project_id = str(uuid.uuid4())
+        temp_dir = f"/tmp/{project_id}"
+        copy_remotion_app(remotion_app_dir, temp_dir)
+        install_dependencies(temp_dir)
 
-    copy_remotion_app(remotion_app_dir, temp_dir)
-    install_dependencies(temp_dir)
+    output_dir = f"{temp_dir}/out/video.mp4"
+    assets_dir = os.path.join(temp_dir, "src/HelloWorld/Assets")
 
     create_constants_json_file(video_task.constants, assets_dir)
     create_json_file(video_task.assets, assets_dir)
