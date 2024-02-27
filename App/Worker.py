@@ -46,7 +46,11 @@ async def concatenate_videos(input_dir):
     else:
         output_file = os.path.join(input_dir, files[0])
     await bot.start()
-    await bot.send_file(-1002069945904, file=output_file, caption="finally done!")
+    # await bot.send_file(-1002069945904, file=output_file, caption="finally done!")
+    await bot.send_message(
+        -1002069945904,
+        f"https://{SERVER_STATE.SPACE_HOST}/video/{output_file.replace('/tmp/Video/', '')}",
+    )
     return output_file
 
 
