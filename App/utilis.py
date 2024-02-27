@@ -39,8 +39,12 @@ class WorkerClient:
     async def discover_node(self):
         if SERVER_STATE.MASTER:
             while True:
-                await self.get_all_nodes()
-                await asyncio.sleep(3)
+                try:
+                    await self.get_all_nodes()
+                except:
+                    pass
+                finally:
+                    await asyncio.sleep(3)
 
     async def register_worker(self):
         async with aiohttp.ClientSession() as session:
