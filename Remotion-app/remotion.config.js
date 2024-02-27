@@ -10,8 +10,6 @@ Config.overrideWebpackConfig((currentConfiguration) => {
 	return enableTailwind(currentConfiguration);
 });
 
-Config.setC;
 Config.setVideoImageFormat('jpeg');
 Config.setFrameRange(Instructions.frames);
-Config.setCachingEnabled(false);
 // Config.setConcurrency(15);
