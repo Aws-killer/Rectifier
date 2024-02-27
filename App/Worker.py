@@ -3,7 +3,7 @@ import os, shutil, subprocess
 import uuid
 from urllib.parse import urlparse
 from subprocess import run
-from App import celery_config, bot, SERVER_STATE
+from App import celery_config, SERVER_STATE
 from typing import List
 from App.Editor.Schema import EditorRequest, LinkInfo, Assets, Constants
 from celery.signals import worker_process_init
@@ -11,10 +11,12 @@ from asgiref.sync import async_to_sync
 import json
 import os
 from pydantic import BaseModel
-from App.utilis import upload_file
+from App.utilis import upload_file, TelegramBot
 
 import subprocess
 from pydantic import BaseModel
+
+tl_bot = TelegramBot()
 
 
 async def concatenate_videos(input_dir):
@@ -45,13 +47,12 @@ async def concatenate_videos(input_dir):
         )
     else:
         output_file = os.path.join(input_dir, files[0])
-    await bot.start()
-    print(output_file)
-    # await bot.send_file(-1002069945904, file=output_file, caption="finally done!")
-    await bot.send_message(
-        -1002069945904,
+    tl_bot.send_message(
         f"https://{SERVER_STATE.SPACE_HOST}/videos/{output_file.replace('/tmp/Video/', '')}",
     )
+    # await bot.send_message(
+    #     -1002069945904,
+    # )
     return output_file
 
 
@@ -160,11 +161,12 @@ def upload_video_to_youtube(task_data: dict):
     return result.stdout
 
 
-def delete_files(dir, files):
+def delete_files(dir):
+    files = os.listdir(dir)
     deleted_files = []
     for f in files:
         file_path = os.path.join(dir, f)
-        if os.path.isfile(file_path) and dir.endswith("public"):
+        if os.path.isfile(file_path):
             os.remove(file_path)
             deleted_files.append(f)
     print("deleted files", deleted_files)
@@ -222,7 +224,7 @@ async def cleanup_temp_directory(
                 await concatenate_videos(video_folder_dir)
                 print("completed")
 
-        delete_files(temp_dir, os.listdir(f"{temp_dir}/public"))
+        delete_files(f"{temp_dir}/public")
         SERVER_STATE.CACHED[temp_dir] = False
 
     return
@@ -247,6 +249,9 @@ async def celery_task(video_task: EditorRequest):
     download_assets(video_task.links, temp_dir)
     render_video(temp_dir, output_dir)
     # unsilence(temp_dir)
+
+    # delete assets_dir
+    shutil.rmtree(assets_dir)
     await cleanup_temp_directory(temp_dir, output_dir, video_task)
 
 

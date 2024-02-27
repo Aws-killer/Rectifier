@@ -1,7 +1,23 @@
 import aiohttp, asyncio
-from App import SERVER_STATE, Node
+from App import SERVER_STATE, Node, TELEGRAM_TOKEN, CHAT_ID
 import aiohttp
 import asyncio
+
+
+class TelegramBot:
+    def __init__(self):
+        self.chat_id = CHAT_ID
+        self.bot_token = TELEGRAM_TOKEN
+        self.url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+
+    async def send_message(self, text):
+        params = {"chat_id": self.chat_id, "text": text}
+        async with aiohttp.ClientSession() as session:
+            async with session.post(self.url, data=params) as response:
+                if response.status == 200:
+                    print("Message sent successfully!")
+                else:
+                    print("Failed to send message:", await response.text())
 
 
 async def upload_file(file_path: str, node: str, chunk: int, task: str):
