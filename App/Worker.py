@@ -211,9 +211,7 @@ async def cleanup_temp_directory(
         print(e)
     finally:
         remotion_app_dir = "/srv/Remotion-app"
-        # shutil.rmtree(remotion_app_dir)
         # use the cache
-        shutil.copytree(temp_dir, remotion_app_dir, ignore=ignore_public)
 
         if SERVER_STATE.MASTER:
             SERVER_STATE.TASKS[video_task.constants.task].mark_node_completed(
