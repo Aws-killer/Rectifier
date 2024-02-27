@@ -27,5 +27,5 @@ jobs:
           # Split the repo names into an array
           IFS=',' read -ra repos <<< "${{ steps.get-repo-names.outputs.repos }}"
           for repo in "${repos[@]}"; do
-            git push $HF_AUTH_LINK/$repo Swam:main
+            git push $HF_AUTH_LINK/$repo Swarm:main
           done
