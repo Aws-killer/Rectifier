@@ -55,7 +55,7 @@ class Task(BaseModel):
 
 
 class ServerState(Node):
-    CACHED: Optional[Dict[str:bool]] = []
+    CACHED: Optional[Dict[str:bool]] = {}
     TASKS: Optional[Dict[str, Task]] = {}
     NODES: Optional[list[Node]]
     DB: str = "https://herokuserver-185316.firebaseio.com/"
