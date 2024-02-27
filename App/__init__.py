@@ -70,6 +70,7 @@ class ServerState(Node):
 CHAT_ID = -1002069945904
 TELEGRAM_SESSION = os.environ.get("TELEGRAM_SESSION", "None")
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "None")
+DISCORD_TOKEN = os.environ.get("DISCORD_TOKEN", "None")
 TELEGRAM_SESSION_PYROGRAM = os.environ.get("TELEGRAM_SESSION_PYROGRAM", "RANDOM_STRING")
 MASTER_SERVER = os.environ.get("MASTER", 0).lower() in ["true", "1"]
 SPACE_HOST = os.environ.get("SPACE_HOST", "RANDOM_STRING")

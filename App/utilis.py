@@ -1,5 +1,5 @@
 import aiohttp, asyncio
-from App import SERVER_STATE, Node, TELEGRAM_TOKEN, CHAT_ID
+from App import SERVER_STATE, Node, TELEGRAM_TOKEN, CHAT_ID, DISCORD_TOKEN
 import aiohttp
 import asyncio
 
