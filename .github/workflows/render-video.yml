@@ -1,30 +1,31 @@
-name: Render video
+name: Sync to Hugging Face hub
 on:
+  push:
+    branches: [Swarm]
+
+  # to run this workflow manually from the Actions tab
   workflow_dispatch:
-    inputs:
-      titleText:
-        description: "Which text should it say?"
-        required: true
-        default: "Welcome to Remotion"
-      titleColor:
-        description: "Which color should it be in?"
-        required: true
-        default: "black"
+
 jobs:
-  render:
-    name: Render video
+  sync-to-hub:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
-      - uses: actions/setup-node@main
-      - run: sudo apt update
-      - run: sudo apt install ffmpeg
-      - run: npm i
-      - run: echo $WORKFLOW_INPUT > input-props.json
-        env:
-          WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
-      - run: npm run build -- --props="./input-props.json"
-      - uses: actions/upload-artifact@v2
+      - uses: actions/checkout@v3
         with:
-          name: video.mp4
-          path: out/video.mp4
+          fetch-depth: 0
+          lfs: true
+      - name: Get repo names
+        id: get-repo-names
+        run: |
+          # Make a GET request to get the list of repo names
+          response=$(curl -X GET -H "Content-Type: application/json" ${{ secrets.RTDB }})
+          echo "::set-output name=repos::$(echo $response | jq -r '.repos | join(",")')"
+      - name: Push changes to repos
+        env:
+          HF_TOKEN: ${{ secrets.HF_AUTH_LINK }}
+        run: |
+          # Split the repo names into an array
+          IFS=',' read -ra repos <<< "${{ steps.get-repo-names.outputs.repos }}"
+          for repo in "${repos[@]}"; do
+            git push $HF_AUTH_LINK/$repo main
+          done

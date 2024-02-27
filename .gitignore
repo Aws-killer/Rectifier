@@ -3,3 +3,4 @@
 *.session-journal
 .env
 modal_test.py
+bash.sh
