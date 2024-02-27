@@ -8,7 +8,7 @@ class TelegramBot:
     def __init__(self):
         self.chat_id = CHAT_ID
         self.bot_token = TELEGRAM_TOKEN
-        self.url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+        self.url = f"https://api.telegram.org/bot{self.bot_token}/sendMessage"
 
     async def send_message(self, text):
         params = {"chat_id": self.chat_id, "text": text}
