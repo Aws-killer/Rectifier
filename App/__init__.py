@@ -46,7 +46,7 @@ class Task(BaseModel):
             space_host = f"https://{space_host}"
         try:
             async with aiohttp.ClientSession(
-                timeout=aiohttp.ClientTimeout(total=5)
+                timeout=aiohttp.ClientTimeout(total=10)
             ) as session:
                 async with session.get(space_host) as response:
                     return response.status == 200
