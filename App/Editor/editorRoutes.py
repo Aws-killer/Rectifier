@@ -56,7 +56,7 @@ async def read_file_range(path, start, end):
         await file.seek(start)
         while True:
             data = await file.read(1024 * 1024)  # read in chunks of 1MB
-            if not data or file.tell() > end:
+            if not data or await file.tell() > end:
                 break
             yield data
 
