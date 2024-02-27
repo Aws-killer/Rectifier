@@ -27,7 +27,7 @@ async def create_video(videoRequest: EditorRequest, background_task: BackgroundT
 async def serve_video(request: Request, task_id: str, video_name: str):
     video_directory = "/tmp/Video"
     video_path = os.path.join(video_directory, task_id, video_name)
-
+    print(video_path)
     if not os.path.isfile(video_path):
         raise HTTPException(status=404, detail="Video not found")
 

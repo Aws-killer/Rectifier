@@ -46,6 +46,7 @@ async def concatenate_videos(input_dir):
     else:
         output_file = os.path.join(input_dir, files[0])
     await bot.start()
+    print(output_file)
     # await bot.send_file(-1002069945904, file=output_file, caption="finally done!")
     await bot.send_message(
         -1002069945904,
