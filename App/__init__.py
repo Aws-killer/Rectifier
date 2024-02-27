@@ -78,11 +78,11 @@ SPACE_HOST = os.environ.get("SPACE_HOST", "RANDOM_STRING")
 SERVER_STATE = ServerState(MASTER=MASTER_SERVER, SPACE_HOST=SPACE_HOST)
 
 
-bot: TelegramClient = TelegramClient(
-    StringSession(TELEGRAM_SESSION),
-    api_id=870972,
-    api_hash="ce2efaca02dfcd110941be6025e9ac0d",
-)
+# bot: TelegramClient = TelegramClient(
+#     StringSession(TELEGRAM_SESSION),
+#     api_id=870972,
+#     api_hash="ce2efaca02dfcd110941be6025e9ac0d",
+# )
 
 
 # bot: Client = Client("mboneabot", session_string=TELEGRAM_SESSION_PYROGRAM, workers=5 ,workdir="/srv")
