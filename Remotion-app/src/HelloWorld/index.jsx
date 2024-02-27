@@ -8,7 +8,7 @@ import React from 'react';
 
 const HelloWorld = React.memo(() => {
 	return (
-		<AbsoluteFill style={{position: 'relative', backgroundColor: 'black'}}>
+		<AbsoluteFill style={{backgroundColor: 'black'}}>
 			<BackgroundStream />
 			<ImageStream />
 			<TextStream />
