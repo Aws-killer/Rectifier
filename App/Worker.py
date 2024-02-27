@@ -167,6 +167,7 @@ def delete_files(dir, files):
         if os.path.isfile(file_path) and dir.endswith("public"):
             os.remove(file_path)
             deleted_files.append(f)
+    print("deleted files", deleted_files)
     return deleted_files
 
 
@@ -221,7 +222,7 @@ async def cleanup_temp_directory(
                 await concatenate_videos(video_folder_dir)
                 print("completed")
 
-        delete_files(temp_dir, os.listdir(temp_dir))
+        delete_files(temp_dir, os.listdir(f"{temp_dir}/public"))
         SERVER_STATE.CACHED[temp_dir] = False
 
     return
