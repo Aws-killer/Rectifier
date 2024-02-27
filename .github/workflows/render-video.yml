@@ -22,7 +22,7 @@ jobs:
           echo "::set-output name=repos::$(echo $response | jq -r '.repos | join(",")')"
       - name: Push changes to repos
         env:
-          HF_TOKEN: ${{ secrets.HF_AUTH_LINK }}
+          HF_AUTH_LINK: ${{ secrets.HF_AUTH_LINK }}
         run: |
           # Split the repo names into an array
           IFS=',' read -ra repos <<< "${{ steps.get-repo-names.outputs.repos }}"
