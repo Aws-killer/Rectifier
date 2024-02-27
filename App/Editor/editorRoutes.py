@@ -45,7 +45,7 @@ async def serve_video(request: Request, task_id: str, video_name: str):
             # "content-disposition": f'inline; filename="{video_name}"',
         }
 
-        content = await read_file_range(video_path, start, end)
+        content = read_file_range(video_path, start, end)
         return StreamingResponse(content, media_type="video/mp4", headers=headers)
 
     return FileResponse(video_path, media_type="video/mp4")
