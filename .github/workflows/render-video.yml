@@ -18,8 +18,10 @@ jobs:
         id: get-repo-names
         run: |
           # Make a GET request to get the list of repo names
-            response=$(curl -X GET -H "Content-Type: application/json" ${{ secrets.RTDB }}/repos.json)
-          echo "::set-output name=repos::$(echo $response | jq -r '.repos | join(",")')"
+          response=$(curl -X GET -H "Content-Type: application/json" ${{ secrets.RTDB }}/nodes.json)
+          repos=$(echo $response | jq -r 'keys[] | select(. | startswith("yakova_")) | "yakova-" + . + ".hf.space"')
+          echo "::set-output name=repos::$repos"
+
       - name: Push changes to repos
         env:
           HF_AUTH_LINK: ${{ secrets.HF_AUTH_LINK }}
