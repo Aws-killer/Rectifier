@@ -67,7 +67,9 @@ class TaskRemote(BaseModel):
     async def update_node_state(self, task: TaskMain, node: NodeTaskState):
         hashed = node.NODE.consistent_hash()
         async with aiohttp.ClientSession() as session:
+            node.COMPLETED = True
             json_node = node.json()
+            json_node["COMPLETED"] = True
             async with session.put(
                 f"{self.base_url}/tasks/{task.TASK_ID}/NODES/{hashed}.json",
                 json=json.loads(json_node),
