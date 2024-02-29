@@ -132,7 +132,7 @@ async def create_file(
         }
     finally:
         await file.close()
-    temp = Task(task)
+    temp = Task(TASK_ID=task)
     await temp.mark_node_completed(SERVER_STATE.SPACE_HOST)
     completed = await temp.is_completed()
     if completed:

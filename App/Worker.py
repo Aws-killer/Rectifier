@@ -218,7 +218,7 @@ async def cleanup_temp_directory(
         # use the cache
 
         if SERVER_STATE.MASTER:
-            temp = Task(video_task.constants.task)
+            temp = Task(TASK_ID=video_task.constants.task)
 
             await temp.mark_node_completed(SERVER_STATE.SPACE_HOST)
             completed = await temp.is_completed()
