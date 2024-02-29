@@ -11,7 +11,7 @@ manager = WorkerClient()
 async def startup_event():
     if SERVER_STATE.MASTER:
         asyncio.create_task(manager.discover_node())
-        await manager.get_all_nodes()
+    await manager.get_all_nodes()
     response = await manager.register_worker()
     if not response:
         print("Error registering worker")
