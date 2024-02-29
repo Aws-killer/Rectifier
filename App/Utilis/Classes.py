@@ -84,8 +84,8 @@ class Task(TaskMain):
         return self
 
     async def _register_task(self) -> bool:
-        await self.REMOTE.register_task(TaskMain(**self.__dict__))
-        return True
+        resp = await self.REMOTE.register_task(TaskMain(**self.__dict__))
+        return resp
 
     async def is_completed(self) -> bool:
         self = await self.REMOTE.get_all_nodes(self.TASK_ID)
