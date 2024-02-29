@@ -86,31 +86,3 @@ class WorkerClient:
                 response = await resp.json()
                 SERVER_STATE.NODES = [Node(**value) for value in response.values()]
                 return SERVER_STATE.NODES
-
-    async def get_task(self, task_id: str):
-        async with aiohttp.ClientSession() as session:
-            async with session.get(f"{self.base_url}/tasks/{task_id}.json") as resp:
-                response = await resp.json()
-                task = None
-                if response:
-                    task = Task(**response)
-                return task
-
-    async def delete_task(self, task: Task):
-        async with aiohttp.ClientSession() as session:
-            json_task = task.json()
-            async with session.delete(
-                f"{self.base_url}/tasks/{task.TASK_ID}.json"
-            ) as resp:
-                response = await resp.json()
-                return response
-
-    async def register_task(self, task: Task):
-        async with aiohttp.ClientSession() as session:
-            json_task = task.json()
-            async with session.put(
-                f"{self.base_url}/tasks/{task.TASK_ID}.json",
-                json=json.loads(json_task),
-            ) as resp:
-                response = await resp.json()
-                return response

@@ -1,14 +1,15 @@
 from fastapi import FastAPI, BackgroundTasks
 from .Editor.editorRoutes import videditor_router
-from App.utilis import WorkerClient, SERVER_STATE
+from App import SERVER_STATE
+from App.Utilis.Classes import WorkerClient
 import asyncio
 
 app = FastAPI()
-manager = WorkerClient()
 
 
 @app.on_event("startup")
 async def startup_event():
+    manager = WorkerClient(node=SERVER_STATE)
     if SERVER_STATE.MASTER:
         asyncio.create_task(manager.discover_node())
     await manager.get_all_nodes()

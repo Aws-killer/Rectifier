@@ -138,6 +138,65 @@ class ServerState(Node):
         return None
 
 
+class WorkerClient:
+    base_url = "https://herokuserver-185316.firebaseio.com/"
+    SERVER_STATE: Node
+
+    def __init__(self, node: Node):
+        self.SERVER_STATE = node
+
+    async def discover_node(self):
+        if self.SERVER_STATE.MASTER:
+            while True:
+                try:
+                    await self.get_all_nodes()
+                except:
+                    pass
+                finally:
+                    await asyncio.sleep(3)
+
+    async def register_worker(self):
+        async with aiohttp.ClientSession() as session:
+            data = {
+                "WORKER_ID": self.SERVER_STATE.SPACE_HOST,
+                "MASTER": self.SERVER_STATE.MASTER,
+                "HOST_NAME": self.SERVER_STATE.SPACE_HOST,
+                "SPACE_HOST": f"https://{self.SERVER_STATE.SPACE_HOST}",
+            }
+            response = await self.get_node()
+            if response != None:
+                print(response, "Server Response", self.SERVER_STATE.SPACE_HOST)
+                return response
+
+            async with session.put(
+                f"{self.base_url}/nodes/{self.SERVER_STATE.SPACE_HOST.replace('-', '_').replace('.', '_')}.json",
+                json=data,
+            ) as resp:
+                return await resp.json()
+
+    async def get_node(self):
+        async with aiohttp.ClientSession() as session:
+            async with session.get(
+                f"{self.base_url}/nodes/{self.SERVER_STATE.SPACE_HOST.replace('-', '_').replace('.', '_')}.json"
+            ) as resp:
+                response = await resp.json()
+                return response
+
+    async def delete_node(self):
+        async with aiohttp.ClientSession() as session:
+            async with session.delete(
+                f"{self.base_url}/nodes/{self.SERVER_STATE.SPACE_HOST.replace('-', '_').replace('.', '_')}.json"
+            ) as resp:
+                response = await resp.json()
+
+    async def get_all_nodes(self):
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f"{self.base_url}/nodes.json") as resp:
+                response = await resp.json()
+                self.SERVER_STATE.NODES = [Node(**value) for value in response.values()]
+                return self.SERVER_STATE.NODES
+
+
 class TelegramBot:
     def __init__(self):
         self.url = f"https://botty.nofoxot593.workers.dev/"

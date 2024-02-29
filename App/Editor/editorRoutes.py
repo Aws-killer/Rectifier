@@ -14,7 +14,7 @@ from celery.result import AsyncResult
 import aiofiles, os, uuid, aiohttp, pprint, json
 from App import SERVER_STATE
 from App.Utilis.Classes import Task
-from App.app import manager
+
 
 videditor_router = APIRouter(tags=["vidEditor"])
 
