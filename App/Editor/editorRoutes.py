@@ -82,7 +82,7 @@ async def create_chunks(videoRequest: EditorRequest, background_task: Background
     ranges = [[i, i + steps - 1] for i in range(0, video_duration, steps)]
     print(ranges)
     for i, node in enumerate(active_nodes):
-        await new_task.add_node(node, i)
+        new_task.add_node(node, i)
     await new_task._register_task()
 
     async with aiohttp.ClientSession() as session:
