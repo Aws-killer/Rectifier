@@ -103,7 +103,8 @@ async def create_chunks(videoRequest: EditorRequest, background_task: Background
                         status_code=response.status,
                         detail="Failed to post request to node",
                     )
-    await new_task._register_task()
+    x = await new_task._register_task()
+    print(x)
     return {"task_id": "started"}
 
 
