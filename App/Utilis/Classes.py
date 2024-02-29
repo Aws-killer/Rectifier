@@ -19,7 +19,7 @@ class Node(BaseModel):
         if hash_value < 0:
             # If negative, convert to positive by adding the maximum integer value
             hash_value += sys.maxsize
-        return hash_value
+        return str(hash_value)
 
 
 class NodeTaskState(BaseModel):
@@ -64,17 +64,8 @@ class TaskRemote(BaseModel):
                 response = await resp.json()
                 return response
 
-    def consistent_hash(self, string):
-        # Use the hash() function to generate a hash value for the string
-        hash_value = hash(string)
-        # Ensure the hash value is non-negative
-        if hash_value < 0:
-            # If negative, convert to positive by adding the maximum integer value
-            hash_value += sys.maxsize
-        return hash_value
-
     async def update_node_state(self, task: TaskMain, node: NodeTaskState):
-        hashed = self.consistent_hash(node.NODE.SPACE_HOST)
+        hashed = node.NODE.consistent_hash()
         async with aiohttp.ClientSession() as session:
             json_node = node.json()
             async with session.put(
