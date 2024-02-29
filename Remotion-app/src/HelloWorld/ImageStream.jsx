@@ -26,11 +26,12 @@ const ImageStream = React.memo(() => {
 		>
 			<TransitionSeries>
 				{imageSequences.map((entry, index) => {
+					const delta = (entry.end - entry.start) / 30 <= 1 ? 2 : 0;
 					return (
 						<>
 							<TransitionSeries.Sequence
 								key={entry.start}
-								durationInFrames={fps * (entry.end - entry.start)}
+								durationInFrames={fps * (entry.end - entry.start) + delta}
 							>
 								<Images key={index} index={index} entry={entry} />;
 							</TransitionSeries.Sequence>
