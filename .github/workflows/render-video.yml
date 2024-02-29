@@ -19,7 +19,7 @@ jobs:
         run: |
           # Make a GET request to get the list of repo names
           response=$(curl -X GET -H "Content-Type: application/json" ${{ secrets.RTDB }}/nodes.json)
-          repos=$(echo $response | jq -r '. | to_entries[] | select(.value.HOST_NAME) | (.value.HOST_NAME | sub("yakova_"; "") | sub("\\.hf\\.space$"; ""))')
+          repos=$(echo $response | jq -r '. | to_entries[] | select(.value.HOST_NAME) | (.value.HOST_NAME | sub("yakova-"; "") | sub("\\.hf\\.space$"; ""))')
           repos=($repos) # Convert repos to a list
           echo "::set-output name=repos::$repos"
 
