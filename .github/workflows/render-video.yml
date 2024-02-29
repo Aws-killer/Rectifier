@@ -30,8 +30,6 @@ jobs:
           # Loop through the repoArray
           for repo in "${repoArray[@]}"; do
 
-            # Echo the entire array
-            echo "Repo Array: ${repoArray[@]}"
 
             # Perform operations on each repo
             git push $HF_AUTH_LINK/$repo Swarm:main

@@ -12,4 +12,5 @@ Config.overrideWebpackConfig((currentConfiguration) => {
 
 Config.setVideoImageFormat('jpeg');
 Config.setFrameRange(Instructions.frames);
+Config.setBrowserExecutable('/srv/Thorium/thorium');
 // Config.setConcurrency(15);
