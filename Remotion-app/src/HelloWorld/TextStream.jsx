@@ -53,7 +53,7 @@ const TextStream = React.memo(() => {
 							style={subtitle}
 							key={index}
 							from={(entry.start + delta) * fps}
-							durationInFrames={fps * (entry.end - entry.start + delta)}
+							durationInFrames={fps * (entry.end - entry.start + 1)}
 						>
 							<Letter style={subtitle}>{entry.text}</Letter>
 						</TransitionSeries.Sequence>
