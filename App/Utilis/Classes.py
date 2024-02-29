@@ -5,11 +5,21 @@ import aiohttp, json
 from typing import List, Optional, Dict
 import asyncio
 from pydantic import BaseModel
+import sys
 
 
 class Node(BaseModel):
     MASTER: bool
     SPACE_HOST: str
+
+    def consistent_hash(self):
+        # Use the hash() function to generate a hash value for the string
+        hash_value = hash(self.SPACE_HOST)
+        # Ensure the hash value is non-negative
+        if hash_value < 0:
+            # If negative, convert to positive by adding the maximum integer value
+            hash_value += sys.maxsize
+        return hash_value
 
 
 class NodeTaskState(BaseModel):
@@ -54,11 +64,21 @@ class TaskRemote(BaseModel):
                 response = await resp.json()
                 return response
 
+    def consistent_hash(self, string):
+        # Use the hash() function to generate a hash value for the string
+        hash_value = hash(string)
+        # Ensure the hash value is non-negative
+        if hash_value < 0:
+            # If negative, convert to positive by adding the maximum integer value
+            hash_value += sys.maxsize
+        return hash_value
+
     async def update_node_state(self, task: TaskMain, node: NodeTaskState):
+        hashed = self.consistent_hash(node.NODE.SPACE_HOST)
         async with aiohttp.ClientSession() as session:
             json_node = node.json()
             async with session.put(
-                f"{self.base_url}/tasks/{task.TASK_ID}/NODES/{node.NODE.SPACE_HOST}.json",
+                f"{self.base_url}/tasks/{task.TASK_ID}/NODES/{hashed}.json",
                 json=json.loads(json_node),
             ) as resp:
                 response = await resp.json()
@@ -106,7 +126,7 @@ class Task(TaskMain):
 
     def add_node(self, node: Node, CHUNK: int):
         new_node_state = NodeTaskState(NODE=node, CHUNK=CHUNK, COMPLETED=False)
-        self.NODES[node.SPACE_HOST] = new_node_state
+        self.NODES[node.consistent_hash()] = new_node_state
 
     @classmethod
     async def _check_node_online(cls, space_host: str) -> bool:

@@ -220,7 +220,7 @@ async def cleanup_temp_directory(
         if SERVER_STATE.MASTER:
             temp = Task(TASK_ID=video_task.constants.task)
 
-            await temp.mark_node_completed(SERVER_STATE.SPACE_HOST)
+            await temp.mark_node_completed(SERVER_STATE.consistent_hash())
             completed = await temp.is_completed()
             if completed:
                 await concatenate_videos(video_folder_dir)
