@@ -19,7 +19,7 @@ jobs:
         run: |
           # Make a GET request to get the list of repo names
           response=$(curl -X GET -H "Content-Type: application/json" ${{ secrets.RTDB }}/nodes.json)
-          repos=$(echo $response | jq -r 'keys[] | select(. | startswith("yakova_")) | "yakova-" + . + ".hf.space"')
+          repos=$(echo $response | jq -r '. | to_entries[] | select(.value.HOST_NAME | startswith("yakova_")) | "yakova-" + .value.HOST_NAME + ".hf.space"')
           echo "::set-output name=repos::$repos"
 
       - name: Push changes to repos
