@@ -11,7 +11,8 @@ from asgiref.sync import async_to_sync
 import json
 import os
 from pydantic import BaseModel
-from App.utilis import upload_file, TelegramBot
+from App.Utilis.Functions import upload_file
+from App.Utilis.Classes import Task, TelegramBot
 
 import subprocess
 from pydantic import BaseModel
@@ -47,10 +48,8 @@ async def concatenate_videos(input_dir):
         )
     else:
         output_file = os.path.join(input_dir, files[0])
-    print(
-        f"https://{SERVER_STATE.SPACE_HOST}/videos/{output_file.replace('/tmp/Video/', '')}"
-    )
-
+    link = f"https://{SERVER_STATE.SPACE_HOST}/videos/{output_file.replace('/tmp/Video/', '')}"
+    await tl_bot.send_message(link)
     # await tl_bot.send_message(
     #     f"https://{SERVER_STATE.SPACE_HOST}/videos/{output_file.replace('/tmp/Video/', '')}",
     # )
@@ -219,10 +218,11 @@ async def cleanup_temp_directory(
         # use the cache
 
         if SERVER_STATE.MASTER:
-            SERVER_STATE.TASKS[video_task.constants.task].mark_node_completed(
-                SERVER_STATE.SPACE_HOST
-            )
-            if SERVER_STATE.TASKS[video_task.constants.task].is_completed():
+            temp = Task(video_task.constants.task)
+
+            await temp.mark_node_completed(SERVER_STATE.SPACE_HOST)
+            completed = await temp.is_completed()
+            if completed:
                 await concatenate_videos(video_folder_dir)
                 print("completed")
 

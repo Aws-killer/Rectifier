@@ -12,7 +12,9 @@ from .Schema import EditorRequest, TaskInfo
 from App.Worker import celery_task, concatenate_videos
 from celery.result import AsyncResult
 import aiofiles, os, uuid, aiohttp, pprint, json
-from App import SERVER_STATE, Task
+from App import SERVER_STATE
+from App.Utilis.Classes import Task
+from App.app import manager
 
 videditor_router = APIRouter(tags=["vidEditor"])
 
@@ -81,8 +83,7 @@ async def create_chunks(videoRequest: EditorRequest, background_task: Background
     print(ranges)
     for i, node in enumerate(active_nodes):
         await new_task.add_node(node, i)
-
-    SERVER_STATE.TASKS[task_id] = new_task
+    await new_task._register_task()
 
     async with aiohttp.ClientSession() as session:
         for i, node in enumerate(active_nodes):
@@ -102,7 +103,7 @@ async def create_chunks(videoRequest: EditorRequest, background_task: Background
                         status_code=response.status,
                         detail="Failed to post request to node",
                     )
-
+    await manager.register_task(task_id=new_task)
     return {"task_id": "started"}
 
 
@@ -131,9 +132,10 @@ async def create_file(
         }
     finally:
         await file.close()
-    running_task = SERVER_STATE.TASKS[task]
-    running_task.mark_node_completed(node)
-    if running_task.is_completed():
+    temp = Task(task)
+    await temp.mark_node_completed(SERVER_STATE.SPACE_HOST)
+    completed = await temp.is_completed()
+    if completed:
         background_tasks.add_task(concatenate_videos, chunk_directory)
 
     return {"message": "File uploaded successfully"}

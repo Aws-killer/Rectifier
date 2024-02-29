@@ -2,69 +2,10 @@ from pyrogram import Client
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
 from typing import List, Optional, Dict
+from App.Utilis.Classes import ServerState
 import os
 import aiohttp
 from pydantic import BaseModel
-
-
-class Node(BaseModel):
-    MASTER: bool
-    SPACE_HOST: str
-
-
-class NodeTaskState(BaseModel):
-    NODE: Node
-    CHUNK: int
-    COMPLETED: bool
-
-
-class Task(BaseModel):
-    TASK_ID: str
-    COMPLETED: bool = False
-    NODES: Optional[List[NodeTaskState]] = []
-
-    def is_completed(self) -> bool:
-        for node in self.NODES:
-            if not node.COMPLETED:
-                return False
-        self.COMPLETED = True
-        return True
-
-    def mark_node_completed(self, space_host: str):
-        for state in self.NODES:
-            if space_host in state.NODE.SPACE_HOST:
-                state.COMPLETED = True
-                break
-
-    async def add_node(self, node: Node, CHUNK: int):
-        new_node_state = NodeTaskState(NODE=node, CHUNK=CHUNK, COMPLETED=False)
-        self.NODES.append(new_node_state)
-
-    @classmethod
-    async def _check_node_online(cls, space_host: str) -> bool:
-        if not "https" in space_host:
-            space_host = f"https://{space_host}"
-        try:
-            async with aiohttp.ClientSession(
-                timeout=aiohttp.ClientTimeout(total=10)
-            ) as session:
-                async with session.get(space_host) as response:
-                    return response.status == 200
-        except aiohttp.ClientError:
-            return False
-
-
-class ServerState(Node):
-    CACHED: Optional[Dict[str, bool]] = {}
-    TASKS: Optional[Dict[str, Task]] = {}
-    NODES: Optional[list[Node]]
-    DB: str = "https://herokuserver-185316.firebaseio.com/"
-
-    def get_master(self) -> Optional[Node]:
-        for node in self.NODES:
-            if node.MASTER:
-                return node
-        return None
 
 
 CHAT_ID = -1002069945904
