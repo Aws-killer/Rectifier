@@ -56,6 +56,9 @@ RUN npm install npm@latest -g && \
 RUN pipx ensurepath && \
   pipx install unsilence
 
+
+# Create directories for Thorium browser
+RUN mkdir -p /srv/Thorium
 # Download Thorium browser ZIP file and save it in /srv/Thorium
 RUN wget -O /srv/Thorium/thorium-browser.zip https://github.com/Alex313031/thorium/releases/download/M117.0.5938.157/thorium-browser_117.0.5938.157_amd64.zip \
   && unzip /srv/Thorium/thorium-browser.zip -d /srv/Thorium \
