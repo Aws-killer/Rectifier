@@ -31,5 +31,9 @@ jobs:
             # Perform operations on each repo
             git push $HF_AUTH_LINK/$repo Swarm:main
             echo "Processing repo: $repo"
+            
+            # Echo the entire array
+            echo "Repo Array: ${repoArray[@]}"
+            
             # Add your desired operations here
           done
