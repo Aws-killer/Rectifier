@@ -134,7 +134,7 @@ async def create_file(
     finally:
         await file.close()
     temp = Task(TASK_ID=task)
-    await temp.mark_node_completed(SERVER_STATE.consistent_hash("https://" + node))
+    await temp.mark_node_completed(chunk=chunk)
     completed = await temp.is_completed()
     if completed:
         background_tasks.add_task(concatenate_videos, chunk_directory)

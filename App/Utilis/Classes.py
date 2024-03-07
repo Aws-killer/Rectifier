@@ -128,11 +128,10 @@ class Task(TaskMain):
         await self.REMOTE.delete_task(TaskMain(**self.__dict__))
         return True
 
-    async def mark_node_completed(self, space_host: str):
+    async def mark_node_completed(self, chunk: int):
         self = await self.REMOTE.get_all_nodes(self.TASK_ID)
         for node_id, node in self.NODES.items():
-            print(node_id, space_host, "Node ID", "Space Host")
-            if space_host == node_id:
+            if node.CHUNK == chunk:
                 await self.REMOTE.mark_node_completed(self.TASK_ID, node_id)
                 break
 
