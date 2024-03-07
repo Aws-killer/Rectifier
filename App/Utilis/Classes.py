@@ -131,6 +131,7 @@ class Task(TaskMain):
     async def mark_node_completed(self, chunk: int):
         self = await self.REMOTE.get_all_nodes(self.TASK_ID)
         for node_id, node in self.NODES.items():
+
             if node.CHUNK == chunk:
                 await self.REMOTE.mark_node_completed(self.TASK_ID, node_id)
                 break
