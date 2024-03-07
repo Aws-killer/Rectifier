@@ -12,9 +12,12 @@ class Node(BaseModel):
     MASTER: bool
     SPACE_HOST: str
 
-    def consistent_hash(self):
+    def consistent_hash(self, value=None):
         # Use the hash() function to generate a hash value for the string
-        hash_value = hash(self.SPACE_HOST)
+        if value:
+            hash_value = hash(value)
+        else:
+            hash_value = hash(self.SPACE_HOST)
         # Ensure the hash value is non-negative
         if hash_value < 0:
             # If negative, convert to positive by adding the maximum integer value
@@ -64,6 +67,21 @@ class TaskRemote(BaseModel):
                 response = await resp.json()
                 return response
 
+    async def mark_node_completed(self, task_id: str, node_id: str):
+
+        # Construct the Firebase Realtime Database endpoint URL
+        url = f"{self.base_url}/tasks/{task_id}/NODES/{node_id}.json"
+
+        # Send a PATCH request to update the node's COMPLETED status to True
+        async with aiohttp.ClientSession() as session:
+            async with session.patch(url, json={"COMPLETED": True}) as response:
+                if response.status == 200:
+                    print(f"Node {node_id} marked as completed.")
+                else:
+                    print(
+                        f"Failed to mark node {node_id} as completed. Status code: {response.status}"
+                    )
+
     async def update_node_state(self, task: TaskMain, node: NodeTaskState):
         hashed = node.NODE.consistent_hash()
         async with aiohttp.ClientSession() as session:
@@ -75,6 +93,7 @@ class TaskRemote(BaseModel):
                 json=json.loads(json_node),
             ) as resp:
                 response = await resp.json()
+                print(response, "Response")
                 return response
 
     async def get_all_nodes(self, task_id: str):
@@ -112,9 +131,8 @@ class Task(TaskMain):
     async def mark_node_completed(self, space_host: str):
         self = await self.REMOTE.get_all_nodes(self.TASK_ID)
         for node_id, node in self.NODES.items():
-            if space_host in node_id:
-                node.COMPLETED = True
-                await self.REMOTE.update_node_state(TaskMain(**self.__dict__), node)
+            if space_host == node_id:
+                await self.REMOTE.mark_node_completed(self.TASK_ID, node_id)
                 break
 
     def add_node(self, node: Node, CHUNK: int):
