@@ -32,7 +32,7 @@ jobs:
 
 
             # Perform operations on each repo
-            git push $HF_AUTH_LINK/$repo Swarm:main
+            git push $HF_AUTH_LINK/$repo Swarm:main --force
             echo "Processing repo: $repo"
             
 
