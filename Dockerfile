@@ -1,11 +1,19 @@
 # Builder stage
 FROM python:3.10.0 as builder
 
+# Create a non-root user
 RUN useradd -ms /bin/bash admin
 
+# Set the working directory
 WORKDIR /srv
+
+# Change ownership of the working directory
 RUN chown -R admin:admin /srv
+
+# Change permissions of the working directory
 RUN chmod -R 755 /srv
+
+
 
 # Install dependencies
 RUN apt-get update && \
@@ -33,23 +41,26 @@ RUN apt-get install -y \
   libxrandr2 \
   xdg-utils
 
-# Download youtubeuploader
-ADD https://github.com/porjo/youtubeuploader/releases/download/23.06/youtubeuploader_23.06_Linux_x86_64.tar.gz youtubeuploader.tar.gz
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 
-# Create youtube directory and extract youtubeuploader there
-RUN mkdir -p /srv/youtube && \
-    tar -zxvf youtubeuploader.tar.gz -C /srv/youtube && \
-    rm youtubeuploader.tar.gz && \
-    chmod +x /srv/youtube/youtubeuploader
+# # Download youtubeuploader
+# ADD https://github.com/porjo/youtubeuploader/releases/download/23.06/youtubeuploader_23.06_Linux_x86_64.tar.gz youtubeuploader.tar.gz
 
 
-# Copy the application code
-COPY --chown=admin . /srv
+# # Create youtube directory and extract youtubeuploader there
+# RUN mkdir -p /srv/youtube && \
+#     tar -zxvf youtubeuploader.tar.gz -C /srv/youtube && \
+#     rm youtubeuploader.tar.gz && \
+#     chmod +x /srv/youtube/youtubeuploader
+
+
 
 # Download and install Thorium Browser
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get install -y \
   software-properties-common \
   npm
 RUN npm install npm@latest -g && \
@@ -58,24 +69,20 @@ RUN npm install npm@latest -g && \
 
 
 
-
 #install the stuff
 # RUN cd /srv/Remotion-app && npm install
 
+# #install unsilence
+# RUN pipx ensurepath
+# RUN pipx install unsilence
 
 
+# Copy the application code
+COPY --chown=admin . /srv
 
 
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-#install unsilence
-RUN pipx ensurepath
-RUN pipx install unsilence
-
-
-
+# Switch to the non-root user
+# USER admin
 
 
 # Command to run the application

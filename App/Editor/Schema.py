@@ -15,20 +15,22 @@ class Constants(BaseModel):
     text: Optional[dict]
 
 
-class Assets(BaseModel):
-    type: str
-    sequence: List[dict]
 
-    @validator("type")
-    def valid_type(cls, v):
-        if v not in ["video", "audio", "text", "image", "sfx", "background"]:
-            raise ValueError("Invalid asset type")
-        return v
+
+class Explanation(BaseModel):
+    highlight: str
+    narration: str
+    duration: int
+    audio: str
+
+class Assets(BaseModel):
+    code: str
+    Explanation: List[Explanation]
 
 
 class EditorRequest(BaseModel):
     links: Optional[List[LinkInfo]]  # List of LinkInfo objects
-    assets: List[Assets]
+    assets: Assets
     constants: Optional[Constants]
 
 

@@ -1,0 +1,27 @@
+{
+  "name": "learning",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "start": "vite",
+    "serve": "vite",
+    "build": "tsc && vite build",
+    "render": "tsc && node dist/render.js"
+  },
+  "dependencies": {
+    "@lezer/javascript": "^1.4.14",
+    "@lezer/python": "^1.1.13",
+    "@motion-canvas/2d": "^3.15.2",
+    "@motion-canvas/core": "^3.15.2",
+    "@revideo/2d": "^0.2.4",
+    "@revideo/core": "^0.2.4",
+    "@revideo/ffmpeg": "^0.2.4",
+    "@revideo/renderer": "^0.2.4",
+    "@revideo/vite-plugin": "^0.2.4"
+  },
+  "devDependencies": {
+    "@revideo/ui": "^0.2.4",
+    "typescript": "^5.2.2",
+    "vite": "^4.5"
+  }
+}

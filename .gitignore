@@ -3,3 +3,5 @@
 *.session-journal
 .env
 modal_test.py
+Motion/node_modules/
+Motion/.cache/
