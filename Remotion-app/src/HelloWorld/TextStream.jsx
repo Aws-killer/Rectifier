@@ -47,7 +47,7 @@ const TextStream = React.memo(() => {
 		>
 			<TransitionSeries>
 				{memoizedTranscriptData.map((entry, index) => {
-					const delta = entry.end - entry.start < 1 / 30 ? 0.2 : 0;
+					const delta = ((entry.end - entry.start) / 30)<1 ? 2 : 0;
 					return (
 						<TransitionSeries.Sequence
 							style={subtitle}
