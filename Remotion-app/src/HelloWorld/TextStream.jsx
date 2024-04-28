@@ -1,9 +1,8 @@
 import React, {useMemo} from 'react';
-import {useVideoConfig, AbsoluteFill, TransitionSeries} from 'remotion';
+import {useVideoConfig, AbsoluteFill, TransitionSeries,	Series} from 'remotion';
 import * as Fonts from '@remotion/google-fonts';
 import transcriptData from './Assets/TextSequences.json';
 import Constants from './Assets/Constants.json';
-import {TransitionSeries} from '@remotion/transitions';
 const defaultText = {
 	fontFamily: 'Luckiest Guy',
 	fontSize: 120,
@@ -45,21 +44,21 @@ const TextStream = React.memo(() => {
 				alignItems: 'center',
 			}}
 		>
-			<TransitionSeries>
+			<Series>
 				{memoizedTranscriptData.map((entry, index) => {
 					const delta = ((entry.end - entry.start) / 30)<1 ? 2 : 0;
 					return (
-						<TransitionSeries.Sequence
+						<Series.Sequence
 							style={subtitle}
 							key={index}
 							from={(entry.start + delta) * fps}
 							durationInFrames={fps * (entry.end - entry.start + delta)}
 						>
 							<Letter style={subtitle}>{entry.text}</Letter>
-						</TransitionSeries.Sequence>
+						</Series.Sequence>
 					);
 				})}
-			</TransitionSeries>
+			</Series>
 		</AbsoluteFill>
 	);
 });
