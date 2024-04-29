@@ -1,11 +1,27 @@
 import React, {useMemo} from 'react';
-import {useVideoConfig, AbsoluteFill, TransitionSeries,	Series} from 'remotion';
+import {
+	useVideoConfig,
+	AbsoluteFill,
+	TransitionSeries,
+	Series,
+	useCurrentFrame,
+} from 'remotion';
 import * as Fonts from '@remotion/google-fonts';
 import transcriptData from './Assets/TextSequences.json';
-import Constants from './Assets/Constants.json';
+
+function chunkArray(array, chunkSize) {
+	const chunks = [];
+	for (let i = 0; i < array.length; i += chunkSize) {
+		chunks.push(array.slice(i, i + chunkSize));
+	}
+	return chunks;
+}
+
+import {TransitionSeries} from '@remotion/transitions';
+const Constants = {};
 const defaultText = {
 	fontFamily: 'Luckiest Guy',
-	fontSize: 120,
+	fontSize: 80,
 	textAlign: 'center',
 	textShadow:
 		'-10px -10px 0 #000, 0   -10px 0 #000, 10px -10px 0 #000, 10px  0   0 #000, 10px  10px 0 #000, 0    10px 0 #000, -10px  10px 0 #000, -10px  0   0 #000',
@@ -31,30 +47,40 @@ Fonts.getAvailableFonts()
 
 const TextStream = React.memo(() => {
 	const {fps} = useVideoConfig();
-
+	const frame = useCurrentFrame();
 	const memoizedTranscriptData = useMemo(() => {
 		return transcriptData;
 	}, []);
-
+	const chunks = chunkArray(memoizedTranscriptData, 3);
 	return (
 		<AbsoluteFill
 			style={{
-				backgroundColor: 'transparent',
+				//backgroundColor: 'red',
 				justifyContent: 'center',
 				alignItems: 'center',
 			}}
 		>
 			<Series>
-				{memoizedTranscriptData.map((entry, index) => {
-					const delta = ((entry.end - entry.start) / 30)<1 ? 2 : 0;
+				{chunks.map((chunk, index) => {
+					let delta = 0;
+					if (chunk.length > 1) {
+						const end = chunk[chunk.length - 1].end;
+						const start = chunk[0].start;
+						delta = end - start;
+					} else {
+						delta = chunk[0].end - chunk[0].start;
+					}
+
 					return (
 						<Series.Sequence
 							style={subtitle}
 							key={index}
-							from={(entry.start + delta) * fps}
-							durationInFrames={fps * (entry.end - entry.start + delta)}
+							from={delta * fps}
+							durationInFrames={fps * delta}
 						>
-							<Letter style={subtitle}>{entry.text}</Letter>
+							<Letter frame={frame} style={subtitle}>
+								{chunk}
+							</Letter>
 						</Series.Sequence>
 					);
 				})}
@@ -63,8 +89,36 @@ const TextStream = React.memo(() => {
 	);
 });
 
-const Letter = React.memo(({children, style}) => {
-	return <div style={style}>{children}</div>;
-});
+const Letter = ({children, style, frame}) => {
+	const {fps} = useVideoConfig();
+
+	return (
+		<div style={style} className="flex space-x-5 justify-center flex-wrap">
+			{children.map((item, index) => {
+				const {text, start, end} = item;
+				console.log('text', text, start * fps, end * fps, frame);
+				return (
+					<div
+						key={index}
+						className=" rounded-3xl p-1"
+						style={{
+							backgroundColor: `${
+								frame >= start * fps && frame <= end * fps
+									? 'black'
+									: 'transparent'
+							}`,
+							// fontSize: style.fontSize,
+							// opacity: 1,
+							// transition: 'opacity 0.5s',
+							// transitionDelay: `${start}s`,
+						}}
+					>
+						{text}
+					</div>
+				);
+			})}
+		</div>
+	);
+};
 
 export default TextStream;
