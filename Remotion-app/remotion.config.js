@@ -12,5 +12,4 @@ Config.overrideWebpackConfig((currentConfiguration) => {
 
 Config.setC;
 Config.setVideoImageFormat('jpeg');
-Config.setFrameRange(Instructions.frames);
-// Config.setConcurrency(15);
+Config.setConcurrency(1);
