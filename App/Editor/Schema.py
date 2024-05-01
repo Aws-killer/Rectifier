@@ -16,6 +16,7 @@ class Constants(BaseModel):
     width: Optional[int]
     text: Optional[dict]
     frames: Optional[dict]
+    instructions: Optional[bool] = False
 
 
 class Assets(BaseModel):
