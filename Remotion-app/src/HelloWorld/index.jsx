@@ -11,7 +11,7 @@ const HelloWorld = React.memo(() => {
 		<AbsoluteFill style={{position: 'relative', backgroundColor: 'black'}}>
 			<BackgroundStream />
 			<ImageStream />
-			<TextStream />
+			//<TextStream />
 			<VideoStream />
 			<AudioStream />
 		</AbsoluteFill>
