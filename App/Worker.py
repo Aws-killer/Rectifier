@@ -88,7 +88,7 @@ def create_constants_json_file(constants: Constants, asset_dir: str):
         json_string = json.dumps({})
     os.makedirs(asset_dir, exist_ok=True)
     with open(instrunction_file, "w") as f:
-        if constants.instrunctions:
+        if constants.instructions:
             f.write(json.dumps({"frames": constants.frames}))
         else:
             f.write(json.dumps({"frames": [0, constants.duration]}))
