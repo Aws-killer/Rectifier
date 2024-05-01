@@ -3,7 +3,6 @@ import {useVideoConfig, AbsoluteFill, TransitionSeries} from 'remotion';
 import * as Fonts from '@remotion/google-fonts';
 import transcriptData from './Assets/TextSequences.json';
 import Constants from './Assets/Constants.json';
-import {TransitionSeries} from '@remotion/transitions';
 const defaultText = {
 	fontFamily: 'Luckiest Guy',
 	fontSize: 120,
