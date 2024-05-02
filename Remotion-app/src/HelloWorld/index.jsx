@@ -10,7 +10,8 @@ const HelloWorld = React.memo(() => {
 	return (
 		<AbsoluteFill style={{position: 'relative', backgroundColor: 'black'}}>
 			<BackgroundStream />
-			<ImageStream />
+{/* <ImageStream /> */}
+			
 					{/* <TextStream /> */}
 			<VideoStream />
 			<AudioStream />
