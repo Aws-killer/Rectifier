@@ -10,6 +10,6 @@ Config.overrideWebpackConfig((currentConfiguration) => {
 	return enableTailwind(currentConfiguration);
 });
 
-Config.setBrowserExecutable("/usr/bin/chrome-headless-shell");
+//Config.setBrowserExecutable("/usr/bin/chrome-headless-shell");
 Config.setVideoImageFormat('jpeg');
 Config.setConcurrency(1);
