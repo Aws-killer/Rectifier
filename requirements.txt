@@ -23,6 +23,5 @@ aiohttp
 instructor
 groq
 python-multipart
-orm
-aiosqlite
+orm[sqlite]
 pydub
