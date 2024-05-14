@@ -7,6 +7,7 @@ from tqdm import tqdm
 from .database.Model import models, database_url, Scene, Project
 from .utils.RenderVideo import RenderVideo
 from .Prompts.StoryGen import Prompt
+from App.Editor.editorRoutes import celery_task, EditorRequest
 
 
 async def update_scene(model_scene):
@@ -48,7 +49,8 @@ async def main(request: GeneratorRequest):
             pbar.update(len(batch))  # Increment progress bar by the size of the batch
 
     temp = await x.generate_json()
-    await renderr.render_video(temp)
+    print(temp)
+    # await renderr.render_video(temp)
 
 
 generator_router = APIRouter(tags=["video-Generator"])
