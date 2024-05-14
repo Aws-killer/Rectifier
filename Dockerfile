@@ -68,6 +68,7 @@ COPY --chown=admin . /srv
 
 # Give read and write permissions to the admin user
 RUN chown -R admin:admin /srv
+RUN chmod 755 /srv
 
 CMD python -m uvicorn App.app:app --workers 1 --host 0.0.0.0 --port 7860 
 
