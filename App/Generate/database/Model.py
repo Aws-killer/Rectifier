@@ -8,7 +8,7 @@ from .Vercel import AsyncImageGenerator
 import aiohttp
 from typing import List
 
-database_url = "sqlite+aiosqlite:///ok.db"
+database_url = "sqlite+aiosqlite:///srv/ok.db"
 database = databases.Database(database_url)
 models = orm.ModelRegistry(database=database)
 
