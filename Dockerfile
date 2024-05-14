@@ -67,10 +67,10 @@ COPY --chown=admin . /srv
 # CMD python -m uvicorn App.app:app --host 0.0.0.0 --port 7860 &  python -m celery -A App.Worker.celery worker -c 5  --max-tasks-per-child=1  --without-heartbeat 
 
 # Give read and write permissions to the admin user
-USER admin
+
 RUN chown -R admin:admin /srv
 RUN chmod 755 /srv
-
+USER admin
 CMD python -m uvicorn App.app:app --workers 1 --host 0.0.0.0 --port 7860 
 
 # Expose port
