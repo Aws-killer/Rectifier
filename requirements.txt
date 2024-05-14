@@ -23,5 +23,5 @@ aiohttp
 instructor
 groq
 python-multipart
-orm[sqlite]
+orm[sqlite]==0.3.0
 pydub
