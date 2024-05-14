@@ -18,7 +18,7 @@ async def main(request: GeneratorRequest):
     topic = request.prompt
     renderr = RenderVideo()
 
-    await models.create_all(database_url)
+    await models.create_all()
     message = chatbot(Prompt.format(topic=topic))
 
     generated_story = Story.from_dict(message["scenes"])
