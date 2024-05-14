@@ -10,11 +10,12 @@ manager = WorkerClient()
 
 @app.on_event("startup")
 async def startup_event():
-    if SERVER_STATE.MASTER:
-        await bot.start()
-    response = await manager.register_worker()
-    if not response:
-        print("Error registering worker")
+    await bot.start()
+    #if SERVER_STATE.MASTER:
+
+    #response = await manager.register_worker()
+    #if not response:
+    #    print("Error registering worker")
 
 
 @app.get("/")

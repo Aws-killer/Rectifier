@@ -189,30 +189,21 @@ async def cleanup_temp_directory(
     chat_id: int = -1002069945904,
 ):
     video_folder_dir = f"/tmp/Video/{video_task.constants.task}"
+    
     try:
-        if not SERVER_STATE.MASTER:
-            await upload_file(
-                output_dir,
-                SERVER_STATE.SPACE_HOST,
-                video_task.constants.chunk,
-                video_task.constants.task,
-            )
-        else:
+        print("sending...")
+        # bot.send_video(chat_id=chat_id,caption="Your Video Caption",file_name=output_dir)
+        await bot.send_file(chat_id, file=output_dir, caption="Your video caption")
 
-            os.makedirs(video_folder_dir, exist_ok=True)
-            shutil.move(
-                output_dir, f"{video_folder_dir}/{video_task.constants.chunk}.mp4"
-            )
 
-    except Exception as e:
-        print(e)
+
     finally:
-        remotion_app_dir = os.path.join("/srv", "Remotion-app")
-        shutil.rmtree(remotion_app_dir)
+        #remotion_app_dir = os.path.join("/srv", "Remotion-app")
+        #shutil.rmtree(remotion_app_dir)
         # use the cache
-        shutil.copytree(temp_dir, remotion_app_dir)
-        if not SERVER_STATE.CACHED:
-            SERVER_STATE.CACHED = True
+        #shutil.copytree(temp_dir, remotion_app_dir)
+        #if not SERVER_STATE.CACHED:
+        #    SERVER_STATE.CACHED = True
         # Cleanup: Remove the temporary directory
         shutil.rmtree(temp_dir, ignore_errors=True)
 
@@ -235,7 +226,7 @@ async def celery_task(video_task: EditorRequest):
     create_json_file(video_task.assets, assets_dir)
     download_assets(video_task.links, temp_dir)
     render_video(temp_dir, output_dir)
-    unsilence(temp_dir)
+    #unsilence(temp_dir)
     await cleanup_temp_directory(temp_dir, output_dir, video_task)
 
     # chain(
