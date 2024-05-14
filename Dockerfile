@@ -10,8 +10,6 @@ WORKDIR /srv
 # Copy requirements file first to leverage caching
 COPY --chown=admin requirements.txt .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
 
 # Install system dependencies
 RUN apt-get update && \
@@ -59,8 +57,15 @@ RUN pipx ensurepath && \
 # Copy the application code
 COPY --chown=admin . /srv
 
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+
 # Command to run the application
 # CMD python -m uvicorn App.app:app --host 0.0.0.0 --port 7860 &  python -m celery -A App.Worker.celery worker -c 5  --max-tasks-per-child=1  --without-heartbeat 
+
+# Give read and write permissions to the admin user
+RUN chown -R admin:admin /srv
 
 CMD python -m uvicorn App.app:app --workers 1 --host 0.0.0.0 --port 7860 
 
