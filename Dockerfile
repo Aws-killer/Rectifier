@@ -50,6 +50,9 @@ RUN npm install npm@latest -g && \
   npm install n -g && \
   n latest
 
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
 # Install unsilence
 RUN pipx ensurepath && \
   pipx install unsilence
@@ -57,8 +60,7 @@ RUN pipx ensurepath && \
 # Copy the application code
 COPY --chown=admin . /srv
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+
 
 
 # Command to run the application
