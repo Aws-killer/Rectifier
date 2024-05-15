@@ -110,7 +110,8 @@ def create_symlink(source_dir, target_dir, symlink_name):
 
 def download_with_wget(link, download_dir, filename):
     print(["aria2c", link, "-d", download_dir, "-o", filename])
-    os.system(f"aria2c  {link}   -d   {download_dir} -o  {filename}")
+    subprocess.run(["aria2c", link, "-d", download_dir, "-o", filename])
+    # os.system(f"aria2c  {link}   -d   {download_dir} -o  {filename}")
 
 
 # @celery.task(name="CopyRemotion")
@@ -168,7 +169,7 @@ def upload_video_to_youtube(task_data: dict):
 def download_assets(links: List[LinkInfo], temp_dir: str):
     public_dir = f"{temp_dir}/public"
     for link in links:
-        file_link = link.link
+        file_link = str(link.link)
         file_name = link.file_name
         download_with_wget(file_link, public_dir, file_name)
 
