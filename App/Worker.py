@@ -110,7 +110,7 @@ def create_symlink(source_dir, target_dir, symlink_name):
 
 def download_with_wget(link, download_dir, filename):
     print(["aria2c", link, "-d", download_dir, "-o", filename])
-    subprocess.run(["aria2c", link, "-d", download_dir, "-o", filename])
+    subprocess.run([f"aria2c  {link}   -d   {download_dir} -o  {filename}"])
 
 
 # @celery.task(name="CopyRemotion")
