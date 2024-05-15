@@ -50,7 +50,7 @@ async def main(request: GeneratorRequest):
 
     temp = await x.generate_json()
     print(temp)
-    # await renderr.render_video(temp)
+    await renderr.render_video(temp)
 
 
 generator_router = APIRouter(tags=["video-Generator"])
