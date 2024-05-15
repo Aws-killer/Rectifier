@@ -4,7 +4,7 @@ from .utils.GroqInstruct import chatbot
 from .Story.Story import Story
 import asyncio, pprint, json
 from tqdm import tqdm
-from .database.Model import models, database_url, Scene, Project
+from .database.Model import models, database_url, Scene, Project, database
 from .utils.RenderVideo import RenderVideo
 from .Prompts.StoryGen import Prompt
 from App.Editor.editorRoutes import celery_task, EditorRequest
@@ -18,7 +18,13 @@ async def update_scene(model_scene):
 async def main(request: GeneratorRequest):
     topic = request.prompt
     renderr = RenderVideo()
-    await models._create_all(database_url)
+    try:
+        await models._create_all(database_url)
+    except:
+        pass
+    finally:
+        if not database.is_connected:
+            await database.connect()
     message = chatbot(Prompt.format(topic=topic))
 
     generated_story = Story.from_dict(message["scenes"])
