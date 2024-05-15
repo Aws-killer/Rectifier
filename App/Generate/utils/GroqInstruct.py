@@ -30,7 +30,7 @@ client = instructor.from_groq(client, mode=instructor.Mode.JSON)
 def chatbot(prompt):
 
     response: VideoOutput = client.chat.completions.create(
-        model="mixtral-8x7b-32768",
+        model="llama3-70b-8192",
         # model="gemma-7b-it",
         # model="llama2-70b-4096",
         # model="llama3-70b-8192",
