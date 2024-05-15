@@ -219,8 +219,8 @@ async def celery_task(video_task: EditorRequest):
 
     # # use the cached stuff
     # if not SERVER_STATE.CACHED:
-    #     install_dependencies(temp_dir)
-
+    #
+    install_dependencies(temp_dir)
     create_constants_json_file(video_task.constants, assets_dir)
     create_json_file(video_task.assets, assets_dir)
     download_assets(video_task.links, temp_dir)
