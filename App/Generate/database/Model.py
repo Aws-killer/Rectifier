@@ -8,7 +8,7 @@ from .Vercel import AsyncImageGenerator
 import aiohttp
 from typing import List
 
-database_url = "sqlite+aiosqlite:///ok.db"
+database_url = "postgresql+asyncpg://postgres.vfhoydxvxuesxhrcdnmx:PkkneZrSFsnJR6B@aws-0-us-west-1.pooler.supabase.com:5432/postgres"
 database = databases.Database(database_url)
 models = orm.ModelRegistry(database=database)
 
