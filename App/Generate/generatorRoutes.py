@@ -48,8 +48,11 @@ async def main(request: GeneratorRequest):
             pbar.update(len(batch))  # Increment progress bar by the size of the batch
 
     temp = await x.generate_json()
-    print(temp)
-    await renderr.render_video(temp)
+    # print(temp)
+
+    # await renderr.render_video(temp)
+    request = EditorRequest.model_validate(temp)
+    await celery_task(video_task=request)
 
 
 generator_router = APIRouter(tags=["video-Generator"])
