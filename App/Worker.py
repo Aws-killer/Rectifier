@@ -189,20 +189,18 @@ async def cleanup_temp_directory(
     chat_id: int = -1002069945904,
 ):
     video_folder_dir = f"/tmp/Video/{video_task.constants.task}"
-    
+
     try:
         print("sending...")
         # bot.send_video(chat_id=chat_id,caption="Your Video Caption",file_name=output_dir)
         await bot.send_file(chat_id, file=output_dir, caption="Your video caption")
 
-
-
     finally:
-        #remotion_app_dir = os.path.join("/srv", "Remotion-app")
-        #shutil.rmtree(remotion_app_dir)
+        # remotion_app_dir = os.path.join("/srv", "Remotion-app")
+        # shutil.rmtree(remotion_app_dir)
         # use the cache
-        #shutil.copytree(temp_dir, remotion_app_dir)
-        #if not SERVER_STATE.CACHED:
+        # shutil.copytree(temp_dir, remotion_app_dir)
+        # if not SERVER_STATE.CACHED:
         #    SERVER_STATE.CACHED = True
         # Cleanup: Remove the temporary directory
         shutil.rmtree(temp_dir, ignore_errors=True)
@@ -218,15 +216,15 @@ async def celery_task(video_task: EditorRequest):
 
     copy_remotion_app(remotion_app_dir, temp_dir)
 
-    # use the cached stuff
-    if not SERVER_STATE.CACHED:
-        install_dependencies(temp_dir)
+    # # use the cached stuff
+    # if not SERVER_STATE.CACHED:
+    #     install_dependencies(temp_dir)
 
     create_constants_json_file(video_task.constants, assets_dir)
     create_json_file(video_task.assets, assets_dir)
     download_assets(video_task.links, temp_dir)
     render_video(temp_dir, output_dir)
-    #unsilence(temp_dir)
+    # unsilence(temp_dir)
     await cleanup_temp_directory(temp_dir, output_dir, video_task)
 
     # chain(
