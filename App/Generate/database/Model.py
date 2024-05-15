@@ -8,7 +8,7 @@ from .Vercel import AsyncImageGenerator
 import aiohttp
 from typing import List
 
-database_url = "sqlite+aiosqlite:///ok.db"
+database_url = "sqlite+aiosqlite://./ok.db"
 database = databases.Database(database_url)
 models = orm.ModelRegistry(database=database)
 
@@ -28,54 +28,6 @@ class Project(orm.Model):
         "constants": orm.JSON(allow_null=True, default={}),
     }
 
-    """
-        assets.extend(
-        [
-            {"type": "video", "sequence": video_sequence},
-            {
-                "type": "audio",
-                "sequence": [
-                    {
-                        "type": "audio",
-                        "name": "transcript.wav",
-                        "start": trans_start,
-                        "end": trans_end,
-                        "props": {
-                            "startFrom": trans_start * 30,
-                            "endAt": trans_end * 30,
-                            "volume": 5,
-                        },
-                    },
-                ],
-            },
-            {
-                "type": "background",
-                "sequence": [
-                    {
-                        "type": "background",
-                        "name": "background.mp3",
-                        "start": trans_start,
-                        "end": trans_end,
-                        "props": {
-                            "startFrom": trans_start * 30,
-                            "endAt": trans_end * 30,
-                            "volume": 0.4,
-                        },
-                    },
-                ],
-            },
-        ]
-    )
-
-    
-                {
-                "type": "image",
-                "name": file_name,
-                "start": image["start"],
-                "end": image["end"],
-            }
-"""
-
     async def get_all_scenes(self):
         return await Scene.objects.filter(project=self).all()
 
@@ -88,15 +40,15 @@ class Project(orm.Model):
         audio_assets = []
 
         transitions = [
-            "WaveRight_transparent.webm",
-            "WaveLeft_transparent.webm",
+            # "WaveRight_transparent.webm",
+            # "WaveLeft_transparent.webm",
             # "WaveBlue_transparent.webm",
             # "Wave_transparent.webm",
             # "Swirl_transparent.webm",
             # "Snow_transparent.webm",
             # "Likes_transparent.webm",
             # "Lightning_transparent.webm",
-            # "Happy_transparent.webm",
+            "Happy_transparent.webm",
             # "Fire_transparent.webm",
             # "CurlingWave_transparent.webm",
             # "Cloud_transparent.webm",
