@@ -18,13 +18,6 @@ async def update_scene(model_scene):
 async def main(request: GeneratorRequest):
     topic = request.prompt
     renderr = RenderVideo()
-    try:
-        await models._create_all(database_url)
-    except:
-        pass
-    finally:
-        if not database.is_connected:
-            await database.connect()
     message = chatbot(Prompt.format(topic=topic))
 
     generated_story = Story.from_dict(message["scenes"])
