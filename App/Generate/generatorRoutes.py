@@ -8,6 +8,7 @@ from .database.Model import models, database_url, Scene, Project
 from .utils.RenderVideo import RenderVideo
 from .Prompts.StoryGen import Prompt
 from App.Editor.editorRoutes import celery_task, EditorRequest
+import uuid
 
 
 async def update_scene(model_scene):
@@ -18,7 +19,7 @@ async def update_scene(model_scene):
 async def main(request: GeneratorRequest):
     topic = request.prompt
     renderr = RenderVideo()
-    await models._create_all(database_url)
+    await models._create_all(f"sqlite+aiosqlite:///{str(uuid.uuid4())}.db")
     message = chatbot(Prompt.format(topic=topic))
 
     generated_story = Story.from_dict(message["scenes"])
