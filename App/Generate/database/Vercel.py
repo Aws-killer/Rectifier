@@ -44,9 +44,13 @@ class AsyncImageGenerator:
     async def fetch_image_status(self, image_id):
         url = f"https://replicate.com/api/predictions/{image_id}"
         async with self.session.get(url) as response:
-            response.raise_for_status()
-            temp = await response.json()
-            status = temp
+            try:
+                response.raise_for_status()
+                temp = await response.json()
+                status = temp
+            except:
+                status["status"] = "404"
+
             while status["status"] != "succeeded":
                 try:
                     status = await self._fetch_image_status(image_id)
