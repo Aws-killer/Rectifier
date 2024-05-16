@@ -146,6 +146,7 @@ class Project(orm.Model):
         }
         try:
             text_stream = await self.generate_transcript()
+            print(text_stream)
             self.assets.append({"type": "text", "sequence": text_stream})
 
         except Exception as e:
