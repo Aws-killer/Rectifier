@@ -1,12 +1,17 @@
 import {AbsoluteFill} from 'remotion';
 
 import React, {useMemo} from 'react';
-import {staticFile, useVideoConfig, Img, Easing, Audio} from 'remotion';
+import {
+	staticFile,
+	useVideoConfig,
+	Img,
+	Easing,
+	Audio,
+	useCurrentFrame,
+	interpolate,
+} from 'remotion';
 import imageSequences from './Assets/ImageSequences.json';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
-import GsapAnimation from './Components/GsapAnimation';
-import gsap from 'gsap';
-import {MotionPathPlugin} from 'gsap-trial/all';
 
 const ImageStream = React.memo(() => {
 	const {fps} = useVideoConfig();
@@ -43,50 +48,28 @@ const ImageStream = React.memo(() => {
 });
 
 const Images = React.memo(({entry, index}) => {
-	const plugins = useMemo(() => [MotionPathPlugin], []);
+	const frame = useCurrentFrame();
+	const {fps} = useVideoConfig();
 
-	const gsapTimeline = () => {
-		let tlContainer = gsap.timeline();
-		// tlContainer.fromTo(
-		// 	'#gaussianBlur',
-		// 	{
-		// 		attr: {stdDeviation: `250,0`},
-		// 	},
-		// 	{
-		// 		attr: {stdDeviation: `0,0`},
-
-		// 		duration: 1 / 2,
-		// 	},
-		// 	0
-		// );
-		tlContainer.to('#imagex', {
-			duration: 2, // Total duration for one loop
-			ease: 'power1.inOut',
-			scale: 1.2,
-			// motionPath: {
-			// 	path: CAMERA_PATHS[index % CAMERA_PATHS.length],
-			// 	align: '#imagex',
-			// 	alignOrigin: [0.5, 0.5],
-			// 	autoRotate: false,
-			// },
-		});
-
-		return tlContainer;
-	};
+	const duration = fps * 2.5;
+	const ImgScale = interpolate(frame, [1, duration], [1, 1.2], {
+		easing: Easing.bezier(0.65, 0, 0.35, 1),
+		extrapolateRight: 'clamp',
+		extrapolateLeft: 'clamp',
+	});
 
 	return (
-		<GsapAnimation
-			plugins={plugins}
+		<AbsoluteFill
 			style={{
 				BackgroundColor: 'black',
 			}}
 			className="bg-black"
-			Timeline={gsapTimeline}
 		>
 			<Audio src={staticFile('sfx_1.mp3')} />
 			<Img
 				id="imagex"
 				style={{
+					scale: 2,
 					filter: `url(#blur)`,
 					objectPosition: 'center',
 					objectFit: 'cover',
@@ -94,14 +77,13 @@ const Images = React.memo(({entry, index}) => {
 					position: 'absolute',
 					top: '50%', // Center vertically
 					left: '50%', // Center horizontally
-					transform: 'translate(-50%, -50%)',
-
+					transform: `translate(-50%, -50%) scale(${ImgScale})`,
 					width: 1080,
 					height: 1920,
 				}}
 				src={staticFile(entry.name)}
 			/>
-		</GsapAnimation>
+		</AbsoluteFill>
 	);
 });
 
