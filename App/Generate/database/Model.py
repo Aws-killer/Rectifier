@@ -120,12 +120,27 @@ class Project(orm.Model):
             "height": 1920,
             "width": 1080,
         }
+        try:
+            data = await self.generate_transcript()
+            print(data)
+        except:
+            pass
 
         await self.update(**self.__dict__)
         return {"links": self.links, "assets": self.assets, "constants": self.constants}
 
     async def generate_transcript(self):
-        pass
+        project_scenes: List[Scene] = self.get_all_scenes()
+        links = []
+        text = ""
+        for narration in project_scenes:
+            narration: Scene
+
+            text += " " + narration.narration
+            links.append(narration.narration_link)
+
+        transcript = await narration.tts._make_transcript(links=links, text=text)
+        return transcript
 
 
 class Scene(orm.Model):

@@ -105,6 +105,13 @@ class Speak:
         self.api_url = api_url
         self.dir = dir
 
+    async def _make_transcript(self, links, text):
+        data = {"audio_url": links, "text": text}
+        response_data = await self._make_request(
+            "post", "descript_transcript", json=data
+        )
+        return response_data
+
     async def _make_request(self, method, endpoint, json=None):
         async with aiohttp.ClientSession() as session:
             async with getattr(session, method)(
