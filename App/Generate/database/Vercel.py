@@ -48,13 +48,15 @@ class AsyncImageGenerator:
                 response.raise_for_status()
                 temp = await response.json()
                 status = temp
-            except:
+            except Exception as e:
+                print(f"Image Request failed {e}")
                 status["status"] = "404"
 
             while status["status"] != "succeeded":
                 try:
                     status = await self._fetch_image_status(image_id)
-                except:
+                except Exception as e:
+                    print(f"Image Request failed {e}")
                     pass
                 await asyncio.sleep(3)
             return status
