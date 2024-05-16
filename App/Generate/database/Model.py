@@ -23,18 +23,18 @@ class WordAlignment(BaseModel):
     hasFailedAlignment: bool
 
     @classmethod
-    def from_old_format(cls, data: dict):
+    def from_old_format(cls, data: dict, offset: float = 0.0):
         return cls(
             text=data["word"],
             alignedWord=data["alignedWord"],
-            start=data["startTime"],
-            end=data["endTime"],
+            start=data["startTime"] + offset,
+            end=data["endTime"] + offset,
             hasFailedAlignment=data["hasFailedAlignment"],
         )
 
 
-def transform_alignment_data(data: List[dict]) -> List[dict]:
-    return [WordAlignment.from_old_format(item).model_dump() for item in data]
+def transform_alignment_data(data: List[dict], offset: float = 0.0) -> List[dict]:
+    return [WordAlignment.from_old_format(item, offset).model_dump() for item in data]
 
 
 class Project(orm.Model):
@@ -62,6 +62,7 @@ class Project(orm.Model):
         image_assets = []
         video_assets = []
         audio_assets = []
+        text_stream = []
 
         transitions = [
             # "WaveRight_transparent.webm",
@@ -104,6 +105,10 @@ class Project(orm.Model):
                 }
             )
 
+            # generate transcripts
+            temp = await scene.generate_scene_transcript(offset=self.start)
+            text_stream.extend(temp)
+
             ## images and transitions
             for image in scene.images:
                 file_name = str(uuid.uuid4()) + ".png"
@@ -144,14 +149,15 @@ class Project(orm.Model):
             "height": 1920,
             "width": 1080,
         }
-        try:
-            text_stream = await self.generate_transcript()
-            print(text_stream)
-            self.assets.append({"type": "text", "sequence": text_stream})
+        self.assets.append({"type": "text", "sequence": text_stream})
+        # try:
+        #     text_stream = await self.generate_transcript()
+        #     print(text_stream)
+        #     self.assets.append({"type": "text", "sequence": text_stream})
 
-        except Exception as e:
-            print(f"Text sequence failed, {e}")
-            pass
+        # except Exception as e:
+        #     print(f"Text sequence failed, {e}")
+        #     pass
 
         await self.update(**self.__dict__)
         return {"links": self.links, "assets": self.assets, "constants": self.constants}
@@ -167,7 +173,7 @@ class Project(orm.Model):
             links.append(narration.narration_link)
 
         transcript = await narration.tts._make_transcript(links=links, text=text)
-        transcript = transform_alignment_data(transcript)
+        # transcript = transform_alignment_data(transcript)
         return transcript
 
 
@@ -190,6 +196,12 @@ class Scene(orm.Model):
         ),
         "narration_link": orm.String(max_length=10_000, allow_null=True, default=""),
     }
+
+    async def generate_scene_transcript(self, offset):
+        links = [self.narration_link]
+        text = self.narration
+        transcript = await self.tts._make_transcript(links=links, text=text)
+        return transform_alignment_data(data=transcript, offset=offset)
 
     async def generate_scene_data(self):
         # Run narrate() and generate_images() concurrently
