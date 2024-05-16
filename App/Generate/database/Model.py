@@ -130,7 +130,7 @@ class Project(orm.Model):
         return {"links": self.links, "assets": self.assets, "constants": self.constants}
 
     async def generate_transcript(self):
-        project_scenes: List[Scene] = self.get_all_scenes()
+        project_scenes: List[Scene] = await self.get_all_scenes()
         links = []
         text = ""
         for narration in project_scenes:
