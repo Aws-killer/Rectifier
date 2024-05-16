@@ -57,7 +57,7 @@ class Project(orm.Model):
         self.links.append(
             {
                 "file_name": "sfx_1.mp3",
-                "link": "https://dm0qx8t0i9gc9.cloudfront.net/previews/audio/BsTwCwBHBjzwub4i4/camera-shutter-05_MJn9CZV__NWM.mp3?type=preview&origin=AUDIOBLOCKS&timestamp_ms=1715270679690&publicKey=kUhrS9sKVrQMTvByQMAGMM0jwRbJ4s31HTPVkfDGmwGhYqzmWJHsjIw5fZCkI7ba&organizationId=105711&apiVersion=2.0&stockItemId=2248&resolution=&endUserId=414d29f16694d76c58e7998200a8dcf6f28dc165&projectId=f734c6d7-e39d-4c1d-8f41-417f94cd37ce&searchId=4b01b35a-fafc-45fb-9f40-e98849cb71ac&searchPageId=f24f4c5b-9976-4fd3-9bac-d217d87c723d",
+                "link": "https://dm0qx8t0i9gc9.cloudfront.net/previews/audio/BsTwCwBHBjzwub4i4/click-match_My50GP4u_NWM.mp3?type=preview&origin=AUDIOBLOCKS&timestamp_ms=1715843203035&publicKey=kUhrS9sKVrQMTvByQMAGMM0jwRbJ4s31HTPVkfDGmwGhYqzmWJHsjIw5fZCkI7ba&organizationId=105711&apiVersion=2.0&stockItemId=28820&resolution=&endUserId=414d29f16694d76c58e7998200a8dcf6f28dc165&projectId=f734c6d7-e39d-4c1d-8f41-417f94cd37ce&searchId=adb77624-5919-41ee-84c6-58e7af098a6d&searchPageId=9124f65b-3e21-47ac-af6b-81387328b7b5",
             }
         )
         for scene in project_scenes:
@@ -72,11 +72,11 @@ class Project(orm.Model):
                     "name": file_name,
                     "start": self.start,
                     "end": self.start + scene.narration_duration + 1,
-                    "props": {
-                        "startFrom": 0,
-                        "endAt": scene.narration_duration * 30,
-                        "volume": 5,
-                    },
+                    # "props": {
+                    #     "startFrom": 0,
+                    #     "endAt": scene.narration_duration * 30,
+                    #     "volume": 5,
+                    # },
                 }
             )
 
