@@ -7,10 +7,34 @@ from .DescriptAPI import Speak
 from .Vercel import AsyncImageGenerator
 import aiohttp
 from typing import List
+from pydantic import BaseModel
+import json
 
 database_url = "sqlite+aiosqlite:///ok.db"
 database = databases.Database(database_url)
 models = orm.ModelRegistry(database=database)
+
+
+class WordAlignment(BaseModel):
+    text: str
+    alignedWord: str
+    start: float
+    end: float
+    hasFailedAlignment: bool
+
+    @classmethod
+    def from_old_format(cls, data: dict):
+        return cls(
+            text=data["word"],
+            alignedWord=data["alignedWord"],
+            start=data["startTime"],
+            end=data["endTime"],
+            hasFailedAlignment=data["hasFailedAlignment"],
+        )
+
+
+def transform_alignment_data(data: List[dict]) -> List[dict]:
+    return [WordAlignment.from_old_format(item).model_dump() for item in data]
 
 
 class Project(orm.Model):
@@ -121,9 +145,11 @@ class Project(orm.Model):
             "width": 1080,
         }
         try:
-            data = await self.generate_transcript()
-            print(data)
-        except:
+            text_stream = await self.generate_transcript()
+            self.assets.append({"type": "text", "sequence": text_stream})
+
+        except Exception as e:
+            print(f"Text sequence failed, {e}")
             pass
 
         await self.update(**self.__dict__)
