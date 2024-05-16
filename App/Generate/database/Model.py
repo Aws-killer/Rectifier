@@ -62,7 +62,7 @@ class Project(orm.Model):
         )
         for scene in project_scenes:
             _, file_name = os.path.split(scene.narration_path)
-            self.duration += scene.narration_duration + 1  ## added one for spaces
+            self.duration += scene.narration_duration  ## added one for spaces
             self.links.append({"file_name": file_name, "link": scene.narration_link})
 
             # narration
@@ -71,7 +71,7 @@ class Project(orm.Model):
                     "type": "audio",
                     "name": file_name,
                     "start": self.start,
-                    "end": self.start + scene.narration_duration + 1,
+                    "end": self.start + scene.narration_duration,
                     "props": {
                         # "startFrom": 0,
                         # "endAt": scene.narration_duration * 30,
