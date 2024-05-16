@@ -72,11 +72,11 @@ class Project(orm.Model):
                     "name": file_name,
                     "start": self.start,
                     "end": self.start + scene.narration_duration + 1,
-                    # "props": {
-                    #     "startFrom": 0,
-                    #     "endAt": scene.narration_duration * 30,
-                    #     "volume": 5,
-                    # },
+                    "props": {
+                        # "startFrom": 0,
+                        # "endAt": scene.narration_duration * 30,
+                        # "volume": 5,
+                    },
                 }
             )
 

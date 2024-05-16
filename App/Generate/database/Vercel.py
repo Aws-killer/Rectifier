@@ -49,7 +49,10 @@ class AsyncImageGenerator:
             temp = await response.json()
             status = temp
             while status["status"] != "succeeded":
-                status = await self._fetch_image_status(image_id)
+                try:
+                    status = await self._fetch_image_status(image_id)
+                except:
+                    pass
                 await asyncio.sleep(3)
             return status
 

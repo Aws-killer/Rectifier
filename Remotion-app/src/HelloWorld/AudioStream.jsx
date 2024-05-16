@@ -31,9 +31,10 @@ const AudioStream = React.memo(() => {
 const AudioX = React.memo(({entry}) => {
 	return (
 		<Audio
-			startFrom={entry.props.startFrom}
-			endAt={entry.props.endAt}
-			volume={entry.props.volume}
+			{...entry.props}
+			// startFrom={entry.props.startFrom}
+			// endAt={entry.props.endAt}
+			// volume={entry.props.volume}
 			src={staticFile(entry.name)}
 		/>
 	);
