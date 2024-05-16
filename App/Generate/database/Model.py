@@ -167,6 +167,7 @@ class Project(orm.Model):
             links.append(narration.narration_link)
 
         transcript = await narration.tts._make_transcript(links=links, text=text)
+        transcript = transform_alignment_data(transcript)
         return transcript
 
 
