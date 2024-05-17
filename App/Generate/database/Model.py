@@ -150,14 +150,6 @@ class Project(orm.Model):
             "width": 1080,
         }
         self.assets.append({"type": "text", "sequence": text_stream})
-        # try:
-        #     text_stream = await self.generate_transcript()
-        #     print(text_stream)
-        #     self.assets.append({"type": "text", "sequence": text_stream})
-
-        # except Exception as e:
-        #     print(f"Text sequence failed, {e}")
-        #     pass
 
         await self.update(**self.__dict__)
         return {"links": self.links, "assets": self.assets, "constants": self.constants}
@@ -218,7 +210,9 @@ class Scene(orm.Model):
         retry_count = 0
         while retry_count < 3:
             try:
-                return await self.tts.say(text=self.narration)
+                return await self.tts.say(
+                    text=self.narration + ",    ,    ,"
+                )  ### The blanks help to even stuff up.
             except Exception as e:
                 print(f"Failed to generate narration: {e}")
                 retry_count += 1
