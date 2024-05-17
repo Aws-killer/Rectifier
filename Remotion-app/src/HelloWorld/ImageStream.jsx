@@ -65,7 +65,7 @@ const Images = React.memo(({entry, index}) => {
 			}}
 			className="bg-black"
 		>
-			<Audio src={staticFile('sfx_1.mp3')} />
+			<Audio src={staticFile('sfx_1.mp3')} volume={0.5} />
 			<Img
 				id="imagex"
 				style={{
