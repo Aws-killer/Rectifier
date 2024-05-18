@@ -198,7 +198,7 @@ class Scene(orm.Model):
         while retry_count < 3:
             try:
                 return await self.tts.say(
-                    text=self.narration + "master"
+                    text=self.narration + " master"
                 )  ### The blanks help to even stuff up.
             except Exception as e:
                 print(f"Failed to generate narration: {e}")
