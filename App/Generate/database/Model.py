@@ -90,24 +90,25 @@ class Project(orm.Model):
             self.duration += scene.narration_duration  ## added one for spaces
             self.links.append({"file_name": file_name, "link": scene.narration_link})
 
-            # narration
+            # generate transcripts
+            temp = await scene.generate_scene_transcript(offset=self.start)
+            end_word = temp[-1]
+
+            # narration of the story
             audio_assets.append(
                 {
                     "type": "audio",
                     "name": file_name,
                     "start": self.start,
-                    "end": self.start + scene.narration_duration,
+                    "end": end_word["start"],
                     "props": {
-                        # "startFrom": 0,
-                        # "endAt": scene.narration_duration * 30,
+                        "startFrom": 0,
+                        "endAt": end_word["start"] * 30,
                         # "volume": 5,
                     },
                 }
             )
-
-            # generate transcripts
-            temp = await scene.generate_scene_transcript(offset=self.start)
-            text_stream.extend(temp)
+            text_stream.extend(temp[:-1])
 
             ## images and transitions
             for image in scene.images:
@@ -154,20 +155,6 @@ class Project(orm.Model):
         await self.update(**self.__dict__)
         return {"links": self.links, "assets": self.assets, "constants": self.constants}
 
-    async def generate_transcript(self):
-        project_scenes: List[Scene] = await self.get_all_scenes()
-        links = []
-        text = ""
-        for narration in project_scenes:
-            narration: Scene
-
-            text += " " + narration.narration
-            links.append(narration.narration_link)
-
-        transcript = await narration.tts._make_transcript(links=links, text=text)
-        # transcript = transform_alignment_data(transcript)
-        return transcript
-
 
 class Scene(orm.Model):
     tts = Speak()
@@ -211,7 +198,7 @@ class Scene(orm.Model):
         while retry_count < 3:
             try:
                 return await self.tts.say(
-                    text=self.narration + ",    ,    ,"
+                    text=self.narration + "master"
                 )  ### The blanks help to even stuff up.
             except Exception as e:
                 print(f"Failed to generate narration: {e}")
