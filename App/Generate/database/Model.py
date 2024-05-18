@@ -178,7 +178,7 @@ class Scene(orm.Model):
 
     async def generate_scene_transcript(self, offset):
         links = [self.narration_link]
-        text = self.narration
+        text = self.narration + " master"
         transcript = await self.tts._make_transcript(links=links, text=text)
         return transform_alignment_data(data=transcript, offset=offset)
 
