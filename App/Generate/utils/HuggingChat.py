@@ -21,4 +21,5 @@ class Hugging:
                 self.url, headers=self.headers, data=json.dumps(payload)
             ) as response:
                 result = await response.text()
+                print(result)
                 return result
