@@ -9,7 +9,7 @@ sign = Login(email, passwd)
 # cookies = sign.login()
 
 # # Save cookies to the local directory
-cookie_path_dir = "./cookies"
+cookie_path_dir = "/srv/App/Generate/utils/cookies"
 sign.saveCookiesToDir(cookie_path_dir)
 
 # Load cookies when you restart your program:
