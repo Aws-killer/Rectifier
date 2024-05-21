@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, BackgroundTasks, UploadFile, Query
 from .Schema import GeneratorRequest
 from .utils.GroqInstruct import chatbot, VideoOutput
-from .utils.HuggingChat import chatbot as huggingChat
+from .utils.HuggingChat import Hugging
 from .Story.Story import Story
 import asyncio, pprint, json
 from tqdm import tqdm
@@ -19,21 +19,16 @@ async def update_scene(model_scene):
 async def main(request: GeneratorRequest):
     topic = request.prompt
     renderr = RenderVideo()
+    huggChat = Hugging()
     if request.grok:
         message = chatbot(Prompt.format(topic=topic))
 
     else:
-        message = json.loads(
-            str(
-                huggingChat.query(
-                    Prompt.format(topic=topic)
-                    + f"Match your response to the following schema:  {VideoOutput.model_json_schema()} Make sure to return an instance of the JSON, not the schema itself, and nothing else."
-                )
-            )
-            .split("```json")[1]
-            .split("```")[0]
-            .strip()
+        temp = await huggChat.chat(
+            Prompt.format(topic=topic)
+            + f"Match your response to the following schema:  {VideoOutput.model_json_schema()} Make sure to return an instance of the JSON, not the schema itself, and nothing else."
         )
+        message = json.loads(temp.split("```json")[1].split("```")[0].strip())
     generated_story = Story.from_dict(message["scenes"])
 
     print("Generated Story ✅")
