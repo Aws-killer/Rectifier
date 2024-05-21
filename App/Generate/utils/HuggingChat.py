@@ -16,7 +16,13 @@ sign.saveCookiesToDir(cookie_path_dir)
 # sign = login(email, None)
 cookies = sign.loadCookiesFromDir(cookie_path_dir)
 
-print(cookies.get_dict(), "#" * 100)
+print(
+    {
+        "hf-chat": "831aa60e-832c-4bc8-9609-feee1a63cabd",
+        "token": "kybodoshVPnQLMIerSDRJjgLMnsoldLxjyoYHTdTsNWGXmOmdiGmQqjIXHDbwulMYnRqpnHkhwTcebrfTMxwXcVjLOfcPShwAJGzWwDTXjnxewKGgHICpagCZhnotfKA",
+    },
+    "#" * 100,
+)
 # Create a ChatBot
 chatbot = hugchat.ChatBot(
     cookies={
