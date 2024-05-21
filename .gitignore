@@ -4,3 +4,4 @@
 .env
 modal_test.py
 tmp/
+*.wav

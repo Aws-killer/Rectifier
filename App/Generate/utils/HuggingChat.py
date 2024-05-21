@@ -5,7 +5,7 @@ import re
 
 class Hugging:
     def __init__(self):
-        self.url = "https://p01--hugging--legal-stuff--a96n-7tyr.code.run/"
+        self.url = "https://p01--hugging--legal-stuff--a96n-7tyr.code.run/generate"
         self.headers = {
             "Authorization": "Bearer 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",
             "accept": "application/json",
