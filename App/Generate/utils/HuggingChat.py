@@ -16,7 +16,7 @@ sign.saveCookiesToDir(cookie_path_dir)
 # sign = login(email, None)
 cookies = sign.loadCookiesFromDir(cookie_path_dir)
 
-
+print(cookies.get_dict(), "#" * 100)
 # Create a ChatBot
 chatbot = hugchat.ChatBot(
     cookies=cookies.get_dict(),
