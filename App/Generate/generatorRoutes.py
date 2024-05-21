@@ -28,11 +28,10 @@ async def main(request: GeneratorRequest):
             Prompt.format(topic=topic)
             + f"Match your response to the following schema:  {VideoOutput.model_json_schema()} Make sure to return an instance of the JSON, not the schema itself, and nothing else."
         )
-        message = json.loads(temp.split("```json")[1].split("```")[0].strip())
+        message = temp
     generated_story = Story.from_dict(message["scenes"])
 
     print("Generated Story ✅")
-
     x = await Project.objects.create(name=topic[0:100])
 
     # Assuming generated_story.scenes is a list of scenes
