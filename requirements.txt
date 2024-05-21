@@ -23,5 +23,6 @@ aiohttp
 instructor
 groq
 python-multipart
+hugchat
 orm[sqlite]==0.3.0
 pydub
