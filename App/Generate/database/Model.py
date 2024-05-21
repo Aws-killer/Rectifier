@@ -10,7 +10,7 @@ from typing import List
 from pydantic import BaseModel
 import json
 
-database_url = "sqlite+aiosqlite:///ok.db"
+database_url = "sqlite:///ok.db"
 database = databases.Database(database_url)
 models = orm.ModelRegistry(database=database)
 
