@@ -6,10 +6,10 @@ email = "mihorag447@vikinoko.com"
 passwd = "IamstewpedW!23@"
 # Log in to huggingface and grant authorization to huggingchat
 sign = Login(email, passwd)
-cookies = sign.login()
+# cookies = sign.login()
 
 # # Save cookies to the local directory
-cookie_path_dir = "./cookies_snapshot"
+cookie_path_dir = "./cookies"
 sign.saveCookiesToDir(cookie_path_dir)
 
 # Load cookies when you restart your program:
@@ -33,4 +33,4 @@ if not chatbot.active_model.name == "CohereForAI/c4ai-command-r-plus":
             model_index = models.index(model)
             chatbot.switch_llm(model_index)
             break
-print(chatbot.current_conversation.system_prompt)
+# print(chatbot.current_conversation.system_prompt)
