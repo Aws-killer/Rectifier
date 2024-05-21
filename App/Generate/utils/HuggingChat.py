@@ -20,7 +20,7 @@ cookies = sign.loadCookiesFromDir(cookie_path_dir)
 # Create a ChatBot
 chatbot = hugchat.ChatBot(
     cookies=cookies.get_dict(),
-    system_prompt="You are an amazing youtuber. A true creative master genius",
+    system_prompt="You are  a true creative master genius and a great story teller that keeps the viewer/listener engauged. Make sure that you narrate the sequence of events properly so that the listener can understand. Use smart/insiteful quotes from the book. Don't speak to the viewers just tell the story accurately. Each scene should carry one topic and if the narration is long add more image_prompts, by default a short naration should have  2 image_prompts",
 )
 
 model_index = 0
@@ -31,6 +31,6 @@ if not chatbot.active_model.name == "CohereForAI/c4ai-command-r-plus":
         print(model.name, "switching..")
         if model.name == "CohereForAI/c4ai-command-r-plus":
             model_index = models.index(model)
+            chatbot.switch_llm(model_index)
             break
 print(chatbot.current_conversation.system_prompt)
-chatbot.switch_llm(model_index)

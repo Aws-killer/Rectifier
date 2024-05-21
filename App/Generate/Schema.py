@@ -5,3 +5,4 @@ from pydantic import validator
 
 class GeneratorRequest(BaseModel):
     prompt: str
+    grok: Optional[bool] = True
