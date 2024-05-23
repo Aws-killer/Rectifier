@@ -10,7 +10,7 @@ from typing import List
 from pydantic import BaseModel
 import json
 
-database_url = "sqlite+aiosqlite:///ok.db"
+database_url = f"sqlite+aiosqlite:///{str(uuid.uuid4())}.db"
 database = databases.Database(database_url)
 models = orm.ModelRegistry(database=database)
 
@@ -208,8 +208,9 @@ class Scene(orm.Model):
         print("Failed to generate narration after 3 attempts.")
 
     def calculate_durations(self):
-        wav_file = AudioSegment.from_file(self.narration_path, format="wav")
-        self.narration_duration = int(len(wav_file) / 1000)
+        file_format = self.narration_path.split(".")[-1]
+        audio_file = AudioSegment.from_file(self.narration_path, format=file_format)
+        self.narration_duration = int(len(audio_file) / 1000)
         self.image_duration = self.narration_duration / len(self.image_prompts)
 
     async def generate_images(self):

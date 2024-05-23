@@ -2,7 +2,12 @@ from fastapi import FastAPI, BackgroundTasks
 from .Editor.editorRoutes import videditor_router
 from App import bot
 from App.utilis import WorkerClient, SERVER_STATE
-from .Generate.generatorRoutes import generator_router, database, database_url, models
+from .Generate.generatorRoutes import (
+    generator_router,
+    database,
+    models,
+)
+import uuid
 
 app = FastAPI()
 manager = WorkerClient()
@@ -10,11 +15,17 @@ manager = WorkerClient()
 
 @app.on_event("startup")
 async def startup_event():
+    app.state.db = database
+    app.state.models = models
+
     try:
-        await models._create_all(database_url)
+        # print(type(database.url), database_url)
+        # await models.create_all()
+        await models._create_all(str(database.url))
     except:
-        pass
+        print("failed to create")
     finally:
+        print(database.is_connected)
         if not database.is_connected:
             await database.connect()
         await database.execute("pragma journal_mode=wal;")
