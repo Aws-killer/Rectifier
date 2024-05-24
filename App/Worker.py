@@ -108,8 +108,51 @@ def create_symlink(source_dir, target_dir, symlink_name):
         print(f"Symlink '{symlink_name}' already exists.")
 
 
+def change_playback_speed(input_path, speed_factor):
+    """
+    Change the playback speed of a video and overwrite the original file.
+
+    :param input_path: Path to the input video file.
+    :param speed_factor: Factor by which to increase the speed. (e.g., 2.0 for double speed)
+    """
+    # Create a temporary output file
+    temp_output_path = input_path + ".temp.mp4"
+
+    # Construct the ffmpeg command
+    command = [
+        "ffmpeg",
+        "-i",
+        input_path,
+        "-filter_complex",
+        f"[0:v]setpts={1/speed_factor}*PTS[v];[0:a]atempo={speed_factor}[a]",
+        "-map",
+        "[v]",
+        "-map",
+        "[a]",
+        "-y",  # Overwrite the output file if it exists
+        temp_output_path,
+    ]
+
+    # Run the command
+    subprocess.run(command, check=True)
+
+    # Replace the original file with the new one
+    os.replace(temp_output_path, input_path)
+
+
 def download_with_wget(link, download_dir, filename):
-    subprocess.run(["aria2c", link, "-d", download_dir, "-o", filename])
+    headers = [
+        "--header",
+        "Cookie: __Host-session=63EQahvTpHuoFSkEW75hC",
+        "--header",
+        "Cookie: __cf_bm=CDGicP5OErYjDI85UmQSRKlppJLlbcgCXlWcODoIQAI-1716296320-1.0.1.1-4Rm5_wdxupmrDWgddOQjEV01TMFC4UJ479GRIAKKGHNgXu3N8ZkASEZXGwCWaRyUYazsUaLMALk.4frWWJzHQ",
+    ]
+
+    # Construct the full command
+    command = ["aria2c"] + headers + [link, "-d", download_dir, "-o", filename]
+
+    # Run the command
+    subprocess.run(command)
 
 
 # @celery.task(name="CopyRemotion")
@@ -224,6 +267,7 @@ async def celery_task(video_task: EditorRequest):
     create_json_file(video_task.assets, assets_dir)
     download_assets(video_task.links, temp_dir)
     render_video(temp_dir, output_dir)
+    change_playback_speed(output_dir, 1.2)
     # unsilence(temp_dir)
     await cleanup_temp_directory(temp_dir, output_dir, video_task)
 
