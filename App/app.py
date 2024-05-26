@@ -28,7 +28,7 @@ async def startup_event():
         print(database.is_connected)
         if not database.is_connected:
             await database.connect()
-        await database.execute("pragma journal_mode=wal;")
+        # await database.execute("pragma journal_mode=wal;")
 
     await bot.start()
     # if SERVER_STATE.MASTER:
