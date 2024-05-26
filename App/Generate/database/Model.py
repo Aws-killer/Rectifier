@@ -9,8 +9,8 @@ import aiohttp
 from typing import List
 from pydantic import BaseModel
 import json
-
-database_url = f"sqlite+aiosqlite:///{str(uuid.uuid4())}.db"
+SUPABASE= os.environ.get("SUPABASE", "RANDOM_STRING")
+database_url = SUPABASE
 database = databases.Database(database_url)
 models = orm.ModelRegistry(database=database)
 
