@@ -71,7 +71,7 @@ COPY --chown=admin . /srv
 RUN chown -R admin:admin /srv
 RUN chmod 755 /srv
 USER admin
-CMD python -m uvicorn App.app:app --workers 4 --host 0.0.0.0 --port 7860 
+CMD python -m uvicorn App.app:app --workers 1 --host 0.0.0.0 --port 7860 
 
 # Expose port
 EXPOSE 7860
