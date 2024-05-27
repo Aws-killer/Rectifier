@@ -134,7 +134,7 @@ class Speak:
             if "status" in status_data:
                 if status_data["status"] == "done":
                     audio_url = status_data["url"]
-                    temp = await self.download_file_with_aria2c(audio_url)
+                    temp = await self.download_file(audio_url)
                     return audio_url, temp
             else:
                 pass
