@@ -5,7 +5,7 @@ from collections import deque
 import wave
 import uuid
 from pydub import AudioSegment
-import tempfile
+
 
 import wave
 import struct
@@ -101,7 +101,7 @@ def concatenate_wav_files(input_files, file_directory):
 
 
 class Speak:
-    def __init__(self, api_url="https://yakova-embedding.hf.space", dir="/tmp"):
+    def __init__(self, api_url="https://yakova-embedding.hf.space", dir="./tmp"):
         self.api_url = api_url
         self.dir = dir
 
@@ -143,10 +143,8 @@ class Speak:
 
     async def download_file(self, url):
         filename = str(uuid.uuid4()) + ".wav"
-        temp_dir = tempfile.TemporaryDirectory()
-        # os.makedirs(self.dir, exist_ok=True)
-        save_path = os.path.join(temp_dir.name, filename)
-        print(url)
+        os.makedirs(self.dir, exist_ok=True)
+        save_path = os.path.join(self.dir, filename)
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status == 200:
