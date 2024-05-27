@@ -146,6 +146,7 @@ class Speak:
         temp_dir = tempfile.TemporaryDirectory()
         # os.makedirs(self.dir, exist_ok=True)
         save_path = os.path.join(temp_dir.name, filename)
+        print(url)
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status == 200:
