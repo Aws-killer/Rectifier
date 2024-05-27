@@ -195,6 +195,7 @@ class Scene(orm.Model):
         self.narration_link = link
 
     async def _retry_narration_generation(self):
+        print(self.narration)
         tts = Speak()
         retry_count = 0
         while retry_count < 3:
