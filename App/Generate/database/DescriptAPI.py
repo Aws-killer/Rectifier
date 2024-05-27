@@ -157,8 +157,12 @@ class Speak:
 
         return save_path
 
-    async def download_file_with_aria2c(url, filepath):
-        command = f"aria2c {url} -o {filepath}"
+    async def download_file_with_aria2c(self, url):
+        filename = str(uuid.uuid4()) + ".wav"
+        os.makedirs(self.dir, exist_ok=True)
+        save_path = os.path.join(self.dir, filename)
+
+        command = f"aria2c {url} -o {save_path}"
         process = await asyncio.create_subprocess_shell(
             command, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
@@ -166,10 +170,10 @@ class Speak:
         stdout, stderr = await process.communicate()
 
         if process.returncode == 0:
-            print(f"File downloaded successfully to {filepath}")
+            print(f"File downloaded successfully to {save_path}")
         else:
             print(f"Failed to download file. Error: {stderr.decode()}")
-        return filepath
+        return save_path
 
 
 async def process_narrations(narrations):
