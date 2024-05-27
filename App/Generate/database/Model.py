@@ -190,11 +190,11 @@ class Scene(orm.Model):
         self.calculate_durations()
 
     async def narrate(self):
-        link, path = await self._retry_narration_generation()
+        link, path = await self.retry_narration_generation()
         self.narration_path = path
         self.narration_link = link
 
-    async def _retry_narration_generation(self):
+    async def retry_narration_generation(self):
         print(self.narration)
         tts = Speak()
         retry_count = 0
@@ -261,26 +261,26 @@ class BackgroundMusic(orm.Model):
 #         pass
 
 
-# # Create the tables
-async def create_tables():
-    datas = {
-        "narration": "Welcome to a journey through some of history's strangest moments! Get ready to explore the bizarre, the unusual, and the downright weird.",
-        "image_prompts": [
-            "Vintage book opening, revealing strange facts, mixed media collage, curious and intriguing, mysterious, eccentric, macro lens, soft lighting, conceptual photography, cross-processed film, surreal, warm tones, textured paper."
-        ],
-    }
+# # # Create the tables
+# async def create_tables():
+#     datas = {
+#         "narration": "Welcome to a journey through some of history's strangest moments! Get ready to explore the bizarre, the unusual, and the downright weird.",
+#         "image_prompts": [
+#             "Vintage book opening, revealing strange facts, mixed media collage, curious and intriguing, mysterious, eccentric, macro lens, soft lighting, conceptual photography, cross-processed film, surreal, warm tones, textured paper."
+#         ],
+#     }
 
-    await models._create_all(database_url)
-    x = await Project.objects.create(name="avatar")
-    scene = await Scene.objects.create(project=x)
-    scene.narration = datas["narration"]
-    scene.image_prompts = datas["image_prompts"]
+#     await models._create_all(database_url)
+#     x = await Project.objects.create(name="avatar")
+#     scene = await Scene.objects.create(project=x)
+#     scene.narration = datas["narration"]
+#     scene.image_prompts = datas["image_prompts"]
 
-    await scene.generate_scene_data()
-    await scene.objects.update(**scene.__dict__)
-    p = await x.get_all_scenes()
-    print(p)
-    print(scene.__dict__)
+#     await scene.generate_scene_data()
+#     await scene.objects.update(**scene.__dict__)
+#     p = await x.get_all_scenes()
+#     print(p)
+#     print(scene.__dict__)
 
 
 # asyncio.run(create_tables())
