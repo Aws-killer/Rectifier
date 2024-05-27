@@ -9,7 +9,8 @@ import aiohttp
 from typing import List
 from pydantic import BaseModel
 import json
-SUPABASE= os.environ.get("SUPABASE", "RANDOM_STRING")
+
+SUPABASE = os.environ.get("SUPABASE", "RANDOM_STRING")
 database_url = SUPABASE
 database = databases.Database(database_url)
 models = orm.ModelRegistry(database=database)
@@ -177,9 +178,10 @@ class Scene(orm.Model):
     }
 
     async def generate_scene_transcript(self, offset):
+        tts = Speak()
         links = [self.narration_link]
         text = self.narration + " master"
-        transcript = await self.tts._make_transcript(links=links, text=text)
+        transcript = await tts._make_transcript(links=links, text=text)
         return transform_alignment_data(data=transcript, offset=offset)
 
     async def generate_scene_data(self):
@@ -193,11 +195,11 @@ class Scene(orm.Model):
         self.narration_link = link
 
     async def _retry_narration_generation(self):
-
+        tts = Speak()
         retry_count = 0
         while retry_count < 3:
             try:
-                return await self.tts.say(
+                return await tts.say(
                     text=self.narration + " master"
                 )  ### The blanks help to even stuff up.
             except Exception as e:
