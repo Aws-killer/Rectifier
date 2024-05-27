@@ -161,7 +161,7 @@ class Speak:
         filename = str(uuid.uuid4()) + ".wav"
         os.makedirs(self.dir, exist_ok=True)
         save_path = os.path.join(self.dir, filename)
-
+        print(url)
         command = f"aria2c {url} -o {save_path}"
         process = await asyncio.create_subprocess_shell(
             command, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
