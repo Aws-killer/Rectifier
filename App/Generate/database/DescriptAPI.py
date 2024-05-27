@@ -5,7 +5,7 @@ from collections import deque
 import wave
 import uuid
 from pydub import AudioSegment
-
+import tempfile
 
 import wave
 import struct
@@ -101,7 +101,7 @@ def concatenate_wav_files(input_files, file_directory):
 
 
 class Speak:
-    def __init__(self, api_url="https://yakova-embedding.hf.space", dir="./tmp"):
+    def __init__(self, api_url="https://yakova-embedding.hf.space", dir="/tmp"):
         self.api_url = api_url
         self.dir = dir
 
@@ -143,8 +143,9 @@ class Speak:
 
     async def download_file(self, url):
         filename = str(uuid.uuid4()) + ".wav"
-        os.makedirs(self.dir, exist_ok=True)
-        save_path = os.path.join(self.dir, filename)
+        temp_dir = tempfile.TemporaryDirectory()
+        # os.makedirs(self.dir, exist_ok=True)
+        save_path = os.path.join(temp_dir.name, filename)
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status == 200:
@@ -181,16 +182,19 @@ async def process_narrations(narrations):
     await asyncio.gather(*[process_task() for _ in range(len(tasks))])
     concatinated_file = concatenate_wav_files(files, speak.dir)
 
-    wav_file = AudioSegment.from_file(concatinated_file, format="wav")
-    duration_in_seconds = int(len(wav_file) / 1000)
+    audio_file = AudioSegment.from_file(concatinated_file, format="wav")
+    duration_in_seconds = int(len(audio_file) / 1000)
 
-    return results, (concatinated_file, duration_in_seconds)
+    return results, [concatinated_file, duration_in_seconds]
 
 
+# duration = 0.23529411764705882
 # # Example narrations
 # narrations = [
-#     "Welcome to a journey through some of history's strangest moments!",
-#     "Did you know that in ancient Rome, mustaches were a big deal?",
+#     "Hello there                          ",
+#     "Hello there",
+#     "Hello there",
+#     "Hello there [space]",
 # ]
 
 
