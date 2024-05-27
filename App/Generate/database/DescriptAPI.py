@@ -134,7 +134,7 @@ class Speak:
             if "status" in status_data:
                 if status_data["status"] == "done":
                     audio_url = status_data["url"]
-                    temp = await self.download_file(audio_url)
+                    temp = await self.download_file_with_aria2c(audio_url)
                     return audio_url, temp
             else:
                 pass
@@ -156,6 +156,20 @@ class Speak:
                             file.write(chunk)
 
         return save_path
+
+    async def download_file_with_aria2c(url, filepath):
+        command = f"aria2c {url} -o {filepath}"
+        process = await asyncio.create_subprocess_shell(
+            command, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        )
+
+        stdout, stderr = await process.communicate()
+
+        if process.returncode == 0:
+            print(f"File downloaded successfully to {filepath}")
+        else:
+            print(f"Failed to download file. Error: {stderr.decode()}")
+        return filepath
 
 
 async def process_narrations(narrations):
