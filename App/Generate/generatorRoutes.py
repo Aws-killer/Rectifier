@@ -9,6 +9,7 @@ from .database.Model import models, database_url, Scene, Project, database
 from .utils.RenderVideo import RenderVideo
 from .Prompts.StoryGen import Prompt
 from App.Editor.editorRoutes import celery_task, EditorRequest
+import uuid
 
 
 async def update_scene(model_scene):
@@ -32,7 +33,7 @@ async def main(request: GeneratorRequest):
     generated_story = Story.from_dict(message["scenes"])
 
     print("Generated Story ✅")
-    x = await Project.objects.create(name=topic[0:100])
+    x = await Project.objects.create(name=str(uuid.uuid4()))
 
     # Assuming generated_story.scenes is a list of scenes
     scene_updates = []
