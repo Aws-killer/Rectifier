@@ -69,7 +69,7 @@ async def bulkGenerate(bulkRequest: GeneratorBulkRequest):
     for request in bulkRequest.stories:
         tasks.append(main(request=request))
 
-    await asyncio.gather(**tasks)
+    await asyncio.gather(*tasks)
 
 
 generator_router = APIRouter(tags=["video-Generator"])
