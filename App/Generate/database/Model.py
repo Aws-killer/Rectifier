@@ -11,11 +11,7 @@ from pydantic import BaseModel
 import tempfile
 import json
 
-
-SUPABASE = os.environ.get(
-    "SUPABASE",
-    "postgresql+asyncpg://postgres.djnpqggqnsnunrnqyqal:3TFrfnDVHvu5Mfsp@aws-0-us-east-1.pooler.supabase.com:5432/postgres",
-)
+SUPABASE = os.environ.get("SUPABASE", "RANDOM_STRING")
 database_url = SUPABASE
 database = databases.Database(database_url)
 models = orm.ModelRegistry(database=database)
