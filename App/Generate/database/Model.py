@@ -8,9 +8,14 @@ from .Vercel import AsyncImageGenerator
 import aiohttp
 from typing import List
 from pydantic import BaseModel
+import tempfile
 import json
 
-SUPABASE = os.environ.get("SUPABASE", "RANDOM_STRING")
+
+SUPABASE = os.environ.get(
+    "SUPABASE",
+    "postgresql+asyncpg://postgres.djnpqggqnsnunrnqyqal:3TFrfnDVHvu5Mfsp@aws-0-us-east-1.pooler.supabase.com:5432/postgres",
+)
 database_url = SUPABASE
 database = databases.Database(database_url)
 models = orm.ModelRegistry(database=database)
@@ -158,7 +163,7 @@ class Project(orm.Model):
 
 
 class Scene(orm.Model):
-    tts = Speak()
+    tts = Speak(dir=tempfile.mkdtemp())
     tablename = "scenes"
     registry = models
     fields = {
@@ -178,10 +183,9 @@ class Scene(orm.Model):
     }
 
     async def generate_scene_transcript(self, offset):
-        tts = Speak()
         links = [self.narration_link]
         text = self.narration + " master"
-        transcript = await tts._make_transcript(links=links, text=text)
+        transcript = await self.tts._make_transcript(links=links, text=text)
         return transform_alignment_data(data=transcript, offset=offset)
 
     async def generate_scene_data(self):
@@ -196,11 +200,10 @@ class Scene(orm.Model):
 
     async def retry_narration_generation(self):
         print(self.narration)
-        tts = Speak()
         retry_count = 0
         while retry_count < 3:
             try:
-                return await tts.say(
+                return await self.tts.say(
                     text=self.narration + " master"
                 )  ### The blanks help to even stuff up.
             except Exception as e:
