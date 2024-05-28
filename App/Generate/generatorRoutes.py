@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status, BackgroundTasks, UploadFile, Query
-from .Schema import GeneratorRequest
+from .Schema import GeneratorRequest, GeneratorBulkRequest
 from .utils.GroqInstruct import chatbot, VideoOutput
 from .utils.HuggingChat import Hugging
 from .Story.Story import Story
@@ -64,6 +64,14 @@ async def main(request: GeneratorRequest):
     await celery_task(video_task=request)
 
 
+async def bulkGenerate(bulkRequest: GeneratorBulkRequest):
+    tasks = []
+    for request in bulkRequest.stories:
+        tasks.append(main(request=request))
+
+    await asyncio.gather(**tasks)
+
+
 generator_router = APIRouter(tags=["video-Generator"])
 
 
@@ -72,4 +80,12 @@ async def generate_video(
     videoRequest: GeneratorRequest, background_task: BackgroundTasks
 ):
     background_task.add_task(main, videoRequest)
+    return {"task_id": "started"}
+
+
+@generator_router.post("/generate_video_bulk")
+async def generate_video_bulk(
+    BulkvideoRequest: GeneratorBulkRequest, background_task: BackgroundTasks
+):
+    background_task.add_task(bulkGenerate, BulkvideoRequest)
     return {"task_id": "started"}
