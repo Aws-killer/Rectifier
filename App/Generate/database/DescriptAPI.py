@@ -119,7 +119,7 @@ class Speak:
             ) as response:
                 return await response.json()
 
-    async def say(self, text, speaker="Tabitha"):
+    async def say(self, text, speaker="Gabi"):
         data = {"text": text, "speaker": speaker}
 
         response_data = await self._make_request("post", "descript_tts", json=data)
