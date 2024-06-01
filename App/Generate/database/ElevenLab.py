@@ -9,6 +9,7 @@ class ElevenLab:
     def __init__(self):
         self.api_url = "https://4336zvnmaw.us-east-1.awsapprunner.com"
         self.dir = str(tempfile.mkdtemp())
+        self.descript = "https://yakova-embedding.hf.space"
         self.headers = {"Connection": "keep-alive", "Content-Type": "application/json"}
         self.voices = [
             {
@@ -741,11 +742,21 @@ class ElevenLab:
             },
         ]
 
-    async def _make_request(self, method, endpoint, json=None):
+    async def _make_transcript(self, links, text):
+
+        data = {"audio_url": links, "text": text, "file_extenstion": ".mp3"}
+        response_data = await self._make_request(
+            "post", "descript_transcript", json=data, external=self.descript
+        )
+        return response_data
+
+    async def _make_request(self, method, endpoint, json=None, external=None):
         async with aiohttp.ClientSession() as session:
-            async with getattr(session, method)(
-                f"{self.api_url}/{endpoint}", json=json
-            ) as response:
+            if external:
+                url = f"{external}/{endpoint}"
+            else:
+                url = f"{self.api_url}/{endpoint}"
+            async with getattr(session, method)(url=url, json=json) as response:
                 return await response.json()
 
     async def say(self, text, speaker="Adam"):
@@ -757,7 +768,6 @@ class ElevenLab:
         data = {"voiceId": voiceId, "text": text}
 
         response_data = await self._make_request("post", "convert", json=data)
-        print(response_data)
         audio_url = response_data["contentUrl"]
         temp = await self.download_file(audio_url)
         return audio_url, temp
@@ -779,11 +789,17 @@ class ElevenLab:
         return save_path
 
 
-# Usage
+# # Usage
 # async def main():
 #     tts = ElevenLab()
-#     await tts.say("Did you know that you don't have the balls to talk to me")
+#     url, temp = await tts.say(
+#         "Did you know that you don't have the balls to talk to me"
+#     )
+#     tranny = await tts._make_transcript(
+#         links=[url], text="Did you know that you don't have the balls to talk to me"
+#     )
+#     print(tranny)
 
 
-# Run the main function
+# # Run the main function
 # asyncio.run(main())
