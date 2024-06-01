@@ -40,10 +40,6 @@ const ImageStream = React.memo(() => {
 							>
 								<Images key={index} index={index} entry={entry} />;
 							</TransitionSeries.Sequence>
-							<TransitionSeries.Transition
-								presentation={slide()}
-								timing={linearTiming({durationInFrames: 30})}
-							/>
 						</>
 					);
 				})}
