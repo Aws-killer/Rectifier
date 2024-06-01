@@ -4,6 +4,7 @@ import asyncio, os
 import uuid, random
 from pydub import AudioSegment
 from .DescriptAPI import Speak
+from .ElevenLab import ElevenLab
 from .Vercel import AsyncImageGenerator
 import aiohttp
 from typing import List
@@ -160,6 +161,7 @@ class Project(orm.Model):
 
 class Scene(orm.Model):
     tts = Speak(dir=tempfile.mkdtemp())
+    eleven = ElevenLab()
     tablename = "scenes"
     registry = models
     fields = {
@@ -199,7 +201,7 @@ class Scene(orm.Model):
         retry_count = 0
         while retry_count < 3:
             try:
-                return await self.tts.say(
+                return await self.eleven.say(
                     text=self.narration + " master"
                 )  ### The blanks help to even stuff up.
             except Exception as e:

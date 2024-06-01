@@ -12,6 +12,7 @@ import {
 } from 'remotion';
 import imageSequences from './Assets/ImageSequences.json';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
+import {slide} from '@remotion/transitions/slide';
 
 const ImageStream = React.memo(() => {
 	const {fps} = useVideoConfig();
@@ -39,6 +40,10 @@ const ImageStream = React.memo(() => {
 							>
 								<Images key={index} index={index} entry={entry} />;
 							</TransitionSeries.Sequence>
+							<TransitionSeries.Transition
+								presentation={slide()}
+								timing={linearTiming({durationInFrames: 30})}
+							/>
 						</>
 					);
 				})}
@@ -65,7 +70,7 @@ const Images = React.memo(({entry, index}) => {
 			}}
 			className="bg-black"
 		>
-			<Audio src={staticFile('sfx_1.mp3')} volume={0.5} />
+			{/* <Audio src={staticFile('sfx_1.mp3')} volume={0.5} /> */}
 			<Img
 				id="imagex"
 				style={{
