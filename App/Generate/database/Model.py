@@ -56,7 +56,7 @@ class Project(orm.Model):
     }
 
     async def get_all_scenes(self):
-        return await Scene.objects.filter(project=self).all()
+        return await Scene.objects.filter(project=self).order_by("id").all()
 
     async def generate_json(self):
         project_scenes: List[Scene] = await self.get_all_scenes()
@@ -127,20 +127,20 @@ class Project(orm.Model):
                 )
                 self.start = self.start + scene.image_duration
 
-                ## transitions between images
-                # video_assets.append(
-                #     {
-                #         "type": "video",
-                #         "name": "Effects/" + random.choice(transitions),
-                #         "start": self.start - 1,
-                #         "end": self.start + 2,
-                #         "props": {
-                #             "startFrom": 1 * 30,
-                #             "endAt": 3 * 30,
-                #             "volume": 0,
-                #         },
-                #     }
-                # )
+                # transitions between images
+                video_assets.append(
+                    {
+                        "type": "video",
+                        "name": "Effects/" + random.choice(transitions),
+                        "start": self.start - 1,
+                        "end": self.start + 2,
+                        "props": {
+                            "startFrom": 1 * 30,
+                            "endAt": 3 * 30,
+                            "volume": 0,
+                        },
+                    }
+                )
 
         self.assets.append({"type": "audio", "sequence": audio_assets})
         ## add the images to assets
