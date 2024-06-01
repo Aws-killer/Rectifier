@@ -128,19 +128,19 @@ class Project(orm.Model):
                 self.start = self.start + scene.image_duration
 
                 ## transitions between images
-                video_assets.append(
-                    {
-                        "type": "video",
-                        "name": "Effects/" + random.choice(transitions),
-                        "start": self.start - 1,
-                        "end": self.start + 2,
-                        "props": {
-                            "startFrom": 1 * 30,
-                            "endAt": 3 * 30,
-                            "volume": 0,
-                        },
-                    }
-                )
+                # video_assets.append(
+                #     {
+                #         "type": "video",
+                #         "name": "Effects/" + random.choice(transitions),
+                #         "start": self.start - 1,
+                #         "end": self.start + 2,
+                #         "props": {
+                #             "startFrom": 1 * 30,
+                #             "endAt": 3 * 30,
+                #             "volume": 0,
+                #         },
+                #     }
+                # )
 
         self.assets.append({"type": "audio", "sequence": audio_assets})
         ## add the images to assets

@@ -763,7 +763,7 @@ class ElevenLab:
         return audio_url, temp
 
     async def download_file(self, url):
-        filename = str(uuid.uuid4()) + ".wav"
+        filename = str(uuid.uuid4()) + ".mp3"
         os.makedirs(self.dir, exist_ok=True)
         save_path = os.path.join(self.dir, filename)
         async with aiohttp.ClientSession() as session:
