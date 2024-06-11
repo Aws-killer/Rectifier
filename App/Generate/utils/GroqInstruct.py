@@ -44,30 +44,10 @@ def chatbot(prompt):
         #     "stop": None,
         # },
         messages=[
-            {
-                "role": "system",
-                "content": """Take a deep breath. You are an amazing story teller, you keep your audience engaged here is an example of one of your stories:
-                Title : Why are Jews so rich
-                 it starts in
-medieval Europe the church and Islamic
-law both prohibit money lending but not
-Jews they loan money and interest makes
-them very wealthy so wealthy that even
-powerful monarchs borrow from them by
-the 17th century they become key members
-of Royal courts known as Court Jews
-financial advisers to Kings and Queens
-when the world transitioned from
-monarchy to democracy Jewish people with
-their centuries of experience were the
-first to take advantage of new banking
-infrastructures today however the world
-is very different Muslims Christians
-Jews everyone enjoys interest
-                
-                
-                """,
-            },
+            # {
+            #     "role": "system",
+            #     "content": """""",
+            # },
             {
                 "role": "user",
                 "content": prompt,
