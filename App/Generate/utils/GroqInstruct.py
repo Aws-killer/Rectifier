@@ -27,10 +27,10 @@ client = instructor.from_groq(client, mode=instructor.Mode.JSON)
 # rather than having to use the OpenAISchema class
 
 
-def chatbot(prompt):
+def chatbot(prompt: str, model: str = "llama3-70b-8192"):
 
     response: VideoOutput = client.chat.completions.create(
-        model="llama3-70b-8192",
+        model=model,
         # model="gemma-7b-it",
         # model="llama2-70b-4096",
         # model="llama3-70b-8192",

@@ -22,7 +22,7 @@ async def main(request: GeneratorRequest):
     renderr = RenderVideo()
     huggChat = Hugging()
     if request.grok:
-        message = chatbot(Prompt.format(topic=topic))
+        message = chatbot(Prompt.format(topic=topic), model=request.model)
 
     else:
         temp = await huggChat.chat(
