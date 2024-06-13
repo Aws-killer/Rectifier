@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, BackgroundTasks, UploadFile, Query
 from .Schema import GeneratorRequest, GeneratorBulkRequest
 from .utils.GroqInstruct import chatbot, VideoOutput
+from .utils.Cohere import chatbot as cohere_chat
 from .utils.HuggingChat import Hugging
 from .Story.Story import Story
 import asyncio, pprint, json
@@ -19,6 +20,7 @@ async def update_scene(model_scene):
 
 async def main(request: GeneratorRequest):
     topic = request.prompt
+    batch_size = request.batch_size
     renderr = RenderVideo()
     huggChat = Hugging()
     if request.grok:
@@ -38,8 +40,10 @@ async def main(request: GeneratorRequest):
     # Assuming generated_story.scenes is a list of scenes
     scene_updates = []
     with tqdm(total=len(generated_story.scenes)) as pbar:
-        for i in range(0, len(generated_story.scenes), 2):
-            batch = generated_story.scenes[i : i + 2]  # Get a batch of two story scenes
+        for i in range(0, len(generated_story.scenes), batch_size):
+            batch = generated_story.scenes[
+                i : i + batch_size
+            ]  # Get a batch of two story scenes
             batch_updates = []
 
             for story_scene in batch:
