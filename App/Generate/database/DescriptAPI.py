@@ -107,10 +107,22 @@ class Speak:
 
     async def _make_transcript(self, links, text):
         data = {"audio_url": links, "text": text}
-        response_data = await self._make_request(
-            "post", "descript_transcript", json=data
-        )
-        return response_data
+        tries = 0
+        max_retries = 10
+        while tries < max_retries:
+            try:
+                response_data = await self._make_request(
+                    "post", "descript_transcript", json=data
+                )
+                if isinstance(response_data, dict):
+                    return response_data
+            except Exception as e:
+                print(f"Attempt {tries + 1} failed: {e}")
+
+            tries += 1
+            await asyncio.sleep(1)  # Adding a delay between retries
+
+        raise Exception("Max retries reached. Unable to get a valid response.")
 
     async def _make_request(self, method, endpoint, json=None):
         async with aiohttp.ClientSession() as session:
