@@ -205,9 +205,8 @@ def install_dependencies(directory: str):
 
 
 # @celery.task(name="uploadTime")
-def upload_video_to_youtube(task_data: dict):
+def upload_video_to_youtube(task: YouTubeUploadTask):
     # Convert dict to Pydantic model
-    task = YouTubeUploadTask(**task_data)
 
     # Build the command
     command = [
@@ -310,7 +309,7 @@ async def celery_task(video_task: EditorRequest):
     response: YouTubeUploadTask = tagger(narration="", response_model=YouTubeUploadTask)
 
     response.filename = output_dir
-    upload_video_to_youtube()
+    upload_video_to_youtube(task=response)
     await cleanup_temp_directory(temp_dir, output_dir, video_task)
 
     # chain(
