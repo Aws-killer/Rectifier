@@ -1,21 +1,30 @@
 import {AbsoluteFill} from 'remotion';
-
 import React, {useMemo} from 'react';
 import {
 	staticFile,
 	useVideoConfig,
 	Img,
 	Easing,
-	Audio,
 	useCurrentFrame,
 	interpolate,
 } from 'remotion';
 import imageSequences from './Assets/ImageSequences.json';
-import {TransitionSeries, linearTiming} from '@remotion/transitions';
-import {slide} from '@remotion/transitions/slide';
+import {TransitionSeries} from '@remotion/transitions';
 
 const ImageStream = React.memo(() => {
 	const {fps} = useVideoConfig();
+
+	const imageComponents = useMemo(() => {
+		return imageSequences.map((entry, index) => (
+			<TransitionSeries.Sequence
+				key={index}
+				durationInFrames={fps * (entry.end - entry.start)}
+			>
+				<Images key={index} entry={entry} />
+			</TransitionSeries.Sequence>
+		));
+	}, [fps]);
+
 	return (
 		<AbsoluteFill
 			style={{
@@ -30,57 +39,42 @@ const ImageStream = React.memo(() => {
 				objectFit: 'cover',
 			}}
 		>
-			<TransitionSeries>
-				{imageSequences.map((entry, index) => {
-					return (
-						<>
-							<TransitionSeries.Sequence
-								key={entry.start}
-								durationInFrames={fps * (entry.end - entry.start)}
-							>
-								<Images key={index} index={index} entry={entry} />;
-							</TransitionSeries.Sequence>
-						</>
-					);
-				})}
-			</TransitionSeries>
+			<TransitionSeries>{imageComponents}</TransitionSeries>
 		</AbsoluteFill>
 	);
 });
 
-const Images = React.memo(({entry, index}) => {
+const Images = React.memo(({entry}) => {
 	const frame = useCurrentFrame();
 	const {fps} = useVideoConfig();
 
-	const duration = fps * 2.5;
-	const ImgScale = interpolate(frame, [1, duration], [1, 1.2], {
-		easing: Easing.bezier(0.65, 0, 0.35, 1),
-		extrapolateRight: 'clamp',
-		extrapolateLeft: 'clamp',
-	});
+	const duration = useMemo(() => fps * 2.5, [fps]);
+	const ImgScale = useMemo(
+		() =>
+			interpolate(frame, [0, duration], [1, 1.2], {
+				easing: Easing.bezier(0.65, 0, 0.35, 1),
+				extrapolateRight: 'clamp',
+				extrapolateLeft: 'clamp',
+			}),
+		[frame, duration]
+	);
 
 	return (
 		<AbsoluteFill
 			style={{
-				BackgroundColor: 'black',
+				backgroundColor: 'black',
 			}}
-			className="bg-black"
 		>
-			{/* <Audio src={staticFile('sfx_1.mp3')} volume={0.5} /> */}
 			<Img
 				id="imagex"
 				style={{
-					scale: 2,
-					filter: `url(#blur)`,
-					objectPosition: 'center',
-					objectFit: 'cover',
-
-					position: 'absolute',
-					top: '50%', // Center vertically
-					left: '50%', // Center horizontally
 					transform: `translate(-50%, -50%) scale(${ImgScale})`,
+					position: 'absolute',
+					top: '50%',
+					left: '50%',
 					width: 1080,
 					height: 1920,
+					objectFit: 'cover',
 				}}
 				src={staticFile(entry.name)}
 			/>
