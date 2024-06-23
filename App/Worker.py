@@ -246,9 +246,7 @@ def download_assets(links: List[LinkInfo], temp_dir: str):
             file_link = link.link
             file_name = link.file_name
             # Write each link to the file in the format required by aria2c
-            links_file.write(
-                f"{file_link}\n out={os.path.join(public_dir, file_name)}\n"
-            )
+            links_file.write(f"{file_link}\n out={file_name}\n")
     download_with_wget(links_file_path=links_file_path, download_dir=public_dir)
 
 
