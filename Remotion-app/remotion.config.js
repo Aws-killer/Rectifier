@@ -4,7 +4,7 @@
 // Note: When using the Node.JS APIs, the config file doesn't apply. Instead, pass options directly to the APIs
 
 import {Config} from '@remotion/cli/config';
-import Instructions from './ServerInstructions.json';
+
 import {enableTailwind} from '@remotion/tailwind';
 Config.overrideWebpackConfig((currentConfiguration) => {
 	return enableTailwind(currentConfiguration);
@@ -12,4 +12,4 @@ Config.overrideWebpackConfig((currentConfiguration) => {
 
 //Config.setBrowserExecutable("/usr/bin/chrome-headless-shell");
 Config.setVideoImageFormat('jpeg');
-Config.setConcurrency(2);
+Config.setConcurrency(1);

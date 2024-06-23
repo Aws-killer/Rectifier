@@ -10,7 +10,8 @@ from celery.signals import worker_process_init
 from asgiref.sync import async_to_sync
 import json
 import os
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from App.Generate.utils.GroqInstruct import tagger
 from App.utilis import upload_file
 
 import subprocess
@@ -46,12 +47,32 @@ def concatenate_videos(input_dir):
 
 class YouTubeUploadTask(BaseModel):
     filename: str
-    title: str = "Default Title"
-    description: str = "Default Description"
+    title: str = Field(
+        ...,
+        min_length=100,
+        max_length=500,
+        description="A good title for the video",
+    )
+    description: str = Field(
+        ...,
+        min_length=100,
+        max_length=500,
+        description="A brief summary of the video's content",
+    )
     category_id: str = "22"  # Default to a generic category, update as needed
     privacy: str = "private"
-    tags: str = ""
-    thumbnail: str = None
+    tags: str = Field(
+        ...,
+        min_length=100,
+        max_length=500,
+        description="Best seo tags for youtube based on the story",
+    )
+    thumbnail: str = Field(
+        ...,
+        min_length=100,
+        max_length=500,
+        description="""Best image prompt based on the image description: here is an """,
+    )
 
 
 # celery = Celery()
@@ -140,7 +161,12 @@ def change_playback_speed(input_path, speed_factor):
     os.replace(temp_output_path, input_path)
 
 
-def download_with_wget(link, download_dir, filename):
+def download_with_wget(
+    link=None,
+    download_dir=None,
+    filename=None,
+    links_file_path=None,
+):
     headers = [
         "--header",
         "Cookie: __Host-session=63EQahvTpHuoFSkEW75hC",
@@ -149,7 +175,10 @@ def download_with_wget(link, download_dir, filename):
     ]
 
     # Construct the full command
-    command = ["aria2c"] + headers + [link, "-d", download_dir, "-o", filename]
+    if links_file_path:
+        command = ["aria2c", "-i", links_file_path, "--dir", download_dir]
+    else:
+        command = ["aria2c"] + headers + [link, "-d", download_dir, "-o", filename]
 
     # Run the command
     subprocess.run(command)
@@ -209,10 +238,19 @@ def upload_video_to_youtube(task_data: dict):
 # @celery.task(name="DownloadAssets")
 def download_assets(links: List[LinkInfo], temp_dir: str):
     public_dir = f"{temp_dir}/public"
-    for link in links:
-        file_link = str(link.link)
-        file_name = link.file_name
-        download_with_wget(file_link, public_dir, file_name)
+    os.makedirs(public_dir, exist_ok=True)
+
+    links_file_path = os.path.join(temp_dir, "download_links.txt")
+
+    with open(links_file_path, "w") as links_file:
+        for link in links:
+            file_link = link.link
+            file_name = link.file_name
+            # Write each link to the file in the format required by aria2c
+            links_file.write(
+                f"{file_link}\n out={os.path.join(public_dir, file_name)}\n"
+            )
+    download_with_wget(links_file_path=links_file_path, download_dir=public_dir)
 
 
 # @celery.task(name="RenderFile")
@@ -269,6 +307,10 @@ async def celery_task(video_task: EditorRequest):
     render_video(temp_dir, output_dir)
     change_playback_speed(output_dir, 1.2)
     # unsilence(temp_dir)
+    response: YouTubeUploadTask = tagger(narration="", response_model=YouTubeUploadTask)
+
+    response.filename = output_dir
+    upload_video_to_youtube()
     await cleanup_temp_directory(temp_dir, output_dir, video_task)
 
     # chain(
