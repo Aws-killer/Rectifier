@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, BackgroundTasks, UploadFile, Query
 from .Schema import GeneratorRequest, GeneratorBulkRequest
-from .utils.GroqInstruct import chatbot, VideoOutput
+from .utils.GroqInstruct import chatbot, VideoOutput, Scene
 from .utils.Cohere import chatbot as cohere_chat
 from .utils.HuggingChat import Hugging
 from .Story.Story import Story
@@ -18,23 +18,12 @@ async def update_scene(model_scene):
     await model_scene.update(**model_scene.__dict__)
 
 
-async def main(request: GeneratorRequest):
-    topic = request.prompt
-    batch_size = request.batch_size
-    renderr = RenderVideo()
-    huggChat = Hugging()
-    if request.grok:
-        message = cohere_chat(Prompt.format(topic=topic), model=request.model)
+async def from_dict_generate(data):
+    generated_strory = Story.from_dict(data)
+    await generate_assets(generated_story=generated_strory)
 
-    else:
-        temp = await huggChat.chat(
-            Prompt.format(topic=topic)
-            + f"Match your response to the following schema:  {VideoOutput.model_json_schema()} Make sure to return an instance of the JSON, not the schema itself, and nothing else."
-        )
-        message = temp
-    generated_story = Story.from_dict(message["scenes"])
 
-    print("Generated Story ✅")
+async def generate_assets(generated_story: Story, batch_size: 4):
     x = await Project.objects.create(name=str(uuid.uuid4()))
 
     # Assuming generated_story.scenes is a list of scenes
@@ -68,6 +57,26 @@ async def main(request: GeneratorRequest):
     await celery_task(video_task=request)
 
 
+async def main(request: GeneratorRequest):
+    topic = request.prompt
+    batch_size = request.batch_size
+    renderr = RenderVideo()
+    huggChat = Hugging()
+    if request.grok:
+        message = cohere_chat(Prompt.format(topic=topic), model=request.model)
+
+    else:
+        temp = await huggChat.chat(
+            Prompt.format(topic=topic)
+            + f"Match your response to the following schema:  {VideoOutput.model_json_schema()} Make sure to return an instance of the JSON, not the schema itself, and nothing else."
+        )
+        message = temp
+    generated_story = Story.from_dict(message["scenes"])
+
+    print("Generated Story ✅")
+    await generate_assets(generated_story=generated_story, batch_size=batch_size)
+
+
 async def bulkGenerate(bulkRequest: GeneratorBulkRequest):
     tasks = []
     for request in bulkRequest.stories:
@@ -84,6 +93,12 @@ async def generate_video(
     videoRequest: GeneratorRequest, background_task: BackgroundTasks
 ):
     background_task.add_task(main, videoRequest)
+    return {"task_id": "started"}
+
+
+@generator_router.post("/generate_video_from_json")
+async def generate_video_from_json(jsonReq: dict, background_task: BackgroundTasks):
+    background_task.add_task(from_dict_generate, jsonReq)
     return {"task_id": "started"}
 
 
