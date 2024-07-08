@@ -23,7 +23,7 @@ class VideoOutput(BaseModel):
 # Patching the Cohere client with the instructor for enhanced capabilities
 client = instructor.from_cohere(
     cohere.Client(os.environ.get("COHERE_API", "RANDOM_STRING")),
-    max_tokens=5000,
+    # max_tokens=5000,
     model="command-r-plus",
 )
 
