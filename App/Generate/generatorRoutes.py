@@ -97,9 +97,7 @@ async def generate_video(
 
 
 @generator_router.post("/generate_video_from_json")
-async def generate_video_from_json(
-    jsonReq: list[Scene], background_task: BackgroundTasks
-):
+async def generate_video_from_json(jsonReq: list, background_task: BackgroundTasks):
     background_task.add_task(from_dict_generate, jsonReq)
     return {"task_id": "started"}
 
