@@ -23,7 +23,7 @@ async def from_dict_generate(data: Story):
     await generate_assets(generated_story=generated_strory)
 
 
-async def generate_assets(generated_story: Story, batch_size: 4):
+async def generate_assets(generated_story: Story, batch_size=4):
     x = await Project.objects.create(name=str(uuid.uuid4()))
 
     # Assuming generated_story.scenes is a list of scenes
