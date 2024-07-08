@@ -18,8 +18,8 @@ async def update_scene(model_scene):
     await model_scene.update(**model_scene.__dict__)
 
 
-async def from_dict_generate(data: list[Scene]):
-    generated_strory = Story(scenes=data)
+async def from_dict_generate(data: Story):
+    generated_strory = data
     await generate_assets(generated_story=generated_strory)
 
 
@@ -97,7 +97,7 @@ async def generate_video(
 
 
 @generator_router.post("/generate_video_from_json")
-async def generate_video_from_json(jsonReq: list, background_task: BackgroundTasks):
+async def generate_video_from_json(jsonReq: Story, background_task: BackgroundTasks):
     background_task.add_task(from_dict_generate, jsonReq)
     return {"task_id": "started"}
 
