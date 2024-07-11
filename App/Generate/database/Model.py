@@ -130,6 +130,8 @@ class Project(orm.Model):
                             "props": {
                                 "volume": 0,
                                 "loop": "true",
+                                "startFrom": 1 * 30,
+                                "endAt": 3 * 30,
                                 "style": {
                                     "transform": "translate(-50%, -50%)",
                                     "position": "absolute",
