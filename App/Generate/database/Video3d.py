@@ -44,14 +44,14 @@ class VideoGenerator:
                             print(
                                 f"Video {output_file} is ready but the file size is zero, retrying in 10 seconds..."
                             )
-                            await asyncio.sleep(120)
+                            await asyncio.sleep(10)
                     elif response.status == 404:
                         data = await response.json()
                         if data.get("detail") == "Video not found":
                             print(
                                 f"Video {output_file} not ready yet, retrying in 10 seconds..."
                             )
-                            await asyncio.sleep(10)
+                            await asyncio.sleep(120)
                         else:
                             print(f"Unexpected response for {output_file}: {data}")
                             return None
@@ -101,20 +101,20 @@ class VideoGenerator:
         return nested_video_urls
 
 
-# # Example usage
-# nested_image_links = [
-#     [
-#         "https://replicate.delivery/yhqm/mQId1rdf4Z3odCyB7cPsx1KwhHfdRc3w44eYAGNG9AQfV0dMB/out-0.png"
-#     ],
-#     [
-#         "https://replicate.delivery/yhqm/mQId1rdf4Z3odCyB7cPsx1KwhHfdRc3w44eYAGNG9AQfV0dMB/out-1.png",
-#         "https://replicate.delivery/yhqm/mQId1rdf4Z3odCyB7cPsx1KwhHfdRc3w44eYAGNG9AQfV0dMB/out-2.png",
-#     ],
-#     # Add more nested image links here
-# ]
+# Example usage
+nested_image_links = [
+    [
+        "https://replicate.delivery/yhqm/mQId1rdf4Z3odCyB7cPsx1KwhHfdRc3w44eYAGNG9AQfV0dMB/out-0.png"
+    ],
+    [
+        "https://replicate.delivery/yhqm/mQId1rdf4Z3odCyB7cPsx1KwhHfdRc3w44eYAGNG9AQfV0dMB/out-1.png",
+        "https://replicate.delivery/yhqm/mQId1rdf4Z3odCyB7cPsx1KwhHfdRc3w44eYAGNG9AQfV0dMB/out-2.png",
+    ],
+    # Add more nested image links here
+]
 
-# loop = asyncio.get_event_loop()
-# video_generator = VideoGenerator()
-# nested_video_urls = loop.run_until_complete(video_generator.run(nested_image_links))
+loop = asyncio.get_event_loop()
+video_generator = VideoGenerator()
+nested_video_urls = loop.run_until_complete(video_generator.run(nested_image_links))
 
-# print("Generated video URLs:", nested_video_urls)
+print("Generated video URLs:", nested_video_urls)
