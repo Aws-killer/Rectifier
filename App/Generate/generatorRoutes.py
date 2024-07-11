@@ -63,7 +63,7 @@ async def generate_assets(generated_story: Story, batch_size=4, threeD=True):
     ###### Here we generate the videos
 
     if threeD:
-        vid_gen = VideoGenerator
+        vid_gen = VideoGenerator()
         nested_images = []
         for scene in all_scenes:
             nested_images.append(scene.images)
