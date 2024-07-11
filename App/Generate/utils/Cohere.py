@@ -22,7 +22,11 @@ class VideoOutput(BaseModel):
 
 # Patching the Cohere client with the instructor for enhanced capabilities
 client = instructor.from_cohere(
-    cohere.Client(os.environ.get("COHERE_API", "RANDOM_STRING")),
+    cohere.Client(
+        os.environ.get(
+            "COHERE_API",
+        )
+    ),
     # max_tokens=5000,
     model="command-r-plus",
 )
@@ -36,7 +40,7 @@ def chatbot(prompt: str, model: str = "command-r-plus"):
 
     response: VideoOutput = client.chat.completions.create(
         model=model,
-        max_tokens=5000,
+        # max_tokens=5000,
         response_model=VideoOutput,
         messages=[
             {
@@ -46,3 +50,6 @@ def chatbot(prompt: str, model: str = "command-r-plus"):
         ],
     )
     return response.dict()
+
+
+# print(chatbot("A horror story"))

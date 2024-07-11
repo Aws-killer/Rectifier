@@ -6,6 +6,7 @@ from pydub import AudioSegment
 from .DescriptAPI import Speak
 from .ElevenLab import ElevenLab
 from .Vercel import AsyncImageGenerator
+from .Video3d import VideoGenerator
 import aiohttp
 from typing import List
 from pydantic import BaseModel
@@ -56,7 +57,7 @@ class Project(orm.Model):
     }
 
     async def get_all_scenes(self):
-        return await Scene.objects.filter(project=self).order_by("id").all()
+        return await Scene.objects.filter(project=self).all()
 
     async def generate_json(self):
         project_scenes: List[Scene] = await self.get_all_scenes()
@@ -113,34 +114,67 @@ class Project(orm.Model):
             )
             text_stream.extend(temp[:-1])
 
-            ## images and transitions
-            for image in scene.images:
-                file_name = str(uuid.uuid4()) + ".png"
-                self.links.append({"file_name": file_name, "link": image})
-                image_assets.append(
-                    {
-                        "type": "image",
-                        "name": file_name,
-                        "start": self.start,
-                        "end": self.start + scene.image_duration,
-                    }
-                )
-                self.start = self.start + scene.image_duration
+            sample_image_extension = scene.images[0].split(".")[-1]
 
-                # transitions between images
-                video_assets.append(
-                    {
-                        "type": "video",
-                        "name": "Effects/" + random.choice(transitions),
-                        "start": self.start - 1,
-                        "end": self.start + 2,
-                        "props": {
-                            "startFrom": 1 * 30,
-                            "endAt": 3 * 30,
-                            "volume": 0,
-                        },
-                    }
-                )
+            if sample_image_extension == "mp4":
+                ## moving images
+                for image in scene.images:
+                    file_name = str(uuid.uuid4()) + ".mp4"
+                    self.links.append({"file_name": file_name, "link": image})
+                    video_assets.append(
+                        {
+                            "type": "video",
+                            "name": file_name,
+                            "start": self.start,
+                            "end": self.start + scene.image_duration,
+                            "props": {
+                                "volume": 0,
+                                "loop": "true",
+                                "style": {
+                                    {
+                                        "transform": "translate(-50%, -50%)",
+                                        "position": "absolute",
+                                        "top": "50%",
+                                        "left": "50%",
+                                        "width": 1080,
+                                        "height": 1920,
+                                        "objectFit": "cover",
+                                    }
+                                },
+                            },
+                        }
+                    )
+                    self.start = self.start + scene.image_duration
+
+            else:
+                ## images and transitions
+                for image in scene.images:
+                    file_name = str(uuid.uuid4()) + ".png"
+                    self.links.append({"file_name": file_name, "link": image})
+                    image_assets.append(
+                        {
+                            "type": "image",
+                            "name": file_name,
+                            "start": self.start,
+                            "end": self.start + scene.image_duration,
+                        }
+                    )
+                    self.start = self.start + scene.image_duration
+
+                ## transitions between images
+                # video_assets.append(
+                #     {
+                #         "type": "video",
+                #         "name": "Effects/" + random.choice(transitions),
+                #         "start": self.start - 1,
+                #         "end": self.start + 2,
+                #         "props": {
+                #             "startFrom": 1 * 30,
+                #             "endAt": 3 * 30,
+                #             "volume": 0,
+                #         },
+                #     }
+                # )
 
         self.assets.append({"type": "audio", "sequence": audio_assets})
         ## add the images to assets
@@ -197,7 +231,6 @@ class Scene(orm.Model):
         self.narration_link = link
 
     async def retry_narration_generation(self):
-        print(self.narration)
         retry_count = 0
         while retry_count < 3:
             try:

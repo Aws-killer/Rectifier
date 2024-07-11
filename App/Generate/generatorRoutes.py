@@ -6,7 +6,14 @@ from .utils.HuggingChat import Hugging
 from .Story.Story import Story
 import asyncio, pprint, json
 from tqdm import tqdm
-from .database.Model import models, database_url, Scene, Project, database
+from .database.Model import (
+    models,
+    database_url,
+    Scene,
+    Project,
+    database,
+    VideoGenerator,
+)
 from .utils.RenderVideo import RenderVideo
 from .Prompts.StoryGen import Prompt
 from App.Editor.editorRoutes import celery_task, EditorRequest
@@ -23,18 +30,21 @@ async def from_dict_generate(data: Story):
     await generate_assets(generated_story=generated_strory)
 
 
-async def generate_assets(generated_story: Story, batch_size=4):
+async def generate_assets(generated_story: Story, batch_size=4, threeD=True):
     x = await Project.objects.create(name=str(uuid.uuid4()))
 
     # Assuming generated_story.scenes is a list of scenes
-    scene_updates = []
     with tqdm(total=len(generated_story.scenes)) as pbar:
+
+        all_scenes: list[Scene] = []
+        # create the batches
         for i in range(0, len(generated_story.scenes), batch_size):
             batch = generated_story.scenes[
                 i : i + batch_size
             ]  # Get a batch of two story scenes
             batch_updates = []
 
+            # generate pictures or narration per batch
             for story_scene in batch:
                 model_scene = await Scene.objects.create(project=x)
                 model_scene.image_prompts = story_scene.image_prompts
@@ -43,11 +53,26 @@ async def generate_assets(generated_story: Story, batch_size=4):
                 batch_updates.append(
                     update_scene(model_scene)
                 )  # Append update coroutine to batch_updates
-            scene_updates.extend(batch_updates)  # Accumulate updates for later awaiting
+            # pause per batch
             await asyncio.gather(
                 *batch_updates
             )  # Await update coroutines for this batch
+            all_scenes.append(model_scene)
             pbar.update(len(batch))  # Increment progress bar by the size of the batch
+
+    ###### Here we generate the videos
+
+    if threeD:
+        vid_gen = VideoGenerator
+        nested_images = []
+        for scene in all_scenes:
+            nested_images.append(scene.images)
+
+        results = await vid_gen.run(nested_image_links=nested_images)
+
+        for result, _scene in zip(results, all_scenes):
+            _scene.images = result
+            await _scene.update(**_scene.__dict__)
 
     temp = await x.generate_json()
     # print(temp)
