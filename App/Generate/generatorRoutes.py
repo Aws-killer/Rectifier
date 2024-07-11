@@ -50,6 +50,7 @@ async def generate_assets(generated_story: Story, batch_size=4, threeD=True):
                 model_scene.image_prompts = story_scene.image_prompts
                 model_scene.narration = story_scene.narration
                 await model_scene.update(**model_scene.__dict__)
+                all_scenes.append(model_scene)
                 batch_updates.append(
                     update_scene(model_scene)
                 )  # Append update coroutine to batch_updates
@@ -57,7 +58,7 @@ async def generate_assets(generated_story: Story, batch_size=4, threeD=True):
             await asyncio.gather(
                 *batch_updates
             )  # Await update coroutines for this batch
-            all_scenes.append(model_scene)
+
             pbar.update(len(batch))  # Increment progress bar by the size of the batch
 
     ###### Here we generate the videos
