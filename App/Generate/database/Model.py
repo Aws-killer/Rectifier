@@ -131,15 +131,13 @@ class Project(orm.Model):
                                 "volume": 0,
                                 "loop": "true",
                                 "style": {
-                                    {
-                                        "transform": "translate(-50%, -50%)",
-                                        "position": "absolute",
-                                        "top": "50%",
-                                        "left": "50%",
-                                        "width": 1080,
-                                        "height": 1920,
-                                        "objectFit": "cover",
-                                    }
+                                    "transform": "translate(-50%, -50%)",
+                                    "position": "absolute",
+                                    "top": "50%",
+                                    "left": "50%",
+                                    "width": 1080,
+                                    "height": 1920,
+                                    "objectFit": "cover",
                                 },
                             },
                         }
