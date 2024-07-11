@@ -51,7 +51,7 @@ class VideoGenerator:
                             print(
                                 f"Video {output_file} not ready yet, retrying in 10 seconds..."
                             )
-                            await asyncio.sleep(120)
+                            await asyncio.sleep(180)
                         else:
                             print(f"Unexpected response for {output_file}: {data}")
                             return None
