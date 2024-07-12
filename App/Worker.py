@@ -241,7 +241,7 @@ def is_url(url: str) -> bool:
 def download_assets(links: List[LinkInfo], temp_dir: str):
     public_dir = f"{temp_dir}/public"
     os.makedirs(public_dir, exist_ok=True)
-
+    print(links)
     links_file_path = os.path.join(temp_dir, "download_links.txt")
 
     with open(links_file_path, "w") as links_file:
