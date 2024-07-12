@@ -37,6 +37,8 @@ const VideoX = React.memo(({entry}) => {
 			endAt={(fps * entry.props.endAt) / 30}
 			volume={(fps * entry.props.volume) / 30}
 			src={staticFile(entry.name)}
+			loop={entry?.loop}
+			style={entry?.style}
 		/>
 	);
 });

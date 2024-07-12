@@ -43,6 +43,7 @@ const TextStream = React.memo(() => {
 				backgroundColor: 'transparent',
 				justifyContent: 'center',
 				alignItems: 'center',
+				zIndex: 2,
 			}}
 		>
 			{memoizedTranscriptData.map((entry, index) => {
