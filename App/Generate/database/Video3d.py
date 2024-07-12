@@ -40,7 +40,7 @@ class VideoGenerator:
             image_file.write(response.content)
         return image_path, image.size
 
-    def make_effect(self, image_link: str, filename: str, params):
+    def make_effect(self, image_link: str, filename: str, params, retry_count=3):
         image_path, (width, height) = self.download_image(image_url=image_link)
         destination = os.path.join(self.video_directory, filename)
         command = [
@@ -66,7 +66,19 @@ class VideoGenerator:
         if params["raw"]:
             command.append("--raw")
         command.extend(["--output", destination])
-        subprocess.run(command, check=True)
+
+        for attempt in range(retry_count):
+            try:
+                subprocess.run(command, check=True)
+                return filename
+            except subprocess.CalledProcessError as e:
+                print(
+                    f"Attempt {attempt + 1} failed for {image_link} with error: {str(e)}"
+                )
+                if attempt < retry_count - 1:
+                    print("Retrying immediately...")
+                else:
+                    raise
         return filename
 
     def process_image(self, image_link):
