@@ -5,6 +5,7 @@ from urllib.parse import urlparse
 from subprocess import run
 from App import celery_config, bot, SERVER_STATE
 from typing import List
+import App
 from App.Editor.Schema import EditorRequest, LinkInfo, Assets, Constants
 from celery.signals import worker_process_init
 from asgiref.sync import async_to_sync
@@ -296,7 +297,9 @@ async def cleanup_temp_directory(
 
 # @celery.task(name="All")
 async def celery_task(video_task: EditorRequest):
-    remotion_app_dir = os.path.join("./", "Remotion-app")
+    remotion_app_dir = os.path.join(
+        os.path.dirname(os.path.dirname(App.__file__)), "Remotion-app"
+    )
     project_id = str(uuid.uuid4())
     temp_dir = f"/tmp/{project_id}"
     output_dir = f"/tmp/{project_id}/out/video.mp4"
