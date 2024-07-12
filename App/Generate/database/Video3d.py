@@ -1,82 +1,83 @@
-import aiohttp
+import os
+import uuid
+import tempfile
+from PIL import Image
+from io import BytesIO
+from mimetypes import guess_extension
+import subprocess
+import requests
 import asyncio
 from itertools import chain
 
 
 class VideoGenerator:
     def __init__(self):
-        self.base_urls = [f"https://yakova-depthflow-{i}.hf.space" for i in range(10)]
-        self.headers = {"accept": "application/json"}
         self.default_params = {
             "frame_rate": 30,
             "duration": 3,
             "quality": 1,
             "ssaa": 0.8,
-            "raw": "false",
+            "raw": False,
         }
+        self.video_directory = "/tmp/Video"
+        self.ensure_video_directory()
 
-    async def generate_video(self, base_url, params):
-        url = f"{base_url}/generate_video"
+    def ensure_video_directory(self):
+        if not os.path.exists(self.video_directory):
+            os.makedirs(self.video_directory)
 
-        async with aiohttp.ClientSession() as session:
-            async with session.post(
-                url, params=params, headers=self.headers
-            ) as response:
-                if response.status == 200:
-                    data = await response.json()
-                    output_file = data.get("output_file")
-                    return output_file
-                else:
-                    print(f"Request to {url} failed with status: {response.status}")
-                    return None
+    def download_image(self, image_url: str):
+        temp_dir = tempfile.mkdtemp()
+        response = requests.get(image_url)
+        response.raise_for_status()
+        image = Image.open(BytesIO(response.content))
+        image_format = image.format.lower()
+        image_extension = guess_extension(f"image/{image_format}")
+        if image_extension is None:
+            raise ValueError("Cannot detect image file type.")
+        image_path = os.path.join(temp_dir, f"image{image_extension}")
+        with open(image_path, "wb") as image_file:
+            image_file.write(response.content)
+        return image_path, image.size
 
-    async def check_video_ready(self, base_url, output_file):
-        url = f"{base_url}/download/{output_file}"
+    def make_effect(self, image_link: str, filename: str, params):
+        image_path, (width, height) = self.download_image(image_url=image_link)
+        destination = os.path.join(self.video_directory, filename)
+        command = [
+            "depthflow",
+            "input",
+            "-i",
+            image_path,
+            "main",
+            "-f",
+            str(params["frame_rate"]),
+            "-t",
+            str(params["duration"]),
+            "--width",
+            str(width),
+            "--height",
+            str(height),
+            "--quality",
+            str(params["quality"]),
+            "--ssaa",
+            str(params["ssaa"]),
+            "--benchmark",
+        ]
+        if params["raw"]:
+            command.append("--raw")
+        command.extend(["--output", destination])
+        subprocess.run(command, check=True)
+        return filename
 
-        async with aiohttp.ClientSession() as session:
-            while True:
-                async with session.get(url, headers=self.headers) as response:
-                    if response.status == 200:
-                        video_content = await response.read()
-                        if len(video_content) > 0:
-                            return url
-                        else:
-                            print(
-                                f"Video {output_file} is ready but the file size is zero, retrying in 10 seconds..."
-                            )
-                            await asyncio.sleep(10)
-                    elif response.status == 404:
-                        data = await response.json()
-                        if data.get("detail") == "Video not found":
-                            print(
-                                f"Video {output_file} not ready yet, retrying in 10 seconds..."
-                            )
-                            await asyncio.sleep(180)
-                        else:
-                            print(f"Unexpected response for {output_file}: {data}")
-                            return None
-                    else:
-                        print(f"Request to {url} failed with status: {response.status}")
-                        return None
-
-    async def process_image(self, base_url, image_link):
+    def process_image(self, image_link):
+        filename = f"{str(uuid.uuid4())}.mp4"
         params = self.default_params.copy()
-        params["image_link"] = image_link
-
-        output_file = await self.generate_video(base_url, params)
-        if output_file:
-            print(f"Generated video file id: {output_file} for image {image_link}")
-            video_url = await self.check_video_ready(base_url, output_file)
-            if video_url:
-                print(
-                    f"Video for {image_link} is ready and can be downloaded from: {video_url}"
-                )
-                return video_url
-            else:
-                print(f"Failed to get the video URL for {image_link}")
-                return None
-        else:
-            print(f"Failed to generate the video for {image_link}")
+        try:
+            video_filename = self.make_effect(image_link, filename, params)
+            video_url = f"http://localhost:7860/download/{video_filename}"
+            return video_url
+        except Exception as e:
+            print(f"Failed to generate video for {image_link}: {str(e)}")
             return None
 
     def flatten(self, nested_list):
@@ -88,14 +89,11 @@ class VideoGenerator:
 
     async def run(self, nested_image_links):
         flat_image_links = self.flatten(nested_image_links)
-        tasks = []
-        base_index = 0
-
-        for image_link in flat_image_links:
-            base_url = self.base_urls[base_index % len(self.base_urls)]
-            tasks.append(self.process_image(base_url, image_link))
-            base_index += 1
-
+        loop = asyncio.get_event_loop()
+        tasks = [
+            loop.run_in_executor(None, self.process_image, image_link)
+            for image_link in flat_image_links
+        ]
         flat_video_urls = await asyncio.gather(*tasks)
         nested_video_urls = self.nest(flat_video_urls, nested_image_links)
         return nested_video_urls
@@ -110,7 +108,6 @@ class VideoGenerator:
 #         "https://replicate.delivery/yhqm/mQId1rdf4Z3odCyB7cPsx1KwhHfdRc3w44eYAGNG9AQfV0dMB/out-1.png",
 #         "https://replicate.delivery/yhqm/mQId1rdf4Z3odCyB7cPsx1KwhHfdRc3w44eYAGNG9AQfV0dMB/out-2.png",
 #     ],
-#     # Add more nested image links here
 # ]
 
 # loop = asyncio.get_event_loop()

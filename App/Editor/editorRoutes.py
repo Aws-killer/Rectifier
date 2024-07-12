@@ -1,8 +1,16 @@
-from fastapi import APIRouter, HTTPException, status, BackgroundTasks, UploadFile, Query
+from fastapi import (
+    APIRouter,
+    HTTPException,
+    status,
+    BackgroundTasks,
+    UploadFile,
+    Request,
+)
 from .Schema import EditorRequest, TaskInfo
 from App.Worker import celery_task, concatenate_videos
 from celery.result import AsyncResult
 import aiofiles, os, uuid, aiohttp
+from fastapi.responses import StreamingResponse, FileResponse
 from App import SERVER_STATE, Task
 
 videditor_router = APIRouter(tags=["vidEditor"])
@@ -82,3 +90,39 @@ async def create_file(
         background_tasks.add_task(concatenate_videos, chunk_directory)
 
     return {"message": "File uploaded successfully"}
+
+
+@videditor_router.get("/download/{filename}")
+async def download_video(filename: str, request: Request):
+    video_directory = "/tmp/Video"
+    video_path = os.path.join(video_directory, filename)
+    if not os.path.isfile(video_path):
+        raise HTTPException(status_code=404, detail="Video not found")
+
+    range_header = request.headers.get("Range", None)
+    video_size = os.path.getsize(video_path)
+
+    if range_header:
+        start, end = range_header.strip().split("=")[1].split("-")
+        start = int(start)
+        end = video_size if end == "" else int(end)
+
+        headers = {
+            "Content-Range": f"bytes {start}-{end}/{video_size}",
+            "Accept-Ranges": "bytes",
+        }
+
+        content = read_file_range(video_path, start, end)
+        return StreamingResponse(content, media_type="video/mp4", headers=headers)
+
+    return FileResponse(video_path, media_type="video/mp4")
+
+
+async def read_file_range(path, start, end):
+    async with aiofiles.open(path, "rb") as file:
+        await file.seek(start)
+        while True:
+            data = await file.read(1024 * 1024)  # read in chunks of 1MB
+            if not data or await file.tell() > end:
+                break
+            yield data
