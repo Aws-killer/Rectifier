@@ -79,15 +79,14 @@ class VideoGenerator:
                     print("Retrying immediately...")
                 else:
                     raise
-        return filename
+        return destination
 
     def process_image(self, image_link):
         filename = f"{str(uuid.uuid4())}.mp4"
         params = self.default_params.copy()
         try:
-            video_filename = self.make_effect(image_link, filename, params)
-            video_url = f"https://mbonea-mjema--rectifier-run-rectifier-dev.modal.run//download/{video_filename}"
-            return video_url
+            video_path = self.make_effect(image_link, filename, params)
+            return video_path
         except Exception as e:
             print(f"Failed to generate video for {image_link}: {str(e)}")
             return None
