@@ -1,4 +1,4 @@
-import {Loop, Series} from 'remotion';
+import {Loop} from 'remotion';
 import React from 'react';
 import {Video, staticFile, useVideoConfig} from 'remotion';
 import videoSequences from './Assets/VideoSequences.json';
