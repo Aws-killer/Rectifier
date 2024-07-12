@@ -89,12 +89,14 @@ class VideoGenerator:
 
     async def run(self, nested_image_links):
         flat_image_links = self.flatten(nested_image_links)
-        loop = asyncio.get_event_loop()
-        tasks = [
-            loop.run_in_executor(None, self.process_image, image_link)
-            for image_link in flat_image_links
-        ]
-        flat_video_urls = await asyncio.gather(*tasks)
+        flat_video_urls = []
+
+        for image_link in flat_image_links:
+            video_url = await asyncio.get_event_loop().run_in_executor(
+                None, self.process_image, image_link
+            )
+            flat_video_urls.append(video_url)
+
         nested_video_urls = self.nest(flat_video_urls, nested_image_links)
         return nested_video_urls
 
