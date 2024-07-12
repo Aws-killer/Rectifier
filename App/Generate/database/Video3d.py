@@ -86,7 +86,7 @@ class VideoGenerator:
         params = self.default_params.copy()
         try:
             video_filename = self.make_effect(image_link, filename, params)
-            video_url = f"http://localhost:7860/download/{video_filename}"
+            video_url = f"https://mbonea-mjema--rectifier-run-rectifier-dev.modal.run/download/{video_filename}"
             return video_url
         except Exception as e:
             print(f"Failed to generate video for {image_link}: {str(e)}")
