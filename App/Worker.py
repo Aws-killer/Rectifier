@@ -235,7 +235,7 @@ def upload_video_to_youtube(task: YouTubeUploadTask):
 
 
 def is_url(url: str) -> bool:
-    return "http" in url
+    return "http" in str(url)
 
 
 def download_assets(links: List[LinkInfo], temp_dir: str):
@@ -249,7 +249,7 @@ def download_assets(links: List[LinkInfo], temp_dir: str):
             file_link = link.link
             file_name = link.file_name
 
-            if is_url(file_link):
+            if is_url(str(file_link)):
                 # Write each link to the file in the format required by aria2c
                 links_file.write(f"{file_link}\n out={file_name}\n")
             else:
