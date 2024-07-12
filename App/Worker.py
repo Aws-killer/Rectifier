@@ -234,7 +234,14 @@ def upload_video_to_youtube(task: YouTubeUploadTask):
     return result.stdout
 
 
-# @celery.task(name="DownloadAssets")
+def is_url(url: str) -> bool:
+    try:
+        result = urlparse(url)
+        return all([result.scheme, result.netloc])
+    except ValueError:
+        return False
+
+
 def download_assets(links: List[LinkInfo], temp_dir: str):
     public_dir = f"{temp_dir}/public"
     os.makedirs(public_dir, exist_ok=True)
@@ -245,9 +252,18 @@ def download_assets(links: List[LinkInfo], temp_dir: str):
         for link in links:
             file_link = link.link
             file_name = link.file_name
-            # Write each link to the file in the format required by aria2c
-            links_file.write(f"{file_link}\n out={file_name}\n")
-    download_with_wget(links_file_path=links_file_path, download_dir=public_dir)
+
+            if is_url(file_link):
+                # Write each link to the file in the format required by aria2c
+                links_file.write(f"{file_link}\n out={file_name}\n")
+            else:
+                # Copy the file to the public_dir
+                destination = os.path.join(public_dir, file_name)
+                shutil.copy(file_link, destination)
+
+    # Only call download_with_wget if there are URLs to download
+    if os.path.getsize(links_file_path) > 0:
+        download_with_wget(links_file_path=links_file_path, download_dir=public_dir)
 
 
 # @celery.task(name="RenderFile")
