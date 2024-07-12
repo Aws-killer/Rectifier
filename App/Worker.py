@@ -235,11 +235,7 @@ def upload_video_to_youtube(task: YouTubeUploadTask):
 
 
 def is_url(url: str) -> bool:
-    try:
-        result = urlparse(url)
-        return all([result.scheme, result.netloc])
-    except ValueError:
-        return False
+    return "http" in url
 
 
 def download_assets(links: List[LinkInfo], temp_dir: str):
