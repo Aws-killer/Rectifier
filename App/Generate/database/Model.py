@@ -132,7 +132,7 @@ class Project(orm.Model):
                                 "volume": 0,
                                 "startFrom": 1 * 30,
                                 "endAt": 3 * 30,
-                                "playbackRate": 0.75,
+                                "playbackRate": 0.7,
                                 "style": {
                                     "transform": "translate(-50%, -50%)",
                                     "position": "absolute",
