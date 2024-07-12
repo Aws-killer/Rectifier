@@ -131,7 +131,7 @@ class Project(orm.Model):
                             "props": {
                                 "volume": 0,
                                 "startFrom": 1 * 30,
-                                "endAt": 3 * 30,
+                                "endAt": 2.9 * 30,
                                 "playbackRate": 0.7,
                                 "style": {
                                     "transform": "translate(-50%, -50%)",
