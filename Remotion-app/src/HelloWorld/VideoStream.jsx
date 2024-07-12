@@ -42,7 +42,7 @@ const VideoX = React.memo(({entry}) => {
 	return (
 		<>
 			{entry?.loop ? (
-				<Loop>
+				<Loop durationInFrames={fps * (entry.end - entry.start)}>
 					<Video {...videoProps} />
 				</Loop>
 			) : (
