@@ -126,10 +126,10 @@ class Project(orm.Model):
                             "type": "video",
                             "name": file_name,
                             "start": self.start,
+                            "loop": "true",
                             "end": self.start + scene.image_duration,
                             "props": {
                                 "volume": 0,
-                                "loop": "true",
                                 "startFrom": 1 * 30,
                                 "endAt": 3 * 30,
                                 "playbackRate": 0.75,
