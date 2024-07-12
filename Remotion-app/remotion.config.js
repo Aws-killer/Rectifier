@@ -12,4 +12,4 @@ Config.overrideWebpackConfig((currentConfiguration) => {
 
 //Config.setBrowserExecutable("/usr/bin/chrome-headless-shell");
 Config.setVideoImageFormat('jpeg');
-Config.setConcurrency(6);
+Config.setConcurrency(12);
