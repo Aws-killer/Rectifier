@@ -5,7 +5,7 @@ from pydantic import validator
 
 class LinkInfo(BaseModel):
     file_name: str
-    link: HttpUrl
+    link: str
 
 
 class Constants(BaseModel):
