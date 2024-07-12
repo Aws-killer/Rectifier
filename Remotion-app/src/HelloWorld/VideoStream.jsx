@@ -1,4 +1,4 @@
-import {Series} from 'remotion';
+import {Loop, Series} from 'remotion';
 import React from 'react';
 import {Video, staticFile, useVideoConfig} from 'remotion';
 import videoSequences from './Assets/VideoSequences.json';
@@ -30,16 +30,25 @@ const VideoStream = React.memo(() => {
 
 const VideoX = React.memo(({entry}) => {
 	const {fps} = useVideoConfig();
+	const videoProps = {
+		pauseWhenBuffering: true,
+		startFrom: (fps * entry.props.startFrom) / 30,
+		endAt: (fps * entry.props.endAt) / 30,
+		volume: (fps * entry.props.volume) / 30,
+		src: staticFile(entry.name),
+		style: entry?.style,
+	};
+
 	return (
-		<Video
-			pauseWhenBuffering
-			startFrom={(fps * entry.props.startFrom) / 30}
-			endAt={(fps * entry.props.endAt) / 30}
-			volume={(fps * entry.props.volume) / 30}
-			src={staticFile(entry.name)}
-			loop={entry?.loop}
-			style={entry?.style}
-		/>
+		<>
+			{entry?.loop ? (
+				<Loop>
+					<Video {...videoProps} />
+				</Loop>
+			) : (
+				<Video {...videoProps} />
+			)}
+		</>
 	);
 });
 

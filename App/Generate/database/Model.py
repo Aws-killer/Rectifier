@@ -132,6 +132,7 @@ class Project(orm.Model):
                                 "loop": "true",
                                 "startFrom": 1 * 30,
                                 "endAt": 3 * 30,
+                                "playbackRate": 0.75,
                                 "style": {
                                     "transform": "translate(-50%, -50%)",
                                     "position": "absolute",
