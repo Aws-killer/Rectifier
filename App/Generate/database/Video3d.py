@@ -19,7 +19,7 @@ class VideoGenerator:
             "ssaa": 0.8,
             "raw": False,
         }
-        self.video_directory = "/root/rectifier/tmp/Video"
+        self.video_directory = "/tmp/Video"
         self.ensure_video_directory()
 
     def ensure_video_directory(self):
@@ -70,7 +70,7 @@ class VideoGenerator:
         for attempt in range(retry_count):
             try:
                 subprocess.run(command, check=True)
-                return filename
+                return destination
             except subprocess.CalledProcessError as e:
                 print(
                     f"Attempt {attempt + 1} failed for {image_link} with error: {str(e)}"
