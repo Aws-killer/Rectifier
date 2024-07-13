@@ -57,7 +57,10 @@ class Project(orm.Model):
     }
 
     async def get_all_scenes(self):
-        return await Scene.objects.filter(project=self).all()
+        scenes: list[Scene] = (
+            await Scene.objects.filter(project=self).order_by("id").all()
+        )
+        return scenes
 
     async def generate_json(self):
         project_scenes: List[Scene] = await self.get_all_scenes()
