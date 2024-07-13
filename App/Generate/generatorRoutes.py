@@ -61,19 +61,19 @@ async def generate_assets(generated_story: Story, batch_size=4, threeD=True):
 
             pbar.update(len(batch))  # Increment progress bar by the size of the batch
 
-    ###### Here we generate the videos
+    ##### Here we generate the videos
 
-    # if threeD:
-    #     vid_gen = VideoGenerator()
-    #     nested_images = []
-    #     for scene in all_scenes:
-    #         nested_images.append(scene.images)
+    if threeD:
+        vid_gen = VideoGenerator()
+        nested_images = []
+        for scene in all_scenes:
+            nested_images.append(scene.images)
 
-    #     results = await vid_gen.run(nested_image_links=nested_images)
-    #     print(results)
-    #     for result, _scene in zip(results, all_scenes):
-    #         _scene.images = result
-    #         await _scene.updateDB()
+        results = await vid_gen.run(nested_image_links=nested_images)
+        print(results)
+        for result, _scene in zip(results, all_scenes):
+            _scene.images = result
+            await _scene.updateDB()
 
     temp = await x.generate_json()
     # print(temp)
