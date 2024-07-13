@@ -42,7 +42,11 @@ const VideoX = React.memo(({entry}) => {
 
 	return (
 		<>
-			{entry?.loop ? <Video loop {...videoProps} /> : <Video {...videoProps} />}
+			{entry?.loop ? (
+				<Video pauseWhenBuffering loop {...videoProps} />
+			) : (
+				<Video pauseWhenBuffering {...videoProps} />
+			)}
 		</>
 	);
 });
