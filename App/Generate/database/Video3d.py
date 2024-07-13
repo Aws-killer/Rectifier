@@ -19,7 +19,7 @@ class VideoGenerator:
             "ssaa": 0.8,
             "raw": False,
         }
-        self.video_directory = "/tmp/Video"
+        self.video_directory = "/root/rectifier/tmp/Video"
         self.ensure_video_directory()
 
     def ensure_video_directory(self):
