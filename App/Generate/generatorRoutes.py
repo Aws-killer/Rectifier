@@ -20,9 +20,9 @@ from App.Editor.editorRoutes import celery_task, EditorRequest
 import uuid
 
 
-async def update_scene(model_scene):
+async def update_scene(model_scene: Scene):
     await model_scene.generate_scene_data()
-    await model_scene.update(**model_scene.__dict__)
+    await model_scene.updateDB()
 
 
 async def from_dict_generate(data: Story):
@@ -49,7 +49,7 @@ async def generate_assets(generated_story: Story, batch_size=4, threeD=True):
                 model_scene = await Scene.objects.create(project=x)
                 model_scene.image_prompts = story_scene.image_prompts
                 model_scene.narration = story_scene.narration
-                await model_scene.update(**model_scene.__dict__)
+                await model_scene.updateDB()
                 all_scenes.append(model_scene)
                 batch_updates.append(
                     update_scene(model_scene)
@@ -73,7 +73,7 @@ async def generate_assets(generated_story: Story, batch_size=4, threeD=True):
     #     print(results)
     #     for result, _scene in zip(results, all_scenes):
     #         _scene.images = result
-    #         await _scene.update(**_scene.__dict__)
+    #         await _scene.updateDB()
 
     temp = await x.generate_json()
     # print(temp)

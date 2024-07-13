@@ -215,6 +215,9 @@ class Scene(orm.Model):
         "narration_link": orm.String(max_length=10_000, allow_null=True, default=""),
     }
 
+    async def updateDB(self):
+        await self.update(**self.__dict__)
+
     async def generate_scene_transcript(self, offset):
         links = [self.narration_link]
         text = self.narration + " master"
