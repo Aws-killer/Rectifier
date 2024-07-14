@@ -63,7 +63,7 @@ async def generate_slide_assets(generated_story: Story, batch_size=4, threeD=Tru
                 await model_scene.updateDB()
                 all_scenes.append(model_scene)
                 batch_updates.append(
-                    update_scene(model_scene)
+                    update_slide_scene(model_scene)
                 )  # Append update coroutine to batch_updates
             # pause per batch
             await asyncio.gather(
