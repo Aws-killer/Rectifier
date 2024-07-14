@@ -181,9 +181,9 @@ async def generate_video_from_json(jsonReq: Story, background_task: BackgroundTa
     return {"task_id": "started"}
 
 
-# @generator_router.post("/generate_video_bulk")
-# async def generate_video_bulk(
-#     BulkvideoRequest: GeneratorBulkRequest, background_task: BackgroundTasks
-# ):
-#     background_task.add_task(bulkGenerate, BulkvideoRequest)
-#     return {"task_id": "started"}
+@generator_router.post("/generate_video_bulk")
+async def generate_video_bulk(
+    BulkvideoRequest: GeneratorBulkRequest, background_task: BackgroundTasks
+):
+    background_task.add_task(bulkGenerate, BulkvideoRequest)
+    return {"task_id": "started"}
