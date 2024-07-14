@@ -25,9 +25,56 @@ async def update_scene(model_scene: Scene):
     await model_scene.updateDB()
 
 
+async def update_slide_scene(model_scene: Scene):
+    await model_scene.generate_scene_data()
+    await model_scene.updateDB()
+
+
+async def slide_from_dict_generate(data: Story):
+    generated_strory = data
+    await generate_slide_assets(generated_story=generated_strory)
+
+
 async def from_dict_generate(data: Story):
     generated_strory = data
     await generate_assets(generated_story=generated_strory)
+
+
+async def generate_slide_assets(generated_story: Story, batch_size=4, threeD=True):
+    x = await Project.objects.create(name=str(uuid.uuid4()))
+
+    # Assuming generated_story.scenes is a list of scenes
+    with tqdm(total=len(generated_story.scenes)) as pbar:
+
+        all_scenes: list[Scene] = []
+        # create the batches
+        for i in range(0, len(generated_story.scenes), batch_size):
+            batch = generated_story.scenes[
+                i : i + batch_size
+            ]  # Get a batch of two story scenes
+            batch_updates = []
+
+            # generate pictures or narration per batch
+            for story_scene in batch:
+                model_scene = await Scene.objects.create(project=x)
+                model_scene.image_prompts = story_scene.image_prompts
+                model_scene.images = story_scene.image_prompts
+                model_scene.narration = story_scene.narration
+                await model_scene.updateDB()
+                all_scenes.append(model_scene)
+                batch_updates.append(
+                    update_scene(model_scene)
+                )  # Append update coroutine to batch_updates
+            # pause per batch
+            await asyncio.gather(
+                *batch_updates
+            )  # Await update coroutines for this batch
+
+            pbar.update(len(batch))  # Increment progress bar by the size of the batch
+
+    temp = await x.generate_json()
+    request = EditorRequest.model_validate(temp)
+    await celery_task(video_task=request)
 
 
 async def generate_assets(generated_story: Story, batch_size=4, threeD=True):
@@ -119,6 +166,12 @@ async def generate_video(
     videoRequest: GeneratorRequest, background_task: BackgroundTasks
 ):
     background_task.add_task(main, videoRequest)
+    return {"task_id": "started"}
+
+
+@generator_router.post("/generate_video_slides_from_json")
+async def generate_video_slides(jsonReq: Story, background_task: BackgroundTasks):
+    background_task.add_task(slide_from_dict_generate, jsonReq)
     return {"task_id": "started"}
 
 

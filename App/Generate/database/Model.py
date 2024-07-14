@@ -227,6 +227,11 @@ class Scene(orm.Model):
         transcript = await self.tts._make_transcript(links=links, text=text)
         return transform_alignment_data(data=transcript, offset=offset)
 
+    async def generate_slide_data(self):
+        # Run narrate() and generate_images() concurrently
+        await asyncio.gather(self.narrate())
+        self.calculate_durations()
+
     async def generate_scene_data(self):
         # Run narrate() and generate_images() concurrently
         await asyncio.gather(self.narrate(), self.generate_images())

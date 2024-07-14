@@ -759,12 +759,13 @@ class ElevenLab:
             async with getattr(session, method)(url=url, json=json) as response:
                 return await response.json()
 
-    async def say(self, text, speaker="Adam"):
+    async def say(self, text, speaker="Carl"):
 
         for i in self.voices:
             name = i["name"].split(" ")[0]
             if name.lower() == speaker.lower():
                 voiceId = i["voice_id"]
+                # voiceId = "yl2ZDV1MzN4HbQJbMihG"
         data = {"voiceId": voiceId, "text": text}
 
         response_data = await self._make_request("post", "convert", json=data)
