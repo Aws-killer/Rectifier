@@ -26,7 +26,7 @@ async def update_scene(model_scene: Scene):
 
 
 async def update_slide_scene(model_scene: Scene):
-    await model_scene.generate_scene_data()
+    await model_scene.generate_slide_data()
     await model_scene.updateDB()
 
 
