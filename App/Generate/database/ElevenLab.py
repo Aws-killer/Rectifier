@@ -759,7 +759,7 @@ class ElevenLab:
             async with getattr(session, method)(url=url, json=json) as response:
                 return await response.json()
 
-    async def say(self, text, speaker="Carl"):
+    async def say(self, text, speaker="Adam"):
 
         for i in self.voices:
             name = i["name"].split(" ")[0]

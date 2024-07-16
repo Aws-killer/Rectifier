@@ -85,7 +85,7 @@ class AsyncImageGenerator:
                 status["status"] = "404"
 
             while status["status"] != "succeeded":
-                print(status)
+                print(status["status"])
                 try:
                     status = await self._fetch_image_status(image_id)
                 except Exception as e:
