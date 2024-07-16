@@ -18,17 +18,17 @@ async def startup_event():
     app.state.db = database
     app.state.models = models
 
-    try:
-        # print(type(database.url), database_url)
-        # await models.create_all()
-        await models._create_all(str(database.url))
-    except:
-        print("failed to create")
-    finally:
-        print(database.is_connected)
-        if not database.is_connected:
-            await database.connect()
-        # await database.execute("pragma journal_mode=wal;")
+    # try:
+    #     # print(type(database.url), database_url)
+    #     # await models.create_all()
+    #     await models._create_all(str(database.url))
+    # except:
+    #     print("failed to create")
+    # finally:
+    #     print(database.is_connected)
+    #     if not database.is_connected:
+    #         await database.connect()
+    # await database.execute("pragma journal_mode=wal;")
 
     await bot.start()
     # if SERVER_STATE.MASTER:
