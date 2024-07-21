@@ -86,8 +86,15 @@ class YouTubeUploadTask(BaseModel):
 
 # @celery.task(name="CreateFile")
 def create_json_file(assets: List[Assets], asset_dir: str):
+    narration = ""
     for asset in assets:
+        text_file = "TextSequences.json"
         filename = f"{asset.type.capitalize()}Sequences.json"
+
+        if filename == text_file:
+            for chunk in asset.sequence:
+                narration += chunk["text"]
+
         # Convert dictionary to JSON string
         json_string = json.dumps(asset.sequence)
 
@@ -97,6 +104,7 @@ def create_json_file(assets: List[Assets], asset_dir: str):
         # Write JSON string to file
         with open(os.path.join(asset_dir, filename), "w") as f:
             f.write(json_string)
+    return narration
 
 
 # @celery.task(name="Constants")
@@ -312,15 +320,17 @@ async def celery_task(video_task: EditorRequest):
     #
     install_dependencies(temp_dir)
     create_constants_json_file(video_task.constants, assets_dir)
-    create_json_file(video_task.assets, assets_dir)
+    narration = create_json_file(video_task.assets, assets_dir)
     download_assets(video_task.links, temp_dir)
     render_video(temp_dir, output_dir)
     change_playback_speed(output_dir, 1.2)
     # unsilence(temp_dir)
-    # response: YouTubeUploadTask = tagger(narration="", response_model=YouTubeUploadTask)
+    response: YouTubeUploadTask = tagger(
+        narration=narration, response_model=YouTubeUploadTask
+    )
 
     # response.filename = output_dir
-    # upload_video_to_youtube(task=response)
+    upload_video_to_youtube(task=response)
     await cleanup_temp_directory(temp_dir, output_dir, video_task)
 
     # chain(
