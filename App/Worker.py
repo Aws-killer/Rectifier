@@ -241,7 +241,7 @@ def upload_video_to_youtube(task: YouTubeUploadTask):
 
     # Execute the command
     result = run(command, capture_output=True, text=True)
-
+    print(result.stdout)
     return result.stdout
 
 
