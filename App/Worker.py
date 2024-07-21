@@ -220,7 +220,7 @@ def upload_video_to_youtube(task: YouTubeUploadTask):
         os.path.dirname(os.path.dirname(App.__file__)), "youtube/youtubeuploader"
     )
     yt_cache = yt_path = os.path.join(
-        os.path.dirname(os.path.dirname(App.__file__)), "request.token"
+        os.path.dirname(os.path.dirname(App.__file__)), "youtube/request.token"
     )
     # Build the command
     command = [
