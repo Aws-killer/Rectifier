@@ -52,4 +52,17 @@ def chatbot(prompt: str, model: str = "command-r-plus"):
     return response.dict()
 
 
-# print(chatbot("A horror story"))
+def tagger(narration: str, response_model: BaseModel, model: str = "command-r-plus"):
+
+    response: response_model = client.chat.completions.create(
+        model=model,
+        # max_tokens=5000,
+        response_model=response_model,
+        messages=[
+            {
+                "role": "user",
+                "content": f"Given the following narration {narration} extract the data in the correct form",
+            },
+        ],
+    )
+    return response

@@ -12,7 +12,7 @@ from asgiref.sync import async_to_sync
 import json
 import os
 from pydantic import BaseModel, Field
-from App.Generate.utils.GroqInstruct import tagger
+from App.Generate.utils.Cohere import tagger
 from App.utilis import upload_file
 
 import subprocess
