@@ -219,6 +219,9 @@ def upload_video_to_youtube(task: YouTubeUploadTask):
     yt_path = os.path.join(
         os.path.dirname(os.path.dirname(App.__file__)), "youtube/youtubeuploader"
     )
+    yt_cache = yt_path = os.path.join(
+        os.path.dirname(os.path.dirname(App.__file__)), "request.token"
+    )
     # Build the command
     command = [
         yt_path,  # Adjust the path as needed
@@ -234,6 +237,8 @@ def upload_video_to_youtube(task: YouTubeUploadTask):
         task.privacy,
         "-tags",
         task.tags,
+        "-cache",
+        yt_cache,
     ]
 
     # if task.thumbnail:
