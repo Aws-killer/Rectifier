@@ -61,7 +61,7 @@ def tagger(narration: str, response_model: BaseModel, model: str = "command-r-pl
         messages=[
             {
                 "role": "user",
-                "content": f"Given the following narration {narration} extract the data in the correct form",
+                "content": f"Given the following narration {narration} extract the data in the correct form the narration",
             },
         ],
     )

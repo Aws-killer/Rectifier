@@ -50,28 +50,28 @@ class YouTubeUploadTask(BaseModel):
     filename: str
     title: str = Field(
         ...,
-        min_length=100,
-        max_length=500,
+        # min_length=100,
+        # max_length=500,
         description="A good title for the video",
     )
     description: str = Field(
         ...,
-        min_length=100,
-        max_length=500,
+        # min_length=100,
+        # max_length=500,
         description="A brief summary of the video's content",
     )
     category_id: str = "22"  # Default to a generic category, update as needed
     privacy: str = "private"
     tags: str = Field(
         ...,
-        min_length=100,
-        max_length=500,
+        # min_length=100,
+        # max_length=500,
         description="Best seo tags for youtube based on the story",
     )
     thumbnail: str = Field(
         ...,
-        min_length=100,
-        max_length=500,
+        # min_length=100,
+        # max_length=500,
         description="""Best image prompt based on the image description: here is an """,
     )
 

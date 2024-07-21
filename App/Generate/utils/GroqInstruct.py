@@ -68,7 +68,7 @@ def tagger(
         messages=[
             {
                 "role": "user",
-                "content": f"Given the following narration {narration} extract the data",
+                "content": f"Given the following narration {narration} extract the data in the correct form",
             },
         ],
     )
