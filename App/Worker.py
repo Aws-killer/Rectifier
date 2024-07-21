@@ -216,10 +216,12 @@ def install_dependencies(directory: str):
 # @celery.task(name="uploadTime")
 def upload_video_to_youtube(task: YouTubeUploadTask):
     # Convert dict to Pydantic model
-
+    yt_path = os.path.join(
+        os.path.dirname(os.path.dirname(App.__file__)), "youtube/youtubeuploader"
+    )
     # Build the command
     command = [
-        "/srv/youtube/youtubeuploader",  # Adjust the path as needed
+        yt_path,  # Adjust the path as needed
         "-filename",
         task.filename,
         "-title",
@@ -234,8 +236,8 @@ def upload_video_to_youtube(task: YouTubeUploadTask):
         task.tags,
     ]
 
-    if task.thumbnail:
-        command.extend(["-thumbnail", task.thumbnail])
+    # if task.thumbnail:
+    #     command.extend(["-thumbnail", task.thumbnail])
 
     # Execute the command
     result = run(command, capture_output=True, text=True)
