@@ -331,7 +331,7 @@ async def celery_task(video_task: EditorRequest):
         narration=narration, response_model=YouTubeUploadTask
     )
 
-    # response.filename = output_dir
+    response.filename = output_dir
     upload_video_to_youtube(task=response)
     await cleanup_temp_directory(temp_dir, output_dir, video_task)
 
