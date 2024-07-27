@@ -332,11 +332,11 @@ async def celery_task(video_task: EditorRequest):
     render_video(temp_dir, output_dir)
     change_playback_speed(output_dir, 1.2)
     # unsilence(temp_dir)
-    response: YouTubeUploadTask = tagger(
-        narration=narration, response_model=YouTubeUploadTask
-    )
+    # response: YouTubeUploadTask = tagger(
+    #     narration=narration, response_model=YouTubeUploadTask
+    # )
 
-    response.filename = output_dir
+    # response.filename = output_dir
     # upload_video_to_youtube(task=response)
     await cleanup_temp_directory(temp_dir, output_dir, video_task)
 
